@@ -28,7 +28,9 @@ book:
   chapters:
     - index.qmd
     - intro.qmd
-    - notebooks/appendix.qmd
+    - sections/data_preprocessing/index.qmd
+    - sections/experiments/index.qmd
+    - sections/generators/index.qmd
     - references.qmd
 
 crossref:

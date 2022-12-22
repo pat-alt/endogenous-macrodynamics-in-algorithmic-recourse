@@ -2,7 +2,7 @@
 
 This notebook was used to run the experiments for the synthetic datasets and can be used to reproduce the results in the paper. In the following we first run the experiments and then generate visualizations and tables.
 
-#### Experiments
+#### Experiment
 
 ```{julia}
 #| echo: false
@@ -11,18 +11,7 @@ include("src/setup.jl")
 eval(setup)
 output_path = output_dir("synthetic") # output directory for artifacts
 www_path = www_dir("synthetic")       # output directory for images
-```
-
-```{julia}
-max_obs = 1000
-catalogue = AlgorithmicRecourseDynamics.Data.load_synthetic(max_obs)
-choices = [
-    :linearly_separable, 
-    :overlapping, 
-    :circles, 
-    :moons,
-]
-data_sets = filter(p -> p[1] in choices, catalogue)
+data_path = data_dir("synthetic")
 ```
 
 ```{julia}
@@ -37,6 +26,18 @@ generators = Dict(
     :REVISE=>REVISEGenerator(),
     :DICE=>DiCEGenerator(),
 )
+```
+
+```{julia}
+max_obs = 1000
+catalogue = AlgorithmicRecourseDynamics.Data.load_synthetic(max_obs; data_dir=data_path)
+choices = [
+    :linearly_separable, 
+    :overlapping, 
+    :circles, 
+    :moons,
+]
+data_sets = filter(p -> p[1] in choices, catalogue)
 ```
 
 ```{julia}

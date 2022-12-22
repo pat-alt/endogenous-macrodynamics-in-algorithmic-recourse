@@ -1,5 +1,7 @@
 setup = quote
 
+    using Pkg; Pkg.activate(".")
+
     # Deps:
     using AlgorithmicRecourseDynamics
     using AlgorithmicRecourseDynamics: run_bootstrap

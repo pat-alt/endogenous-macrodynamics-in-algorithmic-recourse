@@ -11,8 +11,22 @@ data_path = data_dir("real_world")
 ```
 
 ```{julia}
+models = [
+    :LogisticRegression, 
+    :FluxModel, 
+    :FluxEnsemble
+]
+generators = Dict(
+    :Greedy=>GreedyGenerator(), 
+    :Generic=>GenericGenerator(),
+    :REVISE=>REVISEGenerator(),
+    :DICE=>DiCEGenerator(),
+)
+```
+
+```{julia}
 max_obs = 2500
-data_sets = AlgorithmicRecourseDynamics.Data.load_real_world(max_obs; data_dir=data_path)
+data_sets = load_real_world(max_obs; data_dir=data_path)
 choices = [
     :cal_housing, 
     :credit_default, 
@@ -32,21 +46,6 @@ end
 model_params = (batch_norm=false,n_hidden=64,n_layers=3,dropout=true,p_dropout=0.1)
 ```
 
-
-```{julia}
-models = [
-    :LogisticRegression, 
-    :FluxModel, 
-    :FluxEnsemble
-]
-generators = Dict(
-    :Greedy=>GreedyGenerator(), 
-    :Generic=>GenericGenerator(),
-    :REVISE=>REVISEGenerator(),
-    :DICE=>DiCEGenerator(),
-)
-```
-
 ```{julia}
 experiments = set_up_experiments(
     data_sets,models,generators; 
@@ -54,6 +53,15 @@ experiments = set_up_experiments(
     data_loader=data_loader
 )
 ```
+
+```{julia}
+experiments = set_up_experiments(
+    data_sets, models, generators; 
+    pre_train_models=100, model_params=model_params, 
+    data_loader=data_loader
+)
+```
+
 
 #### Experiment
 

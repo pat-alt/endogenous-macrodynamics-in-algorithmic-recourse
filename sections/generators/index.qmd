@@ -1,0 +1,5 @@
+---
+title: Generators
+---
+
+The generators have been moved into [`CounterfactualExplanations.jl`](https://github.com/pat-alt/CounterfactualExplanations.jl). For more information so the package [documentation](https://pat-alt.github.io/CounterfactualExplanations.jl/dev).

@@ -1,0 +1,7 @@
+---
+title: Data Preprocessing
+---
+
+{{< _synthetic_data.qmd >}}
+
+{{< _real_world_data.qmd >}}
