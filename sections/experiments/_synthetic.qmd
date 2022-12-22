@@ -30,7 +30,7 @@ generators = Dict(
 
 ```{julia}
 max_obs = 1000
-catalogue = load_synthetic(max_obs; data_dir=data_path)
+catalogue = load_synthetic(max_obs)
 choices = [
     :linearly_separable, 
     :overlapping, 
@@ -346,4 +346,9 @@ Images.save(joinpath(www_path,"paper_synthetic_results.png"), img)
 #| fig-cap: "Chart in paper"
 
 Images.load(joinpath(www_path,"paper_synthetic_results.png"))
+```
+
+```{julia}
+generate_artifacts(output_path)
+generate_artifacts(www_path)
 ```

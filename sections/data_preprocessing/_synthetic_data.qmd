@@ -41,3 +41,8 @@ df = DataFrame(X)
 df.target = y
 CSV.write(joinpath(data_path, "moons.csv"),df)
 ```
+
+```{julia}
+generate_artifacts(data_path)
+```
+

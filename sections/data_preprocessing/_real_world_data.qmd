@@ -193,6 +193,10 @@ CSV.write(joinpath(data_path, "credit_default.csv"), df_balanced)         # bina
 Serialization.serialize(joinpath(data_path,"credit_default.jls"), data)   # CounterfactualData
 ```
 
+```{julia}
+generate_artifacts(data_path)
+```
+
 
 
 
