@@ -42,8 +42,6 @@ bibliography: bib.bib
 format:
   html:
     theme: cosmo
-  pdf:
-    documentclass: scrreprt
   epub:
     cover-image: cover.png
 
