@@ -5,6 +5,9 @@ using DataFrames
 using Serialization
 using StatsBase
 
+# Artifacts:
+artifact_toml = LazyArtifacts.find_artifacts_toml(".")
+
 """
     output_dir(dir="")
 
@@ -47,9 +50,11 @@ function data_dir(dir="")
     return data_dir
 end
 
-function load_synthetic(max_obs::Union{Nothing,Int}=nothing; data_dir::Union{Nothing, String}=nothing)
+function load_synthetic(max_obs::Union{Nothing,Int}=nothing; data_dir::Union{Nothing,String}=nothing)
     if isnothing(data_dir)
-        data_dir = joinpath(artifact"data", "data/synthetic")
+        _hash = artifact_hash("data", artifact_toml)
+        _path = artifact_path(_hash)
+        data_dir = joinpath(_path, "data/synthetic")
     end
     files = readdir(data_dir)
     files = files[contains.(files, ".csv")]
@@ -68,9 +73,11 @@ function load_synthetic(max_obs::Union{Nothing,Int}=nothing; data_dir::Union{Not
     return data
 end
 
-function load_real_world(max_obs::Union{Nothing,Int}=nothing; data_dir::Union{Nothing, String}=nothing)
+function load_real_world(max_obs::Union{Nothing,Int}=nothing; data_dir::Union{Nothing,String}=nothing)
     if isnothing(data_dir)
-        data_dir = joinpath(artifact"data", "data/real_world")
+        _hash = artifact_hash("data", artifact_toml)
+        _path = artifact_path(_hash)
+        data_dir = joinpath(_path, "data/real_world")
     end
     files = readdir(data_dir)
     files = files[contains.(files, ".jls")]

@@ -28,7 +28,9 @@ setup = quote
     # Setup
     Random.seed!(2023)              # global seed to allow for reproducibility
     theme(:wong)
-    # include("src/utils.jl")
+
+    # Utils
+    include("src/utils.jl")
 
     # Make DataFrames.jl work
     MLUtils.getobs(data::DataFrame, i) = data[i, :]
