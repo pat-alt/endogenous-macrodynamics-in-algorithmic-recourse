@@ -1,0 +1,15 @@
+---
+format: gfm
+
+execute: 
+  freeze: auto
+  eval: false
+  echo: true
+  output: false
+
+jupyter: julia-1.8
+---
+
+# Endogenous Macrodynamics in Algorithmic Recourse
+
+{{< include intro.qmd >}}
