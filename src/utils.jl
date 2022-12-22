@@ -78,22 +78,10 @@ function load_real_world(max_obs::Union{Nothing,Int}=nothing; data_dir::Union{No
         counterfactual_data = Serialization.deserialize(joinpath(data_dir, file))
         if !isnothing(max_obs)
             n_classes = length(unique(counterfactual_data.y))
-            counterfactual_data = undersample(counterfactual_data, Int(round(max_obs / n_classes)))
+            counterfactual_data = AlgorithmicRecourseDynamics.Data.undersample(counterfactual_data, Int(round(max_obs / n_classes)))
         end
         (Symbol(replace(file, ".jls" => "")) => counterfactual_data)
     end
     data = Dict(data...)
     return data
-end
-
-
-function scale(X, dim)
-    dt = fit(ZScoreTransform, X, dim=dim)
-    X_scaled = StatsBase.transform(dt, X)
-    return X_scaled, dt
-end
-
-function rescale(X, dt)
-    X_rescaled = StatsBase.reconstruct(dt, X)
-    return X_rescaled
 end

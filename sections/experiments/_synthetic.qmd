@@ -30,7 +30,7 @@ generators = Dict(
 
 ```{julia}
 max_obs = 1000
-catalogue = AlgorithmicRecourseDynamics.Data.load_synthetic(max_obs; data_dir=data_path)
+catalogue = load_synthetic(max_obs; data_dir=data_path)
 choices = [
     :linearly_separable, 
     :overlapping, 

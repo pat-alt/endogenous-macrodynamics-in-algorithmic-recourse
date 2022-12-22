@@ -7,7 +7,6 @@ include("src/setup.jl")
 eval(setup)
 output_path = output_dir("real_world")
 www_path = www_dir("real_world")
-data_path = data_dir("real_world")
 ```
 
 ```{julia}
@@ -26,10 +25,10 @@ generators = Dict(
 
 ```{julia}
 max_obs = 2500
-data_sets = load_real_world(max_obs; data_dir=data_path)
+data_sets = load_real_world(max_obs)
 choices = [
-    :cal_housing, 
-    :credit_default, 
+    # :cal_housing, 
+    # :credit_default, 
     :gmsc, 
 ]
 data_sets = filter(p -> p[1] in choices, data_sets)
@@ -53,15 +52,6 @@ experiments = set_up_experiments(
     data_loader=data_loader
 )
 ```
-
-```{julia}
-experiments = set_up_experiments(
-    data_sets, models, generators; 
-    pre_train_models=100, model_params=model_params, 
-    data_loader=data_loader
-)
-```
-
 
 #### Experiment
 

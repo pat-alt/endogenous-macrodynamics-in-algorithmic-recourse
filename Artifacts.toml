@@ -1,9 +1,9 @@
 [data]
-git-tree-sha1 = "902bd7e623196b898d323cd974f8dbd5a5329690"
+git-tree-sha1 = "590ac20e723afbca8c6f414eca14f845223a437a"
 lazy = true
 
     [[data.download]]
-    sha256 = "b6049da449edf6505bf52a72022db0ecc1cdcd6d8f48d55ab529597287b482d7"
+    sha256 = "5a15a423e911443889d9a954917133d45f54bee65699f6cd201852f1f1c7d66d"
     url = "https://github.com/pat-alt/endogenous-macrodynamics-in-algorithmic-recourse/releases/download/camera-ready/data.tar.gz"
 
 [output]
@@ -11,7 +11,7 @@ git-tree-sha1 = "086afa8f4efe460e08d4e64582c873ef31294b60"
 lazy = true
 
     [[output.download]]
-    sha256 = "985704f59c63bbf5742fd9be1b0031db87e70b2e8dbea6f9be4e06efe371fbfd"
+    sha256 = "6383094bb584574d5c2ec05093d024f780f0fbe301711c5972d96be807136155"
     url = "https://github.com/pat-alt/endogenous-macrodynamics-in-algorithmic-recourse/releases/download/camera-ready/output.tar.gz"
 
 [www]
@@ -19,5 +19,5 @@ git-tree-sha1 = "be2f5c26e9666aa8c04c241970fbb7813a4a8407"
 lazy = true
 
     [[www.download]]
-    sha256 = "73b2bb14c94d7378023f77cf2f429362454220a2bf86bbb519c308785c0b9f5d"
+    sha256 = "cb05546c6d45589cbcffaad7c72c6ccb9f927af66128af8d6f2502876016ff15"
     url = "https://github.com/pat-alt/endogenous-macrodynamics-in-algorithmic-recourse/releases/download/camera-ready/www.tar.gz"
