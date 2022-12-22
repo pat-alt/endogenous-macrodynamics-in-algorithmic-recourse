@@ -1,7 +1,7 @@
 
 # Endogenous Macrodynamics in Algorithmic Recourse
 
-## Introduction
+# Introduction
 
 To start with, we will look at a proof-of-concept that demonstrates the
 main observation underlying that paper is framed around. In particular,
@@ -9,7 +9,7 @@ we will use synthetic data to see how endogenous domain shifts and the
 resulting model shifts can have implications on the validity and cost of
 algorithmic recourse.
 
-### Data
+## Data
 
 We begin by generating the synthetic data for a simple binary
 classification problem. For illustrative purposes we will use data that
@@ -32,7 +32,7 @@ plot()
 scatter!(counterfactual_data)
 ```
 
-### Classifier
+## Classifier
 
 To model this data $\mathcal{D}$ we will use a linear classifier. In
 particular, as in the paper, we will build a logistic regression model
@@ -45,15 +45,15 @@ mod = FluxModel(model)
 Models.train(mod, counterfactual_data; n_epochs=n_epochs)
 ```
 
-The chart (a) below shows the linear separation of the two classes.
+**?@fig-model** below shows the linear separation of the two classes.
 
 ``` julia
 plt_original = plot(mod, counterfactual_data; zoom=0, colorbar=false, title="(a)")
 ```
 
-### Implementation of Recourse
+## Implementation of Recourse
 
-#### Generate counterfactual
+## Generate counterfactual
 
 ``` julia
 γ = 0.50
@@ -70,8 +70,8 @@ opt = Flux.Adam(0.01)
 gen = GenericGenerator(;decision_threshold=γ, opt=opt)
 ```
 
-The chart (b) below shows the recourse outcome, which we denote here as
-$\mathcal{D}^{\prime}$. The obvious observation at this point is that
+**?@fig-round-1** below shows the recourse outcome, which we denote here
+as $\mathcal{D}^{\prime}$. The obvious observation at this point is that
 the resulting counterfactuals, while valid, are clearly distinguishable
 from the factuals that were always in the target class. This is not a
 new observation and nor is it entirely surprising. In fact, a lot of
@@ -94,28 +94,29 @@ counterfactual_data′ = CounterfactualData(X′,y′')
 plt_single = plot(mod,counterfactual_data′;zoom=0,colorbar=false,title="(b)")
 ```
 
-#### Retrain
+## Retrain
 
 Suppose the agent in charge of the black-box system has provided
-recourse to a share of individuals leading to the outcome in chart (b).
-In practice, models are regularly updated through retraining to account
-for concept drift, for example. For our experiments, we assume that the
-agent accepts $\mathcal{D}^{\prime}$ as its new ground truth. To isolate
-the endogenous effects we are interested in here from any other effect,
-we further assume away any exogenous changes to the data that we might
-expect to occur in practice. Retraining the model on
-$\mathcal{D}^{\prime}$ leads to a shift of the decision boundary **in
-the direction of the non-target class**.
+recourse to a share of individuals leading to the outcome in
+**?@fig-round-1**. In practice, models are regularly updated through
+retraining to account for concept drift, for example. For our
+experiments, we assume that the agent accepts $\mathcal{D}^{\prime}$ as
+its new ground truth. To isolate the endogenous effects we are
+interested in here from any other effect, we further assume away any
+exogenous changes to the data that we might expect to occur in practice.
+Retraining the model on $\mathcal{D}^{\prime}$ leads to a shift of the
+decision boundary **in the direction of the non-target class**
+(**?@fig-retrain**).
 
 ``` julia
 mod = Models.train(mod, counterfactual_data′)
 plt_single_retrained = plot(mod,counterfactual_data′;zoom=0,colorbar=false,title="(c)")
 ```
 
-#### Repeat
+## Repeat
 
 We finally go on to repeat this process of recourse followed by model
-updates for multiple round. The chart below presents the different
+updates for multiple round. **?@fig-final** below presents the different
 stages of the experiment side-by-side, where panel (d) represents the
 outcome after ten rounds.
 
