@@ -54,6 +54,7 @@ Models.train(mod, counterfactual_data; n_epochs=n_epochs)
 #| fig-cap: "The baseline model: contours indicate the predicted label; dots indicate observed data points."
 
 plt_original = plot(mod, counterfactual_data; zoom=0, colorbar=false, title="(a)")
+display(plt_original)
 ```
 
 ## Implementation of Recourse
@@ -92,6 +93,7 @@ X′[:,chosen_individuals] = reduce(hcat, @.(selectdim(counterfactual(outcome), 
 y′[chosen_individuals] = reduce(vcat,@.(selectdim(counterfactual_label(outcome),3,1)))
 counterfactual_data′ = CounterfactualData(X′,y′')
 plt_single = plot(mod,counterfactual_data′;zoom=0,colorbar=false,title="(b)")
+display(plt_single)
 ```
 
 ## Retrain
@@ -105,6 +107,7 @@ Suppose the agent in charge of the black-box system has provided recourse to a s
 
 mod = Models.train(mod, counterfactual_data′)
 plt_single_retrained = plot(mod,counterfactual_data′;zoom=0,colorbar=false,title="(c)")
+display(plt_single_retrained)
 ```
 
 ## Repeat
@@ -140,5 +143,5 @@ plt_single_repeat = plot(mod,counterfactual_data′;zoom=0,colorbar=false,title=
 
 plt = plot(plt_original, plt_single, plt_single_retrained, plt_single_repeat, layout=(1,4), legend=false, axis=nothing, size=(600,165))
 savefig(plt, joinpath(www_path, "poc.png"))
-plt
+display(plt)
 ```

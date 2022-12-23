@@ -1,6 +1,4 @@
----
-title: Preprocessing Real-World Data
----
+## Preprocessing Real-World Data
 
 ```{julia}
 #| echo: false
@@ -12,7 +10,7 @@ www_path = www_dir("real_world")
 data_path = data_dir("real_world")
 ```
 
-## California Housing Data
+### California Housing Data
 
 Fetching the data using Python's `sklearn` (run this in the Python REPL):
 
@@ -47,12 +45,16 @@ df_balanced = getobs(undersample(df, df.target;shuffle=true))[1]
 All features are continuous:
 
 ```{julia}
+#| output: true
+
 schema(df_balanced)
 ```
 
 Feature transformation:
 
 ```{julia}
+#| output: true
+
 transformer = Standardizer(count=true)
 mach = MLJBase.fit!(machine(transformer, df_balanced[:,Not(:target)]))
 X = MLJBase.transform(mach, df_balanced[:,Not(:target)])
@@ -76,7 +78,7 @@ Serialization.serialize(joinpath(data_path,"cal_housing.jls"), data)        # Co
 ```
 
 
-## Give Me Some Credit
+### Give Me Some Credit
 
 Loading and basic preprocessing:
 
@@ -127,7 +129,7 @@ CSV.write(joinpath(data_path, "gmsc.csv"), df_balanced)         # binary file
 Serialization.serialize(joinpath(data_path,"gmsc.jls"), data)   # CounterfactualData
 ```
 
-## UCI Credit Card Default
+### UCI Credit Card Default
 
 Loading and basic preprocessing:
 
@@ -152,12 +154,16 @@ df_balanced = getobs(undersample(df, df.target;shuffle=true))[1]
 **Not** all features are continuous:
 
 ```{julia}
+#| output: true
+
 schema(df_balanced)
 ```
 
 Feature transformation:
 
 ```{julia}
+#| output: true
+
 transformer = Standardizer(count=true) |> ContinuousEncoder()
 mach = MLJBase.fit!(machine(transformer, df_balanced[:,Not(:target)]))
 X = MLJBase.transform(mach, df_balanced[:,Not(:target)])

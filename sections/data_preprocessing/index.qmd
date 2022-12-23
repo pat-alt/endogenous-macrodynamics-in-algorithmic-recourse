@@ -2,6 +2,6 @@
 title: Data Preprocessing
 ---
 
-{{< _synthetic_data.qmd >}}
+{{< include _synthetic_data.qmd >}}
 
-{{< _real_world_data.qmd >}}
+{{< include _real_world_data.qmd >}}

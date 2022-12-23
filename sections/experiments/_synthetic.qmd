@@ -1,8 +1,8 @@
-### Synthetic Data {#sec-app-synthetic}
+## Synthetic Data {#sec-app-synthetic}
 
 This notebook was used to run the experiments for the synthetic datasets and can be used to reproduce the results in the paper. In the following we first run the experiments and then generate visualizations and tables.
 
-#### Experiment
+### Experiment
 
 ```{julia}
 #| echo: false
@@ -205,7 +205,7 @@ for img in img_files
 end
 ```
 
-#### Plots
+### Plots
 
 ```{julia}
 results = Serialization.deserialize(joinpath(output_path,"results.jls"));
@@ -225,7 +225,7 @@ for (data_name, res) in results
 end
 ```
 
-##### Line Charts
+#### Line Charts
 
 @fig-line shows the evolution of the evaluation metrics over the course of the experiment.
 
@@ -246,7 +246,7 @@ for img in img_files
 end
 ```
 
-##### Error Bar Charts
+#### Error Bar Charts
 
 @fig-error shows the evaluation metrics at the end of the experiments.
 
@@ -267,14 +267,14 @@ for img in img_files
 end
 ```
 
-#### Bootstrap
+### Bootstrap
 
 ```{julia}
 n_bootstrap = 10
 df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstrap.csv"))
 ```
 
-#### Chart in paper {#sec-app-synthetic-paper}
+### Chart in paper {#sec-app-synthetic-paper}
 
 @fig-paper shows the chart that went into the paper.
 
