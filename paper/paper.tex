@@ -443,34 +443,6 @@
 
 
 %% ---- classic IEEETrans one column per institution --------
- %% -- beg if/affiliation.institution-columnar
-\IEEEauthorblockN{
-  %% -- beg for/affiliation.institution.author
-Patrick Altmeyer,
-  %% -- beg for/affiliation.institution.author
-Giovan Angela,
-  %% -- beg for/affiliation.institution.author
-Aleksander Buszydlik,
-  %% -- beg for/affiliation.institution.author
-Karol Dobiczek,
-  %% -- beg for/affiliation.institution.author
-Arie van Deursen,
-  %% -- beg for/affiliation.institution.author
-Cynthia C. S. Liem %% -- end for/affiliation.institution.author
-}
-\IEEEauthorblockA{\emph{Faculty of Electrical Engineering, Mathematics and Computer Science}\\
-\emph{Delft University of Technology}\\
-2628 XE Delft, The Netherlands
-  %% -- beg for/affiliation.institution.author
-\\P.Altmeyer@tudelft.nl
-  %% -- beg for/affiliation.institution.author
-  %% -- beg for/affiliation.institution.author
-  %% -- beg for/affiliation.institution.author
-  %% -- beg for/affiliation.institution.author
-  %% -- beg for/affiliation.institution.author
- %% -- end for/affiliation.institution.author
-}
- %% -- end for/affiliation.institution
  %% -- end if/affiliation.institution-columnar
 %% ----------------------------------------------------------
 
@@ -479,6 +451,86 @@ Cynthia C. S. Liem %% -- end for/affiliation.institution.author
 
 
 %% ---- one column per author, classic/default IEEETrans ----
+ % -- beg affiliation.author-columnar
+  %% -- beg for/affiliation.institution.author
+\IEEEauthorblockN{
+Patrick Altmeyer
+}
+\IEEEauthorblockA{\emph{Delft University of Technology}\\
+\emph{Faculty of Electrical Engineering}\\
+\emph{Mathematics and Computer Science}\\
+2628 XE Delft, The Netherlands
+  %% -- beg for/affiliation.institution.author
+\\P.Altmeyer@tudelft.nl
+ %% -- end for/affiliation.institution.author
+}
+\and
+  %% -- beg for/affiliation.institution.author
+\IEEEauthorblockN{
+Giovan Angela
+}
+\IEEEauthorblockA{\emph{Delft University of Technology}\\
+\emph{Faculty of Electrical Engineering}\\
+\emph{Mathematics and Computer Science}\\
+2628 XE Delft, The Netherlands
+  %% -- beg for/affiliation.institution.author
+\\G.J.A.Angela@student.tudelft.nl
+ %% -- end for/affiliation.institution.author
+}
+\and
+  %% -- beg for/affiliation.institution.author
+\IEEEauthorblockN{
+Aleksander Buszydlik
+}
+\IEEEauthorblockA{\emph{Delft University of Technology}\\
+\emph{Faculty of Electrical Engineering}\\
+\emph{Mathematics and Computer Science}\\
+2628 XE Delft, The Netherlands
+  %% -- beg for/affiliation.institution.author
+\\A.J.Buszydlik@student.tudelft.nl
+ %% -- end for/affiliation.institution.author
+}
+\and
+  %% -- beg for/affiliation.institution.author
+\IEEEauthorblockN{
+Karol Dobiczek
+}
+\IEEEauthorblockA{\emph{Delft University of Technology}\\
+\emph{Faculty of Electrical Engineering}\\
+\emph{Mathematics and Computer Science}\\
+2628 XE Delft, The Netherlands
+  %% -- beg for/affiliation.institution.author
+\\K.T.Dobiczek@student.tudelft.nl
+ %% -- end for/affiliation.institution.author
+}
+\and
+  %% -- beg for/affiliation.institution.author
+\IEEEauthorblockN{
+Arie van Deursen
+}
+\IEEEauthorblockA{\emph{Delft University of Technology}\\
+\emph{Faculty of Electrical Engineering}\\
+\emph{Mathematics and Computer Science}\\
+2628 XE Delft, The Netherlands
+  %% -- beg for/affiliation.institution.author
+\\Arie.vanDeursen@tudelft.nl
+ %% -- end for/affiliation.institution.author
+}
+\and
+  %% -- beg for/affiliation.institution.author
+\IEEEauthorblockN{
+Cynthia C. S. Liem
+}
+\IEEEauthorblockA{\emph{Delft University of Technology}\\
+\emph{Faculty of Electrical Engineering}\\
+\emph{Mathematics and Computer Science}\\
+2628 XE Delft, The Netherlands
+  %% -- beg for/affiliation.institution.author
+\\C.C.S.Liem@tudelft.nl
+ %% -- end for/affiliation.institution.author
+}
+ %% -- end for/affiliation.institution.author
+ %% -- end for/affiliation.institution
  %% -- end if/affiliation.institution-columnar
 %% ----------------------------------------------------------
 
@@ -1044,17 +1096,17 @@ The experimental setup proposed here is designed to mimic a real-world recourse 
 \hypertarget{causal-modelling}{%
 \subsection{Causal Modelling}\label{causal-modelling}}
 
-In this work we have focused on popular counterfactual generators that do not incorporate any causal knowledge. The generated perturbations therefore may involve changes to variables that affect the outcome predicted by the black-box model, but not the true outcome. The implementation of such changes is typically described as \textbf{gaming} \protect\hyperlink{ref-miller2020strategic}{{[}36{]}}, although they need not be driven by adversarial intentions: in Example \ref{exm:student}, student applicants may dutifully focus on acquiring credentials that help them to be admitted to university, but ultimately not to improve their chances of success at completing their degree \protect\hyperlink{ref-barocas2017fairness}{{[}37{]}}. Preventing such actions may help to avoid the dynamics we have pointed to in this work. Future work would likely benefit from including recent approaches to AR that incorporate causal knowledge such as Karimi et al. \protect\hyperlink{ref-karimi2021algorithmic}{{[}13{]}}.
-
-\hypertarget{limit-data}{%
-\subsection{Data}\label{limit-data}}
-
-Largely in line with the existing literature on Algorithmic Recourse, we have limited our analysis of real-world data to three commonly used benchmark datasets that involve binary prediction tasks. Future work may benefit from including novel datasets or extending the analysis to multi-class or regression problems, the latter arguably representing the most common objective in Finance and Economics. It is also worth mentioning that the use of real-world datasets considered in this work is constrained by the fact that at the time of writing \href{https://github.com/pat-alt/CounterfactualExplanations.jl}{\texttt{CounterfactualExplanations.jl}} only supports continuous features, at least for some of the counterfactual generators considered here. The fact that we therefore had to discard discrete features led to relatively poor initial performance of our classifiers in some cases. While this is indeed a limitation we intend to address in future and derivative work, our findings with respect to endogenous macrodynamics do not hinge on strong classifier performance.
+In this work we have focused on popular counterfactual generators that do not incorporate any causal knowledge. The generated perturbations therefore may involve changes to variables that affect the outcome predicted by the black-box model, but not the true outcome. The implementation of such changes is typically described as \textbf{gaming} \protect\hyperlink{ref-miller2020strategic}{{[}36{]}}, although they need not be driven by adversarial intentions: in Example \ref{exm:student}, student applicants may dutifully focus on acquiring credentials that help them to be admitted to university, but ultimately not to improve their chances of success at completing their degree \protect\hyperlink{ref-barocas2017fairness}{\textbf{barocas2017fairness?}}. Preventing such actions may help to avoid the dynamics we have pointed to in this work. Future work would likely benefit from including recent approaches to AR that incorporate causal knowledge such as Karimi et al. \protect\hyperlink{ref-karimi2021algorithmic}{{[}13{]}}.
 
 \hypertarget{classifiers}{%
 \subsection{Classifiers}\label{classifiers}}
 
-For reasons stated earlier we have limited our analysis to differentiable linear and non-linear classifiers, in particular logistic regression and deep neural networks. While these sorts of classifiers have also typically been analyzed in the existing literature on Counterfactual Explanations and Algorithmic Recourse, they represent only a subset of popular machine learning models employed in practice. Despite the success and popularity of deep learning in the context of high-dimensional data such as image, audio and video, empirical evidence suggests that other models such as boosted decision trees may have an edge when it comes to lower-dimensional tabular datasets, such as the ones considered here (\protect\hyperlink{ref-borisov2021deep}{{[}38{]}}, \protect\hyperlink{ref-grinsztajn2022why}{{[}39{]}}).
+For reasons stated earlier we have limited our analysis to differentiable linear and non-linear classifiers, in particular logistic regression and deep neural networks. While these sorts of classifiers have also typically been analyzed in the existing literature on Counterfactual Explanations and Algorithmic Recourse, they represent only a subset of popular machine learning models employed in practice. Despite the success and popularity of deep learning in the context of high-dimensional data such as image, audio and video, empirical evidence suggests that other models such as boosted decision trees may have an edge when it comes to lower-dimensional tabular datasets, such as the ones considered here (\protect\hyperlink{ref-borisov2021deep}{{[}37{]}}, \protect\hyperlink{ref-grinsztajn2022why}{{[}38{]}}).
+
+\hypertarget{limit-data}{%
+\subsection{Data}\label{limit-data}}
+
+Largely in line with the existing literature on Algorithmic Recourse, we have limited our analysis of real-world data to three commonly used benchmark datasets that involve binary prediction tasks. Future work may benefit from including novel datasets or extending the analysis to multi-class or regression problems, the latter arguably representing the most common objective in Finance and Economics.
 
 \hypertarget{conclusion}{%
 \section{Concluding Remarks}\label{conclusion}}
@@ -1085,7 +1137,7 @@ This work has revisited and extended some of the most general and defining conce
 
 \leavevmode\vadjust pre{\hypertarget{ref-altmeyer2022counterfactualexplanations}{}}%
 \CSLLeftMargin{{[}5{]} }%
-\CSLRightInline{P. Altmeyer, {``{CounterfactualExplanations}.{Jl} - a {Julia} package for {Counterfactual Explanations} and {Algorithmic Recourse}.''} 2022. Available: \url{https://github.com/pat-alt/CounterfactualExplanations.jl}}
+\CSLRightInline{P. Altmeyer, {``{CounterfactualExplanations}.jl - a {Julia} package for {Counterfactual Explanations} and {Algorithmic Recourse}.''} 2022. Available: \url{https://github.com/pat-alt/CounterfactualExplanations.jl}}
 
 \leavevmode\vadjust pre{\hypertarget{ref-schut2021generating}{}}%
 \CSLLeftMargin{{[}6{]} }%
@@ -1211,16 +1263,12 @@ This work has revisited and extended some of the most general and defining conce
 \CSLLeftMargin{{[}36{]} }%
 \CSLRightInline{J. Miller, S. Milli, and M. Hardt, {``Strategic {Classification} is {Causal Modeling} in {Disguise},''} in \emph{Proceedings of the 37th {International Conference} on {Machine Learning}}, Nov. 2020, pp. 6917--6926. Accessed: Nov. 03, 2022. {[}Online{]}. Available: \url{https://proceedings.mlr.press/v119/miller20b.html}}
 
-\leavevmode\vadjust pre{\hypertarget{ref-barocas2017fairness}{}}%
-\CSLLeftMargin{{[}37{]} }%
-\CSLRightInline{S. Barocas, M. Hardt, and A. Narayanan, {``Fairness in machine learning,''} \emph{Nips tutorial}, vol. 1, p. 2, 2017.}
-
 \leavevmode\vadjust pre{\hypertarget{ref-borisov2021deep}{}}%
-\CSLLeftMargin{{[}38{]} }%
+\CSLLeftMargin{{[}37{]} }%
 \CSLRightInline{V. Borisov, T. Leemann, K. Seßler, J. Haug, M. Pawelczyk, and G. Kasneci, {``Deep neural networks and tabular data: {A} survey,''} 2021. Available: \url{https://arxiv.org/abs/2110.01889}}
 
 \leavevmode\vadjust pre{\hypertarget{ref-grinsztajn2022why}{}}%
-\CSLLeftMargin{{[}39{]} }%
+\CSLLeftMargin{{[}38{]} }%
 \CSLRightInline{L. Grinsztajn, E. Oyallon, and G. Varoquaux, {``Why do tree-based models still outperform deep learning on tabular data?''} 2022. Available: \url{https://arxiv.org/abs/2207.08815}}
 
 \end{CSLReferences}
