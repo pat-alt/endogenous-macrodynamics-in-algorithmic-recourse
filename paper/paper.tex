@@ -649,7 +649,7 @@ Existing work in this field has largely worked in a static setting: various appr
 
 Research on Algorithmic Recourse has also so far typically addressed the issue from the perspective of a single individual. Arguably though, most real-world applications that warrant AR involve potentially large groups of individuals typically competing for scarce resources. Our work demonstrates that in such scenarios, choices made by or for a single individual are likely to affect the broader collective of individuals in ways that many current approaches to AR fail to account for. More specifically, we argue that a strict focus on minimizing the private costs to individuals may be too narrow an objective.
 
-Figure \ref{fig:poc} illustrates this idea for a binary problem involving a probabilistic classifier and the counterfactual generator proposed by Wachter et al. \protect\hyperlink{ref-wachter2017counterfactual}{{[}4{]}}: the implementation of AR for a subset of individuals immediately leads to a visible domain shift in the (orange) target class (b), which in turn triggers a model shift (c). As this game of implementing AR and updating the classifier is repeated, the decision boundary moves away from training samples that were originally in the target class (d). We refer to these types of dynamics as \textbf{endogenous} because they are induced by the implementation of recourse itself. The term \textbf{macrodynamics} is borrowed from the economics literature and used to describe processes involving whole groups or societies.
+Figure \ref{fig:poc} illustrates this idea for a binary problem involving a linear classifier and the counterfactual generator proposed by Wachter et al. \protect\hyperlink{ref-wachter2017counterfactual}{{[}4{]}}: the implementation of AR for a subset of individuals immediately leads to a visible domain shift in the (orange) target class (b), which in turn triggers a model shift (c). As this game of implementing AR and updating the classifier is repeated, the decision boundary moves away from training samples that were originally in the target class (d). We refer to these types of dynamics as \textbf{endogenous} because they are induced by the implementation of recourse itself. The term \textbf{macrodynamics} is borrowed from the economics literature and used to describe processes involving whole groups or societies.
 
 \begin{figure}
 
@@ -712,7 +712,7 @@ In the context of Algorithmic Recourse, domain and model shifts were first broug
 \hypertarget{related-benchmark}{%
 \subsection{Benchmarking Counterfactual Generators}\label{related-benchmark}}
 
-Despite the large and growing number of approaches to counterfactual search, there have been surprisingly few benchmark studies that compare different methodologies. This may be partially due to limited software availability in this space. Recent work has started to address this gap: firstly, \protect\hyperlink{ref-deoliveira2021framework}{{[}22{]}} run a large benchmarking study using different algorithmic approaches and numerous tabular datasets; secondly, \protect\hyperlink{ref-pawelczyk2021carla}{{[}3{]}} introduce a Python framework---CARLA---that can be used to apply and benchmark different methodologies; finally, \href{https://github.com/pat-alt/CounterfactualExplanations.jl}{\texttt{CounterfactualExplanations.jl}} \protect\hyperlink{ref-altmeyer2022counterfactualexplanations}{{[}5{]}} provides an extensible, fast and language-agnostic implementation in Julia. Since the experiments presented here involve extensive simulations, we have relied on and extended the Julia implementation due to the associated performance benefits. In particular, we have built a framework on top of \href{https://github.com/pat-alt/CounterfactualExplanations.jl}{\texttt{CounterfactualExplanations.jl}} that extends the functionality from static benchmarks to simulation experiments: \href{(https://anonymous.4open.science/r/AlgorithmicRecourseDynamics/README.md)}{\texttt{AlgorithmicRecourseDynamics.jl}}\footnote{The code is available from the following anonymized Github repository: \url{https://anonymous.4open.science/r/AlgorithmicRecourseDynamics/README.md}.}. The core concepts implemented in that package reflect what is presented in Section \ref{method-2} of this paper.
+Despite the large and growing number of approaches to counterfactual search, there have been surprisingly few benchmark studies that compare different methodologies. This may be partially due to limited software availability in this space. Recent work has started to address this gap: firstly, \protect\hyperlink{ref-deoliveira2021framework}{{[}22{]}} run a large benchmarking study using different algorithmic approaches and numerous tabular datasets; secondly, \protect\hyperlink{ref-pawelczyk2021carla}{{[}3{]}} introduce a Python framework---CARLA---that can be used to apply and benchmark different methodologies; finally, \href{https://github.com/pat-alt/CounterfactualExplanations.jl}{\texttt{CounterfactualExplanations.jl}} \protect\hyperlink{ref-altmeyer2022counterfactualexplanations}{{[}5{]}} provides an extensible, fast and language-agnostic implementation in Julia. Since the experiments presented here involve extensive simulations, we have relied on and extended the Julia implementation due to the associated performance benefits. In particular, we have built a framework on top of \href{https://github.com/pat-alt/CounterfactualExplanations.jl}{\texttt{CounterfactualExplanations.jl}} that extends the functionality from static benchmarks to simulation experiments: \href{(https://github.com/pat-alt/AlgorithmicRecourseDynamics.jl)}{\texttt{AlgorithmicRecourseDynamics.jl}}\footnote{The code has been released as a package: \url{https://github.com/pat-alt/AlgorithmicRecourseDynamics.jl}.}. The core concepts implemented in that package reflect what is presented in Section \ref{method-2} of this paper.
 
 \hypertarget{method}{%
 \section{Gradient-Based Recourse Revisited}\label{method}}
@@ -1096,12 +1096,12 @@ The experimental setup proposed here is designed to mimic a real-world recourse 
 \hypertarget{causal-modelling}{%
 \subsection{Causal Modelling}\label{causal-modelling}}
 
-In this work we have focused on popular counterfactual generators that do not incorporate any causal knowledge. The generated perturbations therefore may involve changes to variables that affect the outcome predicted by the black-box model, but not the true outcome. The implementation of such changes is typically described as \textbf{gaming} \protect\hyperlink{ref-miller2020strategic}{{[}36{]}}, although they need not be driven by adversarial intentions: in Example \ref{exm:student}, student applicants may dutifully focus on acquiring credentials that help them to be admitted to university, but ultimately not to improve their chances of success at completing their degree \protect\hyperlink{ref-barocas2017fairness}{\textbf{barocas2017fairness?}}. Preventing such actions may help to avoid the dynamics we have pointed to in this work. Future work would likely benefit from including recent approaches to AR that incorporate causal knowledge such as Karimi et al. \protect\hyperlink{ref-karimi2021algorithmic}{{[}13{]}}.
+In this work we have focused on popular counterfactual generators that do not incorporate any causal knowledge. The generated perturbations therefore may involve changes to variables that affect the outcome predicted by the black-box model, but not the true outcome. The implementation of such changes is typically described as \textbf{gaming} \protect\hyperlink{ref-miller2020strategic}{{[}36{]}}, although they need not be driven by adversarial intentions: in Example \ref{exm:student}, student applicants may dutifully focus on acquiring credentials that help them to be admitted to university, but ultimately not to improve their chances of success at completing their degree \protect\hyperlink{ref-barocas2022fairness}{{[}37{]}}. Preventing such actions may help to avoid the dynamics we have pointed to in this work. Future work would likely benefit from including recent approaches to AR that incorporate causal knowledge such as Karimi et al. \protect\hyperlink{ref-karimi2021algorithmic}{{[}13{]}}.
 
 \hypertarget{classifiers}{%
 \subsection{Classifiers}\label{classifiers}}
 
-For reasons stated earlier we have limited our analysis to differentiable linear and non-linear classifiers, in particular logistic regression and deep neural networks. While these sorts of classifiers have also typically been analyzed in the existing literature on Counterfactual Explanations and Algorithmic Recourse, they represent only a subset of popular machine learning models employed in practice. Despite the success and popularity of deep learning in the context of high-dimensional data such as image, audio and video, empirical evidence suggests that other models such as boosted decision trees may have an edge when it comes to lower-dimensional tabular datasets, such as the ones considered here (\protect\hyperlink{ref-borisov2021deep}{{[}37{]}}, \protect\hyperlink{ref-grinsztajn2022why}{{[}38{]}}).
+For reasons stated earlier we have limited our analysis to differentiable linear and non-linear classifiers, in particular logistic regression and deep neural networks. While these sorts of classifiers have also typically been analyzed in the existing literature on Counterfactual Explanations and Algorithmic Recourse, they represent only a subset of popular machine learning models employed in practice. Despite the success and popularity of deep learning in the context of high-dimensional data such as image, audio and video, empirical evidence suggests that other models such as boosted decision trees may have an edge when it comes to lower-dimensional tabular datasets, such as the ones considered here (\protect\hyperlink{ref-borisov2021deep}{{[}38{]}}, \protect\hyperlink{ref-grinsztajn2022why}{{[}39{]}}).
 
 \hypertarget{limit-data}{%
 \subsection{Data}\label{limit-data}}
@@ -1111,7 +1111,7 @@ Largely in line with the existing literature on Algorithmic Recourse, we have li
 \hypertarget{conclusion}{%
 \section{Concluding Remarks}\label{conclusion}}
 
-This work has revisited and extended some of the most general and defining concepts underlying the literature on Counterfactual Explanations and, in particular, Algorithmic Recourse. We demonstrate that long-held beliefs as to what defines optimality in AR, may not be suitable in contexts that involves large groups of individuals facing adverse outcomes. Specifically, we run experiments that simulate the application of recourse in practice using various state-of-the-art counterfactual generators and find that all of them induce substantial domain and model shifts. We argue that these shifts should be considered as an expected external cost of individual recourse and call for a paradigm shift from individual to collective recourse in these types of situations. By proposing an adapted counterfactual search objective that incorporates this cost, we make that paradigm shift explicit. We show that this modified objective lends itself to mitigation strategies that can be used to effectively decrease the magnitude of induced domain and model shifts. Through our work we hope to inspire future research on this important topic. To this end we have open-sourced all of our code along with a Julia package: \href{https://anonymous.4open.science/r/AlgorithmicRecourseDynamics/README.md}{\texttt{AlgorithmicRecourseDynamics.jl}}. The package is built on top of \href{https://github.com/pat-alt/CounterfactualExplanations.jl}{\texttt{CounterfactualExplanations.jl}} and inherits its extensibility \protect\hyperlink{ref-altmeyer2022counterfactualexplanations}{{[}5{]}}. That is to say that future researchers should find it relatively easy to replicate, modify and extend the simulation experiments presented here and apply to their own custom counterfactual generators.
+This work has revisited and extended some of the most general and defining concepts underlying the literature on Counterfactual Explanations and, in particular, Algorithmic Recourse. We demonstrate that long-held beliefs as to what defines optimality in AR, may not always be suitable. Specifically, we run experiments that simulate the application of recourse in practice using various state-of-the-art counterfactual generators and find that all of them induce substantial domain and model shifts. We argue that these shifts should be considered as an expected external cost of individual recourse and call for a paradigm shift from individual to collective recourse in these types of situations. By proposing an adapted counterfactual search objective that incorporates this cost, we make that paradigm shift explicit. We show that this modified objective lends itself to mitigation strategies that can be used to effectively decrease the magnitude of induced domain and model shifts. Through our work we hope to inspire future research on this important topic. To this end we have open-sourced all of our code along with a Julia package: \href{https://anonymous.4open.science/r/AlgorithmicRecourseDynamics/README.md}{\texttt{AlgorithmicRecourseDynamics.jl}}. Future researchers should find it relatively easy to replicate, modify and extend the simulation experiments presented here and apply to their own custom counterfactual generators.
 
 \hypertarget{references}{%
 \section*{References}\label{references}}
@@ -1129,7 +1129,7 @@ This work has revisited and extended some of the most general and defining conce
 
 \leavevmode\vadjust pre{\hypertarget{ref-pawelczyk2021carla}{}}%
 \CSLLeftMargin{{[}3{]} }%
-\CSLRightInline{M. Pawelczyk, S. Bielawski, J. van den Heuvel, T. Richter, and G. Kasneci, {``Carla: {A} python library to benchmark algorithmic recourse and counterfactual explanation algorithms,''} 2021. Available: \url{https://arxiv.org/abs/2108.00783}}
+\CSLRightInline{M. Pawelczyk, S. Bielawski, J. van den Heuvel, T. Richter, and G. Kasneci, {``Carla: A python library to benchmark algorithmic recourse and counterfactual explanation algorithms,''} 2021. Available: \url{https://arxiv.org/abs/2108.00783}}
 
 \leavevmode\vadjust pre{\hypertarget{ref-wachter2017counterfactual}{}}%
 \CSLLeftMargin{{[}4{]} }%
@@ -1157,7 +1157,7 @@ This work has revisited and extended some of the most general and defining conce
 
 \leavevmode\vadjust pre{\hypertarget{ref-karimi2020survey}{}}%
 \CSLLeftMargin{{[}10{]} }%
-\CSLRightInline{A.-H. Karimi, G. Barthe, B. Schölkopf, and I. Valera, {``A survey of algorithmic recourse: {Definitions}, formulations, solutions, and prospects,''} 2020. Available: \url{https://arxiv.org/abs/2010.04050}}
+\CSLRightInline{A.-H. Karimi, G. Barthe, B. Schölkopf, and I. Valera, {``A survey of algorithmic recourse: Definitions, formulations, solutions, and prospects,''} 2020. Available: \url{https://arxiv.org/abs/2010.04050}}
 
 \leavevmode\vadjust pre{\hypertarget{ref-verma2020counterfactual}{}}%
 \CSLLeftMargin{{[}11{]} }%
@@ -1169,7 +1169,7 @@ This work has revisited and extended some of the most general and defining conce
 
 \leavevmode\vadjust pre{\hypertarget{ref-karimi2021algorithmic}{}}%
 \CSLLeftMargin{{[}13{]} }%
-\CSLRightInline{A.-H. Karimi, B. Schölkopf, and I. Valera, {``Algorithmic recourse: {From} counterfactual explanations to interventions,''} in \emph{Proceedings of the 2021 {ACM Conference} on {Fairness}, {Accountability}, and {Transparency}}, 2021, pp. 353--362.}
+\CSLRightInline{A.-H. Karimi, B. Schölkopf, and I. Valera, {``Algorithmic recourse: From counterfactual explanations to interventions,''} in \emph{Proceedings of the 2021 {ACM Conference} on {Fairness}, {Accountability}, and {Transparency}}, 2021, pp. 353--362.}
 
 \leavevmode\vadjust pre{\hypertarget{ref-upadhyay2021robust}{}}%
 \CSLLeftMargin{{[}14{]} }%
@@ -1263,12 +1263,16 @@ This work has revisited and extended some of the most general and defining conce
 \CSLLeftMargin{{[}36{]} }%
 \CSLRightInline{J. Miller, S. Milli, and M. Hardt, {``Strategic {Classification} is {Causal Modeling} in {Disguise},''} in \emph{Proceedings of the 37th {International Conference} on {Machine Learning}}, Nov. 2020, pp. 6917--6926. Accessed: Nov. 03, 2022. {[}Online{]}. Available: \url{https://proceedings.mlr.press/v119/miller20b.html}}
 
-\leavevmode\vadjust pre{\hypertarget{ref-borisov2021deep}{}}%
+\leavevmode\vadjust pre{\hypertarget{ref-barocas2022fairness}{}}%
 \CSLLeftMargin{{[}37{]} }%
+\CSLRightInline{S. Barocas, M. Hardt, and A. Narayanan, {``Fairness and machine learning,''} Dec. 23, 2022. \url{https://fairmlbook.org/index.html} (accessed Nov. 08, 2022).}
+
+\leavevmode\vadjust pre{\hypertarget{ref-borisov2021deep}{}}%
+\CSLLeftMargin{{[}38{]} }%
 \CSLRightInline{V. Borisov, T. Leemann, K. Seßler, J. Haug, M. Pawelczyk, and G. Kasneci, {``Deep neural networks and tabular data: {A} survey,''} 2021. Available: \url{https://arxiv.org/abs/2110.01889}}
 
 \leavevmode\vadjust pre{\hypertarget{ref-grinsztajn2022why}{}}%
-\CSLLeftMargin{{[}38{]} }%
+\CSLLeftMargin{{[}39{]} }%
 \CSLRightInline{L. Grinsztajn, E. Oyallon, and G. Varoquaux, {``Why do tree-based models still outperform deep learning on tabular data?''} 2022. Available: \url{https://arxiv.org/abs/2207.08815}}
 
 \end{CSLReferences}
@@ -1276,7 +1280,7 @@ This work has revisited and extended some of the most general and defining conce
 \hypertarget{appendix}{%
 \section{Appendix}\label{appendix}}
 
-Granular results for all of our experiments can be found in this supplementary \href{https://anonymous.4open.science/r/AlgorithmicRecourseDynamics/build/dev/notebooks/appendix.html}{appendix}.
+Granular results for all of our experiments can be found in this online companion: \url{https://www.paltmeyer.com/endogenous-macrodynamics-in-algorithmic-recourse/}. The Github repository containing all the code used to produce the results in this paper can be found here: \url{https://github.com/pat-alt/endogenous-macrodynamics-in-algorithmic-recourse}.
 
 \end{document}
 
