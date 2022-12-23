@@ -13,3 +13,19 @@ lazy = true
     [[dev-artifacts-upload-data-synthetic.download]]
     sha256 = "5b7eafd5c362a917ed23436f1d3e7d0ad9f83645122a175cc4abe379a63e1e2d"
     url = "https://github.com/pat-alt/endogenous-macrodynamics-in-algorithmic-recourse/releases/download/camera-ready/dev-artifacts-upload-data-synthetic.tar.gz"
+
+[dev-artifacts-upload-output-real_world]
+git-tree-sha1 = "48384ce8d681a46cbd0338a06523be09abbf95e2"
+lazy = true
+
+    [[dev-artifacts-upload-output-real_world.download]]
+    sha256 = "c259664c0eea4b5ef46398d1dabbc062f7ca0e5c16a904af6d8e816d93535947"
+    url = "https://github.com/pat-alt/endogenous-macrodynamics-in-algorithmic-recourse/releases/download/camera-ready/dev-artifacts-upload-output-real_world.tar.gz"
+
+[dev-artifacts-upload-www-real_world]
+git-tree-sha1 = "38a90db898aa40f81e0ca10a8c9c81209953d620"
+lazy = true
+
+    [[dev-artifacts-upload-www-real_world.download]]
+    sha256 = "7726b036ea60e32ace45a6bc0a20ad8e4b57e7218c9a078e93490fd9ee43fdea"
+    url = "https://github.com/pat-alt/endogenous-macrodynamics-in-algorithmic-recourse/releases/download/camera-ready/dev-artifacts-upload-www-real_world.tar.gz"

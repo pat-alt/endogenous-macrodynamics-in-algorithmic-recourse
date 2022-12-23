@@ -27,8 +27,8 @@ generators = Dict(
 max_obs = 2500
 data_sets = load_real_world(max_obs)
 choices = [
-    # :cal_housing, 
-    # :credit_default, 
+    :cal_housing, 
+    :credit_default, 
     :gmsc, 
 ]
 data_sets = filter(p -> p[1] in choices, data_sets)
