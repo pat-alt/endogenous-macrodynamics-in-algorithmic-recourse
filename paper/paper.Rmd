@@ -132,4 +132,4 @@ knitr::opts_chunk$set(
 
 # Appendix
 
-Granular results for all of our experiments can be found in this supplementary [appendix](https://anonymous.4open.science/r/AlgorithmicRecourseDynamics/build/dev/notebooks/appendix.html).
+Granular results for all of our experiments can be found in this online companion: [https://www.paltmeyer.com/endogenous-macrodynamics-in-algorithmic-recourse/](https://www.paltmeyer.com/endogenous-macrodynamics-in-algorithmic-recourse/). The Github repository containing all the code used to produce the results in this paper can be found here: [https://github.com/pat-alt/endogenous-macrodynamics-in-algorithmic-recourse](https://github.com/pat-alt/endogenous-macrodynamics-in-algorithmic-recourse).
