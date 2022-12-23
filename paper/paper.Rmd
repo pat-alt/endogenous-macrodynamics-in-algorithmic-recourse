@@ -2,8 +2,8 @@
 title: "Endogenous Macrodynamics in Algorithmic Recourse"
 affiliation:
   ## use one only of the following
-  # author-columnar: true         ## one column per author
-  institution-columnar: true  ## one column per institution (multiple autors eventually)
+  author-columnar: true         ## one column per author
+  # institution-columnar: true  ## one column per institution (multiple autors eventually)
   # wide: true                  ## one column wide author/affiliation fields
 
   #author:   ## A custom author ordering field that breaks institution grouping.
@@ -37,22 +37,23 @@ affiliation:
     - name: |
         *Delft University of Technology*
       department: |
-        *Faculty of Electrical Engineering, Mathematics and Computer Science*
+        | *Faculty of Electrical Engineering*
+        | *Mathematics and Computer Science*
       location: 2628 XE Delft, The Netherlands
       mark: 1
       author:
         - name: Patrick Altmeyer
           email: P.Altmeyer@tudelft.nl
         - name: Giovan Angela
-          # email: G.J.A.Angela@student.tudelft.nl
+          email: G.J.A.Angela@student.tudelft.nl
         - name: Aleksander Buszydlik
-          # email: A.J.Buszydlik@student.tudelft.nl
+          email: A.J.Buszydlik@student.tudelft.nl
         - name: Karol Dobiczek
-          # email: K.T.Dobiczek@student.tudelft.nl
+          email: K.T.Dobiczek@student.tudelft.nl
         - name: Arie van Deursen
-          # email: Arie.vanDeursen@tudelft.nl
+          email: Arie.vanDeursen@tudelft.nl
         - name: Cynthia C. S. Liem
-          # email: C.C.S.Liem@tudelft.nl
+          email: C.C.S.Liem@tudelft.nl
   #   - name: Twentieth Century Fox
   #     location: Springfield, USA
   #     mark: 2
