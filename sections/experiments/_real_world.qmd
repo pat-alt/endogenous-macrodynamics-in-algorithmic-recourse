@@ -208,6 +208,11 @@ Images.save(joinpath(www_path,"paper_real_world_results.png"), img)
 Images.load(joinpath(www_path,"paper_real_world_results.png"))
 ```
 
+```{julia}
+generate_artifacts(output_path)
+generate_artifacts(www_path)
+```
+
 
 
 

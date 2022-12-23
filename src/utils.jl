@@ -1,9 +1,10 @@
 using CounterfactualExplanations.DataPreprocessing: CounterfactualData
+using CSV
+using DataFrames
 using ghr_jll
 using LazyArtifacts
 using LibGit2
-using CSV
-using DataFrames
+using Pkg.Artifacts
 using Serialization
 using StatsBase
 
@@ -53,10 +54,13 @@ function data_dir(dir="")
     return _path
 end
 
-function load_synthetic(max_obs::Union{Nothing,Int}=nothing; artifact_name::Union{Nothing,String}=nothing)
+function load_synthetic(max_obs::Union{Nothing,Int}=nothing; artifact_name::Union{Nothing,String}=nothing, root=".", tag="camera-ready")
     artifact_name = create_artifact_name_from_path(data_dir("synthetic"), artifact_name)
     _hash = artifact_hash(artifact_name, artifact_toml)
-    _path = joinpath(artifact_path(_hash),artifact_name)
+    origin_url = get_git_remote_url(root)
+    deploy_repo = "$(basename(dirname(origin_url)))/$(splitext(basename(origin_url))[1])"
+    download_artifact(_hash, "https://github.com/$(deploy_repo)/releases/download/$(tag)/$(artifact_name).tar.gz")
+    _path = joinpath(artifact_path(_hash), artifact_name)
     files = readdir(_path)
     files = files[contains.(files, ".csv")]
     data = map(files) do file
@@ -74,10 +78,13 @@ function load_synthetic(max_obs::Union{Nothing,Int}=nothing; artifact_name::Unio
     return data
 end
 
-function load_real_world(max_obs::Union{Nothing,Int}=nothing; artifact_name::Union{Nothing,String}=nothing)
+function load_real_world(max_obs::Union{Nothing,Int}=nothing; artifact_name::Union{Nothing,String}=nothing, root=".", tag="camera-ready")
     artifact_name = create_artifact_name_from_path(data_dir("real_world"), artifact_name)
     _hash = artifact_hash(artifact_name, artifact_toml)
-    _path = joinpath(artifact_path(_hash),artifact_name)
+    origin_url = get_git_remote_url(root)
+    deploy_repo = "$(basename(dirname(origin_url)))/$(splitext(basename(origin_url))[1])"
+    download_artifact(_hash, "https://github.com/$(deploy_repo)/releases/download/$(tag)/$(artifact_name).tar.gz")
+    _path = joinpath(artifact_path(_hash), artifact_name)
     files = readdir(_path)
     files = files[contains.(files, ".jls")]
     data = map(files) do file
@@ -108,12 +115,6 @@ function generate_artifacts(
     if deploy
         # Where we will put our tarballs
         tempdir = mktempdir()
-
-        function get_git_remote_url(repo_path::String)
-            repo = LibGit2.GitRepo(repo_path)
-            origin = LibGit2.get(LibGit2.GitRemote, repo, "origin")
-            return LibGit2.url(origin)
-        end
 
         # Try to detect where we should upload these weights to (or just override
         # as shown in the commented-out line)
@@ -163,4 +164,10 @@ function create_artifact_name_from_path(datafiles::String, artifact_name::Union{
     # Name for hash/artifact:
     artifact_name = isnothing(artifact_name) ? replace(datafiles, ("/" => "-")) : artifact_
     return artifact_name
+end
+
+function get_git_remote_url(repo_path::String)
+    repo = LibGit2.GitRepo(repo_path)
+    origin = LibGit2.get(LibGit2.GitRemote, repo, "origin")
+    return LibGit2.url(origin)
 end
