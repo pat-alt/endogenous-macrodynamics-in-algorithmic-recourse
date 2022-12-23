@@ -1,4 +1,4 @@
-### Mitigation Strategies
+## Mitigation Strategies
 
 ```{julia}
 #| echo: false
@@ -24,7 +24,7 @@ generators = Dict(
 )
 ```
 
-#### Synthetic
+### Synthetic
 
 ```{julia}
 max_obs = 1000
@@ -56,7 +56,7 @@ results = run_experiments(
 Serialization.serialize(joinpath(output_path,"results_synthetic.jls"),results)
 ```
 
-#### Plots
+### Plots
 
 ```{julia}
 using Serialization
@@ -77,7 +77,7 @@ for (data_name, res) in results
 end
 ```
 
-##### Line Charts
+#### Line Charts
 
 @fig-mit-line shows the evolution of the evaluation metrics over the course of the experiment.
 
@@ -101,7 +101,7 @@ for img in img_files
 end
 ```
 
-##### Error Bar Charts
+#### Error Bar Charts
 
 @fig-mit-error shows the evaluation metrics at the end of the experiments.
 
@@ -125,14 +125,14 @@ for img in img_files
 end
 ```
 
-#### Bootstrap
+### Bootstrap
 
 ```{julia}
 n_bootstrap = 10
 df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstrap_synthetic.csv"))
 ```
 
-#### Chart in paper
+### Chart in paper
 
 @fig-mit-paper shows the chart that went into the paper.
 
@@ -199,7 +199,7 @@ Images.load(joinpath(www_path,"paper_synthetic_results.png"))
 ```
 
 
-#### Latent Space Search
+### Latent Space Search
 
 ```{julia}
 generators = Dict(
@@ -247,9 +247,9 @@ for (data_name, res) in results
 end
 ```
 
-#### Plots
+### Plots
 
-##### Line Charts
+#### Line Charts
 
 @fig-mit-line-latent shows the evolution of the evaluation metrics over the course of the experiment.
 
@@ -270,7 +270,7 @@ for img in img_files
 end
 ```
 
-##### Error Bar Charts
+#### Error Bar Charts
 
 @fig-mit-error-latent shows the evaluation metrics at the end of the experiments.
 
@@ -291,14 +291,14 @@ for img in img_files
 end
 ```
 
-#### Bootstrap
+### Bootstrap
 
 ```{julia}
 n_bootstrap = 10
 df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstrap_latent.csv"))
 ```
 
-#### Chart in paper
+### Chart in paper
 
 @fig-mit-latent-paper shows the chart that went into the paper.
 
@@ -364,7 +364,7 @@ Images.save(joinpath(www_path,"paper_synthetic_latent_results.png"), img)
 Images.load(joinpath(www_path,"paper_synthetic_latent_results.png"))
 ```
 
-## Real World
+### Real World
 
 ```{julia}
 generators = Dict(

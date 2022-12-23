@@ -264,8 +264,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p><a href="#fig-model">Figure&nbsp;<span>1.2</span></a> below shows the linear separation of the two classes.</p>
 <div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plt_original <span class="op">=</span> <span class="fu">plot</span>(mod, counterfactual_data; zoom<span class="op">=</span><span class="fl">0</span>, colorbar<span class="op">=</span><span class="cn">false</span>, title<span class="op">=</span><span class="st">"(a)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plt_original <span class="op">=</span> <span class="fu">plot</span>(mod, counterfactual_data; zoom<span class="op">=</span><span class="fl">0</span>, colorbar<span class="op">=</span><span class="cn">false</span>, title<span class="op">=</span><span class="st">"(a)"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>(plt_original)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
 <div id="fig-model" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="intro_files/figure-html/fig-model-output-1.svg" class="img-fluid figure-img"></p>
@@ -304,8 +305,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>X′[<span class="op">:</span>,chosen_individuals] <span class="op">=</span> <span class="fu">reduce</span>(hcat, @.(<span class="fu">selectdim</span>(<span class="fu">counterfactual</span>(outcome), <span class="fl">3</span>, <span class="fl">1</span>)))</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>y′[chosen_individuals] <span class="op">=</span> <span class="fu">reduce</span>(vcat,@.(<span class="fu">selectdim</span>(<span class="fu">counterfactual_label</span>(outcome),<span class="fl">3</span>,<span class="fl">1</span>)))</span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>counterfactual_data′ <span class="op">=</span> <span class="fu">CounterfactualData</span>(X′,y′<span class="ch">')</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>plt_single <span class="op">=</span> <span class="fu">plot</span>(mod,counterfactual_data′;zoom<span class="op">=</span><span class="fl">0</span>,colorbar<span class="op">=</span><span class="cn">false</span>,title<span class="op">=</span><span class="st">"(b)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="8">
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>plt_single <span class="op">=</span> <span class="fu">plot</span>(mod,counterfactual_data′;zoom<span class="op">=</span><span class="fl">0</span>,colorbar<span class="op">=</span><span class="cn">false</span>,title<span class="op">=</span><span class="st">"(b)"</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>(plt_single)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
 <div id="fig-round-1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="intro_files/figure-html/fig-round-1-output-1.svg" class="img-fluid figure-img"></p>
@@ -320,8 +322,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Suppose the agent in charge of the black-box system has provided recourse to a share of individuals leading to the outcome in <a href="#fig-round-1">Figure&nbsp;<span>1.3</span></a>. In practice, models are regularly updated through retraining to account for concept drift, for example. For our experiments, we assume that the agent accepts <span class="math inline">\(\mathcal{D}^{\prime}\)</span> as its new ground truth. To isolate the endogenous effects we are interested in here from any other effect, we further assume away any exogenous changes to the data that we might expect to occur in practice. Retraining the model on <span class="math inline">\(\mathcal{D}^{\prime}\)</span> leads to a shift of the decision boundary <strong>in the direction of the non-target class</strong> (<a href="#fig-retrain">Figure&nbsp;<span>1.4</span></a>).</p>
 <div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mod <span class="op">=</span> Models.<span class="fu">train</span>(mod, counterfactual_data′)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plt_single_retrained <span class="op">=</span> <span class="fu">plot</span>(mod,counterfactual_data′;zoom<span class="op">=</span><span class="fl">0</span>,colorbar<span class="op">=</span><span class="cn">false</span>,title<span class="op">=</span><span class="st">"(c)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plt_single_retrained <span class="op">=</span> <span class="fu">plot</span>(mod,counterfactual_data′;zoom<span class="op">=</span><span class="fl">0</span>,colorbar<span class="op">=</span><span class="cn">false</span>,title<span class="op">=</span><span class="st">"(c)"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>(plt_single_retrained)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
 <div id="fig-retrain" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="intro_files/figure-html/fig-retrain-output-1.svg" class="img-fluid figure-img"></p>
@@ -355,8 +358,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plt <span class="op">=</span> <span class="fu">plot</span>(plt_original, plt_single, plt_single_retrained, plt_single_repeat, layout<span class="op">=</span>(<span class="fl">1</span>,<span class="fl">4</span>), legend<span class="op">=</span><span class="cn">false</span>, axis<span class="op">=</span><span class="cn">nothing</span>, size<span class="op">=</span>(<span class="fl">600</span>,<span class="fl">165</span>))</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">savefig</span>(plt, <span class="fu">joinpath</span>(www_path, <span class="st">"poc.png"</span>))</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="11">
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>(plt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
 <div id="fig-final" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="intro_files/figure-html/fig-final-output-1.svg" class="img-fluid figure-img"></p>

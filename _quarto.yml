@@ -27,11 +27,11 @@ book:
   date: "22/12/2022"
   chapters:
     - index.qmd
-    - sections/intro.qmd
+    - intro.qmd
     - sections/data_preprocessing/index.qmd
     - sections/experiments/index.qmd
     - sections/generators/index.qmd
-    - sections/references.qmd
+    - references.qmd
 
 crossref:
   fig-prefix: Figure
