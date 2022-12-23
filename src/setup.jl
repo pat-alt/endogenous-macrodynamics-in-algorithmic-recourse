@@ -26,7 +26,7 @@ setup = quote
     using StatsBase
 
     # Setup
-    Random.seed!(2023)              # global seed to allow for reproducibility
+    Random.seed!(42)              # global seed to allow for reproducibility
     theme(:wong)
 
     # Utils

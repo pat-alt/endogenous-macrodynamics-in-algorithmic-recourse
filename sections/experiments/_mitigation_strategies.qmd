@@ -15,12 +15,13 @@ models = [
     :FluxModel, 
     :FluxEnsemble,
 ]
+opt = Flux.Descent(0.01) 
 generators = Dict(
-    :Generic=>GenericGenerator(decision_threshold=0.5),
-    :Latent=>REVISEGenerator(),
-    :Generic_conservative=>GenericGenerator(decision_threshold=0.9),
-    :Gravitational=>GravitationalGenerator(),
-    :ClapROAR=>ClapROARGenerator()
+    :Generic=>GenericGenerator(opt = opt, decision_threshold=0.5),
+    :Latent=>REVISEGenerator(opt = opt),
+    :Generic_conservative=>GenericGenerator(opt = opt, decision_threshold=0.9),
+    :Gravitational=>GravitationalGenerator(opt = opt),
+    :ClapROAR=>ClapROARGenerator(opt = opt)
 )
 ```
 
@@ -203,10 +204,10 @@ Images.load(joinpath(www_path,"paper_synthetic_results.png"))
 
 ```{julia}
 generators = Dict(
-    :Latent=>GenericGenerator(decision_threshold=0.5),
-    :Latent_conservative=>GenericGenerator(decision_threshold=0.9),
-    :Gravitational=>GravitationalGenerator(),
-    :ClapROAR=>ClapROARGenerator()
+    :Latent=>GenericGenerator(opt = opt, decision_threshold=0.5),
+    :Latent_conservative=>GenericGenerator(opt = opt, decision_threshold=0.9),
+    :Gravitational=>GravitationalGenerator(opt = opt),
+    :ClapROAR=>ClapROARGenerator(opt = opt)
 )
 ```
 

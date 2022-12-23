@@ -20,11 +20,12 @@ models = [
     :FluxModel, 
     :FluxEnsemble,
 ]
+opt = Flux.Descent(0.01) 
 generators = Dict(
     :Greedy=>GreedyGenerator(), 
-    :Generic=>GenericGenerator(),
-    :REVISE=>REVISEGenerator(),
-    :DICE=>DiCEGenerator(),
+    :Generic=>GenericGenerator(opt = opt),
+    :REVISE=>REVISEGenerator(opt = opt),
+    :DICE=>DiCEGenerator(opt = opt),
 )
 ```
 
@@ -349,6 +350,6 @@ Images.load(joinpath(www_path,"paper_synthetic_results.png"))
 ```
 
 ```{julia}
-generate_artifacts(output_path)
-generate_artifacts(www_path)
+# generate_artifacts(output_path)
+# generate_artifacts(www_path)
 ```

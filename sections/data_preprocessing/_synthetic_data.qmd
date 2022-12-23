@@ -40,6 +40,12 @@ df.target = y
 CSV.write(joinpath(data_path, "moons.csv"),df)
 ```
 
+
+```{julia}
+generate_artifacts(data_path)
+```
+
+
 ```{julia}
 #| output: true
 
@@ -54,9 +60,3 @@ plt = plot(plts..., layout=(1,4), size=(850,200))
 savefig(plt, "paper/www/synthetic_data.png")
 display(plt)
 ```
-
-
-```{julia}
-generate_artifacts(data_path)
-```
-
