@@ -129,7 +129,7 @@ end
 ### Bootstrap
 
 ```{julia}
-n_bootstrap = 10
+n_bootstrap = 100
 df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstrap_synthetic.csv"))
 ```
 
@@ -224,7 +224,8 @@ T = 100
 using Serialization
 results = run_experiments(
     experiments;
-    save_path=output_path,evaluate_every=evaluate_every,n_rounds=n_rounds, n_folds=n_folds, T=T
+    save_path=output_path, evaluate_every=evaluate_every, n_rounds=n_rounds, n_folds=n_folds, T=T, 
+    latent_space = true
 )
 Serialization.serialize(joinpath(output_path,"results_synthetic_latent.jls"),results)
 ```
@@ -295,7 +296,7 @@ end
 ### Bootstrap
 
 ```{julia}
-n_bootstrap = 10
+n_bootstrap = 100
 df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstrap_latent.csv"))
 ```
 
@@ -368,19 +369,25 @@ Images.load(joinpath(www_path,"paper_synthetic_latent_results.png"))
 ### Real World
 
 ```{julia}
+models = [
+    :LogisticRegression, 
+    :FluxModel, 
+    :FluxEnsemble,
+]
+opt = Flux.Descent(0.01) 
 generators = Dict(
-    :Generic=>GenericGenerator(decision_threshold=0.5),
-    :Latent=>REVISEGenerator(),
-    :Generic_conservative=>GenericGenerator(decision_threshold=0.9),
-    :Gravitational=>GravitationalGenerator(),
-    :ClapROAR=>ClapROARGenerator()
+    :Generic=>GenericGenerator(opt = opt, decision_threshold=0.5),
+    :Latent=>REVISEGenerator(opt = opt),
+    :Generic_conservative=>GenericGenerator(opt = opt, decision_threshold=0.9),
+    :Gravitational=>GravitationalGenerator(opt = opt),
+    :ClapROAR=>ClapROARGenerator(opt = opt)
 )
 ```
 
 ```{julia}
 max_obs = 2500
 data_path = data_dir("real_world")
-data_sets = load_real_world(max_obs; data_dir=data_path)
+data_sets = load_real_world(max_obs)
 choices = [
     :cal_housing, 
     :credit_default, 
@@ -446,7 +453,7 @@ end
 #### Bootstrap
 
 ```{julia}
-n_bootstrap = 10
+n_bootstrap = 100
 df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstrap_real_world.csv"))
 ```
 
@@ -456,7 +463,7 @@ df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstra
 
 ```{julia}
 using DataFrames, Statistics
-model_ = :FluxEnsemble
+model_ = :FluxModel
 df = DataFrame() 
 for (key, val) in results
     df_ = deepcopy(val.output)

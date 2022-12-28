@@ -271,7 +271,7 @@ end
 ### Bootstrap
 
 ```{julia}
-n_bootstrap = 10
+n_bootstrap = 100
 df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstrap.csv"))
 ```
 
@@ -350,6 +350,6 @@ Images.load(joinpath(www_path,"paper_synthetic_results.png"))
 ```
 
 ```{julia}
-# generate_artifacts(output_path)
-# generate_artifacts(www_path)
+generate_artifacts(output_path)
+generate_artifacts(www_path)
 ```

@@ -4,6 +4,7 @@ using DataFrames
 using ghr_jll
 using LazyArtifacts
 using LibGit2
+using MLUtils
 using Pkg.Artifacts
 using Serialization
 using StatsBase
@@ -105,7 +106,7 @@ function generate_artifacts(
     root=".",
     artifact_toml=joinpath(root, "Artifacts.toml"),
     deploy=true,
-    tag="camera-ready"
+    tag="dec-2022"
 )
 
     if deploy && !haskey(ENV, "GITHUB_TOKEN")

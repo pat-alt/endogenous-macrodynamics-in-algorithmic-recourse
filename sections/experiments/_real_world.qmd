@@ -15,16 +15,17 @@ models = [
     :FluxModel, 
     :FluxEnsemble
 ]
+opt = Flux.Descent(0.01) 
 generators = Dict(
     :Greedy=>GreedyGenerator(), 
-    :Generic=>GenericGenerator(),
-    :REVISE=>REVISEGenerator(),
-    :DICE=>DiCEGenerator(),
+    :Generic=>GenericGenerator(opt = opt),
+    :REVISE=>REVISEGenerator(opt = opt),
+    :DICE=>DiCEGenerator(opt = opt),
 )
 ```
 
 ```{julia}
-max_obs = 2500
+max_obs = 5000
 data_sets = load_real_world(max_obs)
 choices = [
     :cal_housing, 
@@ -134,11 +135,9 @@ end
 ### Bootstrap
 
 ```{julia}
-n_bootstrap = 10
+n_bootstrap = 100
 df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstrap.csv"))
 ```
-
-
 
 ### Chart in paper
 

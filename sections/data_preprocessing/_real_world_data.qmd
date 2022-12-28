@@ -39,7 +39,7 @@ df.target = y
 Random undersampling to balance the data:
 
 ```{julia}
-df_balanced = getobs(undersample(df, df.target;shuffle=true))[1]
+df_balanced = getobs(undersample(df, df.target; shuffle=true))[1]
 ```
 
 All features are continuous:
