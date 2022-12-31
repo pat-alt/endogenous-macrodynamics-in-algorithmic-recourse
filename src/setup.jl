@@ -32,8 +32,4 @@ setup = quote
     # Utils
     include("src/utils.jl")
 
-    # Make DataFrames.jl work
-    MLUtils.getobs(data::DataFrame, i) = data[i, :]
-    MLUtils.numobs(data::DataFrame) = nrow(data)
-
 end

@@ -4,8 +4,8 @@ title: Experimental Results
 
 This is a supplementary appendix to the research paper **Endogenous Macrodynamics in Algorithmic Recourse**. It contains all of the experimental results, including those not highlighted in the actual paper. It also links to additional information about the proposed mitigation strategies.
 
-{{< include _synthetic.qmd >}}
+{{< include synthetic.qmd >}}
 
-{{< include _real_world.qmd >}}
+{{< include real_world.qmd >}}
 
-{{< include _mitigation_strategies.qmd >}}
+{{< include mitigation_strategies.qmd >}}
