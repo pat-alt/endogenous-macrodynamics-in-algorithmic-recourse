@@ -83,7 +83,7 @@ end
 @fig-mit-line shows the evolution of the evaluation metrics over the course of the experiment.
 
 ```{julia}
-
+#| output: true
 #| fig-cap: "Line Charts"
 #| fig-subcap: 
 #|      - "California Housing"
@@ -95,7 +95,16 @@ end
 #|      - "Overlapping"
 #| layout-ncol: 1
 #| label: fig-mit-line
+#| eval: true
+
+choices = [
+    :linearly_separable, 
+    :overlapping, 
+    :circles, 
+    :moons,
+]
 img_files = readdir(www_path)[contains.(readdir(www_path),"line_chart") .&& .!contains.(readdir(www_path),"latent")]
+img_files = img_files[Bool.(reduce(+, map(choice -> contains.(img_files, string(choice)), choices)))]
 img_files = joinpath.(www_path,img_files)
 for img in img_files
     display(load(img))
@@ -107,7 +116,7 @@ end
 @fig-mit-error shows the evaluation metrics at the end of the experiments.
 
 ```{julia}
-
+#| output: true
 #| fig-cap: "Error Bar Charts"
 #| fig-subcap: 
 #|      - "California Housing"
@@ -119,7 +128,16 @@ end
 #|      - "Overlapping"
 #| layout-ncol: 1
 #| label: fig-mit-error
+#| eval: true
+
+choices = [
+    :linearly_separable, 
+    :overlapping, 
+    :circles, 
+    :moons,
+]
 img_files = readdir(www_path)[contains.(readdir(www_path),"errorbar_chart") .&& .!contains.(readdir(www_path),"latent")]
+img_files = img_files[Bool.(reduce(+, map(choice -> contains.(img_files, string(choice)), choices)))]
 img_files = joinpath.(www_path,img_files)
 for img in img_files
     display(load(img))
@@ -193,8 +211,10 @@ Images.save(joinpath(www_path,"paper_synthetic_results.png"), img)
 ```
 
 ```{julia}
+#| output: true
 #| label: fig-mit-paper
 #| fig-cap: "Chart in paper"
+#| eval: true
 
 Images.load(joinpath(www_path,"paper_synthetic_results.png"))
 ```
@@ -256,7 +276,7 @@ end
 @fig-mit-line-latent shows the evolution of the evaluation metrics over the course of the experiment.
 
 ```{julia}
-
+#| output: true
 #| fig-cap: "Line Charts"
 #| fig-subcap: 
 #|      - "Circles"
@@ -265,6 +285,8 @@ end
 #|      - "Overlapping"
 #| layout-ncol: 1
 #| label: fig-mit-line-latent
+#| eval: true
+
 img_files = readdir(www_path)[contains.(readdir(www_path),"line_chart") .&& contains.(readdir(www_path),"latent")]
 img_files = joinpath.(www_path,img_files)
 for img in img_files
@@ -277,7 +299,7 @@ end
 @fig-mit-error-latent shows the evaluation metrics at the end of the experiments.
 
 ```{julia}
-
+#| output: true
 #| fig-cap: "Error Bar Charts"
 #| fig-subcap: 
 #|      - "Circles"
@@ -286,6 +308,8 @@ end
 #|      - "Overlapping"
 #| layout-ncol: 1
 #| label: fig-mit-error-latent
+#| eval: true
+
 img_files = readdir(www_path)[contains.(readdir(www_path),"errorbar_chart") .&& contains.(readdir(www_path),"latent")]
 img_files = joinpath.(www_path,img_files)
 for img in img_files
@@ -360,8 +384,10 @@ Images.save(joinpath(www_path,"paper_synthetic_latent_results.png"), img)
 ```
 
 ```{julia}
+#| output: true
 #| label: fig-mit-latent-paper
 #| fig-cap: "Chart in paper"
+#| eval: true
 
 Images.load(joinpath(www_path,"paper_synthetic_latent_results.png"))
 ```
@@ -450,6 +476,62 @@ for (data_name, res) in results
 end
 ```
 
+#### Line Charts
+
+@fig-real-line shows the evolution of the evaluation metrics over the course of the experiment.
+
+```{julia}
+#| output: true
+#| fig-cap: "Line Charts"
+#| fig-subcap: 
+#|      - "California Housing"
+#|      - "Credit Default"
+#|      - "GMSC"
+#| layout-ncol: 1
+#| label: fig-real-line
+#| eval: true
+
+choices = [
+    :cal_housing, 
+    :credit_default, 
+    :gmsc, 
+]
+img_files = readdir(www_path)[contains.(readdir(www_path),"line_chart")]
+img_files = img_files[Bool.(reduce(+, map(choice -> contains.(img_files, string(choice)), choices)))]
+img_files = joinpath.(www_path,img_files)
+for img in img_files
+    display(load(img))
+end
+```
+
+#### Error Bar Charts
+
+@fig-real-error shows the evaluation metrics at the end of the experiments.
+
+```{julia}
+#| output: true
+#| fig-cap: "Error Bar Charts"
+#| fig-subcap: 
+#|      - "California Housing"
+#|      - "Credit Default"
+#|      - "GMSC"
+#| layout-ncol: 1
+#| label: fig-real-error
+#| eval: true
+
+choices = [
+    :cal_housing, 
+    :credit_default, 
+    :gmsc, 
+]
+img_files = readdir(www_path)[contains.(readdir(www_path),"errorbar_chart")]
+img_files = img_files[Bool.(reduce(+, map(choice -> contains.(img_files, string(choice)), choices)))]
+img_files = joinpath.(www_path,img_files)
+for img in img_files
+    display(load(img))
+end
+```
+
 #### Bootstrap
 
 ```{julia}
@@ -520,13 +602,17 @@ Images.save(joinpath(www_path,"paper_real_world_results.png"), img)
 ```
 
 ```{julia}
+#| output: true
 #| label: fig-mit-real-paper
 #| fig-cap: "Chart in paper"
+#| eval: true
 
 Images.load(joinpath(www_path,"paper_real_world_results.png"))
 ```
 
 ```{julia}
+#| echo: false
+
 generate_artifacts(output_path)
 generate_artifacts(www_path)
 ```

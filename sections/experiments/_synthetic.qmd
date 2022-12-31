@@ -50,7 +50,8 @@ experiments = set_up_experiments(data_sets,models,generators)
 ```{julia}
 #| label: fig-test-before
 #| fig-cap: "Test data before experiment"
-
+#| output: true
+#| eval: true
 
 plts = []
 for (exp_name, exp_) in experiments
@@ -74,7 +75,8 @@ plt
 ```{julia}
 #| label: fig-train-before
 #| fig-cap: "Training data before experiment"
-
+#| output: true
+#| eval: true
 
 using AlgorithmicRecourseDynamics.Models: model_evaluation
 plts = []
@@ -139,7 +141,6 @@ end
 @fig-test-after shows the test data after running the experiment.
 
 ```{julia}
-
 #| fig-cap: "Test data after experiment"
 #| fig-subcap: 
 #|      - "DICE"
@@ -149,6 +150,7 @@ end
 #| layout-ncol: 1
 #| label: fig-test-after
 #| output: true
+#| eval: true
 
 img_files = readdir(www_path)[contains.(readdir(www_path),"models_test_after")]
 img_files = joinpath.(www_path,img_files)
@@ -190,7 +192,7 @@ end
 @fig-train-after shows the training data after running the experiment.
 
 ```{julia}
-
+#| output: true
 #| fig-cap: "Training data after experiment"
 #| fig-subcap: 
 #|      - "DICE"
@@ -199,6 +201,8 @@ end
 #|      - "Latent"
 #| layout-ncol: 1
 #| label: fig-train-after
+#| eval: true
+
 img_files = readdir(www_path)[contains.(readdir(www_path),"models_train_after")]
 img_files = joinpath.(www_path,img_files)
 for img in img_files
@@ -240,6 +244,8 @@ end
 #|      - "Overlapping"
 #| layout-ncol: 1
 #| label: fig-line
+#| eval: true
+
 img_files = readdir(www_path)[contains.(readdir(www_path),"line_chart")]
 img_files = joinpath.(www_path,img_files)
 for img in img_files
@@ -261,6 +267,8 @@ end
 #|      - "Overlapping"
 #| layout-ncol: 1
 #| label: fig-error
+#| eval: true
+
 img_files = readdir(www_path)[contains.(readdir(www_path),"errorbar_chart")]
 img_files = joinpath.(www_path,img_files)
 for img in img_files
@@ -343,13 +351,17 @@ Images.save(joinpath(www_path,"paper_synthetic_results.png"), img)
 
 
 ```{julia}
+#| output: true
 #| label: fig-paper
 #| fig-cap: "Chart in paper"
+#| eval: true
 
 Images.load(joinpath(www_path,"paper_synthetic_results.png"))
 ```
 
 ```{julia}
+# echo: false
+
 generate_artifacts(output_path)
 generate_artifacts(www_path)
 ```
