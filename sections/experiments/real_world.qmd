@@ -8,6 +8,16 @@ include("src/setup.jl")
 eval(setup)
 output_path = output_dir("real_world")
 www_path = www_dir("real_world")
+
+# Artifacts:
+# Images:
+artifact_name = create_artifact_name_from_path(www_path, nothing)
+_hash = artifact_hash(artifact_name, artifact_toml)
+www_artifact_path = joinpath(artifact_path(_hash), artifact_name)
+# Output:
+artifact_name = create_artifact_name_from_path(output_path, nothing)
+_hash = artifact_hash(artifact_name, artifact_toml)
+output_artifact_path = joinpath(artifact_path(_hash), artifact_name)
 ```
 
 ```{julia}
@@ -108,8 +118,8 @@ end
 #| label: fig-real-line
 #| eval: true
 
-img_files = readdir(www_path)[contains.(readdir(www_path),"line_chart")]
-img_files = joinpath.(www_path,img_files)
+img_files = readdir(www_artifact_path)[contains.(readdir(www_artifact_path),"line_chart")]
+img_files = joinpath.(www_artifact_path,img_files)
 for img in img_files
     display(load(img))
 end
@@ -130,8 +140,8 @@ end
 #| label: fig-real-error
 #| eval: true
 
-img_files = readdir(www_path)[contains.(readdir(www_path),"errorbar_chart")]
-img_files = joinpath.(www_path,img_files)
+img_files = readdir(www_artifact_path)[contains.(readdir(www_artifact_path),"errorbar_chart")]
+img_files = joinpath.(www_artifact_path,img_files)
 for img in img_files
     display(load(img))
 end
@@ -144,11 +154,27 @@ n_bootstrap = 100
 df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstrap.csv"))
 ```
 
+```{julia}
+#| output: true
+#| eval: true
+#| echo: false
+
+_file = readdir(output_artifact_path)[contains.(readdir(output_artifact_path),"bootstrap")]
+_file = joinpath.(output_artifact_path, _file)
+df = CSV.File(_file) |> DataFrame
+df = df[.!(ismissing.(df.p_value)),:]
+df = combine(groupby(df, [:name, :scope, :data, :model, :generator]), :p_value => mean)
+ENV["LINES"] = size(df, 1)
+pretty_table(df)
+```
+
 ### Chart in paper
 
 @fig-real-paper shows the chart that went into the paper.
 
 ```{julia}
+#| echo: false
+
 using DataFrames, Statistics
 model_ = :FluxEnsemble
 df = DataFrame() 
@@ -211,7 +237,7 @@ Images.save(joinpath(www_path,"paper_real_world_results.png"), img)
 #| fig-cap: "Chart in paper"
 #| eval: true
 
-Images.load(joinpath(www_path,"paper_real_world_results.png"))
+Images.load(joinpath(www_artifact_path,"paper_real_world_results.png"))
 ```
 
 ```{julia}

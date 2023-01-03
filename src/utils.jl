@@ -106,7 +106,7 @@ function generate_artifacts(
     root=".",
     artifact_toml=joinpath(root, "Artifacts.toml"),
     deploy=true,
-    tag="dec-2022"
+    tag="jan-2023"
 )
 
     if deploy && !haskey(ENV, "GITHUB_TOKEN")
@@ -163,7 +163,7 @@ end
 
 function create_artifact_name_from_path(datafiles::String, artifact_name::Union{Nothing,String})
     # Name for hash/artifact:
-    artifact_name = isnothing(artifact_name) ? replace(datafiles, ("/" => "-")) : artifact_
+    artifact_name = isnothing(artifact_name) ? replace(datafiles, ("/" => "-")) : artifact_name
     return artifact_name
 end
 
@@ -171,4 +171,21 @@ function get_git_remote_url(repo_path::String)
     repo = LibGit2.GitRepo(repo_path)
     origin = LibGit2.get(LibGit2.GitRemote, repo, "origin")
     return LibGit2.url(origin)
+end
+
+function artifacts_to_local_dev(
+    ;
+    tag::String="dec-2022",
+    root="."
+)
+    artifact_toml = joinpath(root, "Artifacts.toml")
+    artifact_names = keys(LazyArtifacts.select_downloadable_artifacts(artifact_toml, include_lazy=true))
+    origin_url = get_git_remote_url(root)
+    deploy_repo = "$(basename(dirname(origin_url)))/$(splitext(basename(origin_url))[1])"
+    for _name in artifact_names
+        _hash = artifact_hash(_name, artifact_toml)
+        download_artifact(_hash, "https://github.com/$(deploy_repo)/releases/download/$(tag)/$(_name).tar.gz")
+        _path = joinpath(artifact_path(_hash), _name)
+        println(_path)
+    end
 end

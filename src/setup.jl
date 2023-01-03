@@ -20,10 +20,12 @@ setup = quote
     using MLUtils
     using MLUtils: undersample
     using Plots
+    using PrettyTables
     using Random
     using RCall
     using Serialization
     using StatsBase
+    using StatsPlots
 
     # Setup
     Random.seed!(42)              # global seed to allow for reproducibility
