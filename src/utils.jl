@@ -185,7 +185,12 @@ function artifacts_to_local_dev(
     for _name in artifact_names
         _hash = artifact_hash(_name, artifact_toml)
         download_artifact(_hash, "https://github.com/$(deploy_repo)/releases/download/$(tag)/$(_name).tar.gz")
-        _path = joinpath(artifact_path(_hash), _name)
-        cp(datafiles, joinpath(artifact_dir, artifact_name))
+        old_path = joinpath(artifact_path(_hash), _name)
+        new_path = replace(_name, ("-" => "/"))
+        new_path = replace(new_path, ("upload" => "download"))
+        if !isdir(new_path)
+            mkpath(joinpath(root, new_path))
+        end
+        cp(old_path, new_path, force=true)
     end
 end
