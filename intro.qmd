@@ -13,7 +13,7 @@ To start with, we will look at a proof-of-concept that demonstrates the main obs
 
 ## Data
 
-We begin by generating the synthetic data for a simple binary classification problem. For illustrative purposes we will use data that is linearly separable. The chart below shows the data $\mathcal{D}$ at time zero, before any implementation of recourse.
+We begin by generating the synthetic data for a simple binary classification problem. For illustrative purposes, we will use data that is linearly separable. The chart below shows the data $\mathcal{D}$ at time zero, before any implementation of recourse.
 
 ```{julia}
 #| output: true
@@ -76,7 +76,7 @@ opt = Flux.Adam(0.01)
 gen = GenericGenerator(;decision_threshold=γ, opt=opt)
 ```
 
-@fig-round-1 below shows the recourse outcome, which we denote here as $\mathcal{D}^{\prime}$. The obvious observation at this point is that the resulting counterfactuals, while valid, are clearly distinguishable from the factuals that were always in the target class. This is not a new observation and nor is it entirely surprising. In fact, a lot of recent work in this field has tried to address this issue. In this work we wonder what happens when we let these sorts of dynamics play out further in practice. While the outcome in (b) is not surprising, it may be much harder to observe so clearly it in practice (when the data is more complex).
+@fig-round-1 below shows the recourse outcome, which we denote here as $\mathcal{D}^{\prime}$. The obvious observation at this point is that the resulting counterfactuals, while valid, are distinguishable from the factuals that were always in the target class. This is not a new observation and nor is it entirely surprising. In fact, a lot of recent work in this field has tried to address this issue. In this work, we wonder what happens when we let these sorts of dynamics play out further in practice. While the outcome in (b) is not surprising, it may be much harder to observe so clearly in practice (when the data is more complex).
 
 ```{julia}
 #| output: true
@@ -112,11 +112,11 @@ display(plt_single_retrained)
 
 ## Repeat
 
-We finally go on to repeat this process of recourse followed by model updates for multiple round. @fig-final below presents the different stages of the experiment side-by-side, where panel (d) represents the outcome after ten rounds. 
+We finally go on to repeat this process of recourse followed by model updates for multiple rounds. @fig-final below presents the different stages of the experiment side-by-side, where panel (d) represents the outcome after ten rounds. 
 
-At first glance it seems that costs to individuals seeking recourse are gradually reduced as the decision boundary moves into the direction of the non-target class: they need to exert less effort to move to valid counterfactual states. The problem with this idea is, of course, that there is no free lunch. This reduction inflicts a burden on the agent in charge of the black-box: the group of individuals that is now classified as target class individuals looks entirely different from the original group. 
+At first glance, it seems that costs to individuals seeking recourse are gradually reduced as the decision boundary moves in the direction of the non-target class: they need to exert less effort to move to valid counterfactual states. The problem with this idea is, of course, that there is no free lunch. This reduction inflicts a burden on the agent in charge of the black-box: the group of individuals that are now classified as target class individuals looks entirely different from the original group. 
 
-Why is this a problem? Let's, for example, that the two synthetic features accurately describe the credit worthiness of individual seeking loans, where credit-worthiness increases in the South-West direction. Non-target class individuals (orange) are denied credit, while target class individuals (blue) receive a loan. Then the population of borrowers in (d) is much more risky than in (a). Clearly, any lender (bank) aware of such dynamics would avoid them in practice. They might choose not to offer recourse in the first place, generating a cost to all individuals seeking recourse. Alternatively, they may reward first movers, but stop offering recourse after a few rounds. 
+Why is this a problem? Let's assume, for example, that the two synthetic features accurately describe the creditworthiness of individuals seeking loans, where creditworthiness increases in the South-West direction. Non-target class individuals (orange) are denied credit, while target class individuals (blue) receive a loan. Then the population of borrowers in (d) is much riskier than in (a). Any lender (bank) aware of such dynamics would avoid them in practice. They might choose not to offer recourse in the first place, generating a cost to all individuals seeking recourse. Alternatively, they may reward first movers, but stop offering recourse after a few rounds. 
 
 This last point makes it clear that the implementation of recourse by one individual may generate external costs for other individuals. This notion motivates the ideas set out in the paper.
 
