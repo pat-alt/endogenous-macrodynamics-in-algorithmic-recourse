@@ -51,6 +51,37 @@ data_sets = filter(p -> p[1] in choices, catalogue)
 ```
 
 ```{julia}
+
+counterfactual_data = data_sets[:linearly_separable]
+M = AlgorithmicRecourseDynamics.Models.FluxModel(counterfactual_data)
+M = AlgorithmicRecourseDynamics.Models.train(M, counterfactual_data)
+
+# Generators:
+generators = Dict(
+    "Generic (γ=0.5)" => GenericGenerator(opt = opt, decision_threshold=0.5),
+    "Generic (γ=0.9)" => GenericGenerator(opt = opt, decision_threshold=0.9),
+    "Gravitational" => GravitationalGenerator(opt = opt),
+    "ClaPROAR" => ClapROARGenerator(opt = opt)
+)
+
+# Counterfactuals
+x = select_factual(counterfactual_data, rand(1:size(counterfactual_data.X,2))) 
+y = round(probs(M, x)[1])
+target = ifelse(y==1.0,0.0,1.0) # opposite label as target
+T = 50
+counterfactuals = Dict([name => generate_counterfactual(x, target, counterfactual_data, M, gen; T=T, latent_space=false) for (name, gen) in generators])
+
+# Plots:
+plts = []
+for (name,ce) ∈ counterfactuals
+    plt = plot(ce; title=name, colorbar=false, ticks = false, legend=false, zoom=0)
+    plts = vcat(plts..., plt)
+end
+plt = plot(plts..., size=(750,200), layout=(1,4))
+savefig(plt, "paper/www/mitigation.png")
+```
+
+```{julia}
 experiments = set_up_experiments(data_sets,models,generators)
 ```
 
