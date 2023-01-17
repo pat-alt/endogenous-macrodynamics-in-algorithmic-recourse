@@ -79,7 +79,7 @@ for (name,ce) ∈ counterfactuals
     plts = vcat(plts..., plt)
 end
 plt = plot(plts..., size=(750,200), layout=(1,4))
-savefi\text{extcost}(plt, "dev/paper/www/mitigation.png")
+savefig(plt, "paper/www/mitigation.png")
 ```
 
 
