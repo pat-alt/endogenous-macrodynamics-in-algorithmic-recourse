@@ -125,6 +125,10 @@ knitr::opts_chunk$set(
 ```{r, child=child_docs}
 ```
 
+# Acknowledgements {-}
+
+Some of the members of TU Delft were partially funded by ICAI AI for Fintech Research, an ING --- TU Delft collaboration. 
+
 # References {.unnumbered}
 
 ::: {#refs}
@@ -135,9 +139,5 @@ knitr::opts_chunk$set(
 # Appendix {-}
 
 Granular results for all of our experiments can be found in this online companion: [https://www.paltmeyer.com/endogenous-macrodynamics-in-algorithmic-recourse/](https://www.paltmeyer.com/endogenous-macrodynamics-in-algorithmic-recourse/). The Github repository containing all the code used to produce the results in this paper can be found here: [https://github.com/pat-alt/endogenous-macrodynamics-in-algorithmic-recourse](https://github.com/pat-alt/endogenous-macrodynamics-in-algorithmic-recourse).
-
-# Acknowledgements {-}
-
-Some of the members of TU Delft were partially funded by ICAI AI for Fintech Research, an ING --- TU Delft collaboration. 
 
 

@@ -801,7 +801,7 @@ In order to simulate the dynamic process, we suppose that the model \(M\) is ret
 
 Note that the operation in line 4 is an assignment, rather than a copy operation, so any updates to `batch' will also affect \(\mathcal{D}\). The function \(\text{eval}(M,\mathcal{D})\) loosely denotes the computation of various evaluation metrics introduced below. In practice, these metrics can also be computed at regular intervals as opposed to every round.
 
-Along with any other fixed parameters affecting the counterfactual search, the parameters \(T\) and \(B\) are assumed as given in Algorithm \ref{algo-experiment}. Still, it is worth noting that the higher these values, the more factual instances undergo recourse throughout the entire experiment. Of course, this is likely to lead to more pronounced domain and model shifts by time \(T\). In our experiments, we choose the values such that \(T \cdot B\) corresponds to the application of recourse on \(\approx50\%\) of the negative instances from the initial dataset. As we compute evaluation metrics at regular intervals throughout the procedure, we can also verify the impact of recourse when it is implemented for a smaller number of individuals.
+Along with any other fixed parameters affecting the counterfactual search, the parameters \(T\) and \(B\) are assumed as given in Algorithm \ref{algo-experiment}. Still, it is worth noting that the higher these values, the more factual instances undergo recourse throughout the entire experiment. Of course, this is likely to lead to more pronounced domain and model shifts by time \(T\). In our experiments, we choose the values such that the majority of the negative instances from the initial dataset receive recourse. As we compute evaluation metrics at regular intervals throughout the procedure, we can also verify the impact of recourse when it is implemented for a smaller number of individuals.
 
 Algorithm \ref{algo-experiment} summarizes the proposed simulation experiment for a given dataset \(\mathcal{D}\), model \(M\) and generator \(G\), but naturally, we are interested in comparing simulation outcomes for different sources of data, models and generators. The framework we have built facilitates this, making use of multi-threading in order to speed up computations. Holding the initial model and dataset constant, the experiments are run for all generators, since our primary concern is to benchmark different recourse methods. To ensure that each generator is faced with the same initial conditions in each round \(t\), the candidate batch of individuals from the non-target class is randomly drawn from the intersection of all non-target class individuals across all experiments \(\left\{\textsc{Experiment}(M,\mathcal{D},G)\right\}_{j=1}^J\) where \(J\) is the total number of generators.
 
@@ -843,7 +843,7 @@ Finally, we also take a look at the out-of-sample \textbf{Performance} of our mo
 \hypertarget{empirical}{%
 \section{Experiment Setup}\label{empirical}}
 
-This section presents the exact ingredients and parameter choices describing the simulation experiments we ran to produce the findings presented in the next section (\ref{empirical-2}). For convenience, we use Algorithm \ref{algo-experiment} as a template to guide us through this section. A few high-level details upfront: each experiment is run for a total of \(T=50\) rounds, where in each round we provide recourse to five per cent of all individuals in the non-target class, so \(B_t=0.05 * N_t^{\mathcal{D}_0}\)\footnote{As mentioned in the previous section, we end up providing recourse to a total of \(\approx50\%\) by the end of round \(T=50\).}. All classifiers and generative models are retrained for 10 epochs in each round \(t\) of the experiment. Rather than retraining models from scratch, we initialize all parameters at their previous levels (\(t-1\)) and backpropagate for 10 epochs using the new training data as inputs into the existing model. Evaluation metrics are computed and stored every 10 rounds. To account for noise, each individual experiment is repeated five times.\footnote{In the current implementation, we use the same train-test split each time to only account for stochasticity associated with randomly selecting individuals for recourse. An interesting alternative may be to also perform data splitting each time, thereby adding an additional layer of randomness.}
+This section presents the exact ingredients and parameter choices describing the simulation experiments we ran to produce the findings presented in the next section (\ref{empirical-2}). For convenience, we use Algorithm \ref{algo-experiment} as a template to guide us through this section. A few high-level details upfront: each experiment is run for a total of \(T=50\) rounds, where in each round we provide recourse to five per cent of all individuals in the non-target class, so \(B_t=0.05 * N_t^{\mathcal{D}_0}\). All classifiers and generative models are retrained for 10 epochs in each round \(t\) of the experiment. Rather than retraining models from scratch, we initialize all parameters at their previous levels (\(t-1\)) and backpropagate for 10 epochs using the new training data as inputs into the existing model. Evaluation metrics are computed and stored every 10 rounds. To account for noise, each individual experiment is repeated five times.\footnote{In the current implementation, we use the same train-test split each time to only account for stochasticity associated with randomly selecting individuals for recourse. An interesting alternative may be to also perform data splitting each time, thereby adding an additional layer of randomness.}
 
 \hypertarget{empirical-classifiers}{%
 \subsection{\texorpdfstring{\(M\)---Classifiers and Generative Models}{M---Classifiers and Generative Models}}\label{empirical-classifiers}}
@@ -1113,6 +1113,12 @@ Largely in line with the existing literature on Algorithmic Recourse, we have li
 
 This work has revisited and extended some of the most general and defining concepts underlying the literature on Counterfactual Explanations and, in particular, Algorithmic Recourse. We demonstrate that long-held beliefs as to what defines optimality in AR, may not always be suitable. Specifically, we run experiments that simulate the application of recourse in practice using various state-of-the-art counterfactual generators and find that all of them induce substantial domain and model shifts. We argue that these shifts should be considered as an expected external cost of individual recourse and call for a paradigm shift from individual to collective recourse in these types of situations. By proposing an adapted counterfactual search objective that incorporates this cost, we make that paradigm shift explicit. We show that this modified objective lends itself to mitigation strategies that can be used to effectively decrease the magnitude of induced domain and model shifts. Through our work, we hope to inspire future research on this important topic. To this end we have open-sourced all of our code along with a Julia package: \href{https://anonymous.4open.science/r/AlgorithmicRecourseDynamics/README.md}{\texttt{AlgorithmicRecourseDynamics.jl}}. Future researchers should find it easy to replicate, modify and extend the simulation experiments presented here and apply them to their own custom counterfactual generators.
 
+\hypertarget{acknowledgements}{%
+\section*{Acknowledgements}\label{acknowledgements}}
+\addcontentsline{toc}{section}{Acknowledgements}
+
+Some of the members of TU Delft were partially funded by ICAI AI for Fintech Research, an ING --- TU Delft collaboration.
+
 \hypertarget{references}{%
 \section*{References}\label{references}}
 \addcontentsline{toc}{section}{References}
@@ -1284,12 +1290,6 @@ This work has revisited and extended some of the most general and defining conce
 \addcontentsline{toc}{section}{Appendix}
 
 Granular results for all of our experiments can be found in this online companion: \url{https://www.paltmeyer.com/endogenous-macrodynamics-in-algorithmic-recourse/}. The Github repository containing all the code used to produce the results in this paper can be found here: \url{https://github.com/pat-alt/endogenous-macrodynamics-in-algorithmic-recourse}.
-
-\hypertarget{acknowledgements}{%
-\section*{Acknowledgements}\label{acknowledgements}}
-\addcontentsline{toc}{section}{Acknowledgements}
-
-Some of the members of TU Delft were partially funded by ICAI AI for Fintech Research, an ING --- TU Delft collaboration.
 
 \end{document}
 
