@@ -175,7 +175,7 @@ end
 
 function artifacts_to_local_dev(
     ;
-    tag::String="dec-2022",
+    tag::String="jan-2023",
     root="."
 )
     artifact_toml = joinpath(root, "Artifacts.toml")
