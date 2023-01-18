@@ -125,7 +125,7 @@ knitr::opts_chunk$set(
 ```{r, child=child_docs}
 ```
 
-# Acknowledgement {-}
+# Acknowledgements {-}
 
 Some of the members of TU Delft were partially funded by ICAI AI for Fintech Research, an ING --- TU Delft collaboration. 
 

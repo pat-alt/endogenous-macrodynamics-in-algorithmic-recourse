@@ -15,22 +15,17 @@ To start with, we will look at a proof-of-concept that demonstrates the main obs
 
 We begin by generating the synthetic data for a simple binary classification problem. For illustrative purposes, we will use data that is linearly separable. The chart below shows the data $\mathcal{D}$ at time zero, before any implementation of recourse.
 
+
 ```{julia}
 #| output: true
 #| label: fig-data
 #| fig-cap: "Linearly separable synthetic data"
 
-N = 1000
-xmax = 2
-X, ys = make_blobs(
-    N, 2; 
-    centers=2, as_table=false, center_box=(-xmax => xmax), cluster_std=0.1
-)
-ys .= ys.==2
-X = X'
-xs = Flux.unstack(X,2)
-data = zip(xs,ys)
-counterfactual_data = CounterfactualData(X,ys')
+max_obs = 1000
+catalogue = load_synthetic(max_obs)
+counterfactual_data = catalogue[:linearly_separable]
+X = counterfactual_data.X
+ys = vec(counterfactual_data.y)
 plot()
 scatter!(counterfactual_data)
 ```
@@ -44,6 +39,7 @@ n_epochs = 100
 model = Chain(Dense(2,1))
 mod = FluxModel(model)
 Models.train(mod, counterfactual_data; n_epochs=n_epochs)
+mod_orig = deepcopy(mod)
 ```
 
 @fig-model below shows the linear separation of the two classes.
@@ -72,7 +68,7 @@ Markdown.parse(
 ```
 
 ```{julia}
-opt = Flux.Adam(0.01)
+opt = Flux.Descent(0.01)
 gen = GenericGenerator(;decision_threshold=γ, opt=opt)
 ```
 
@@ -143,5 +139,45 @@ plt_single_repeat = plot(mod,counterfactual_data′;zoom=0,colorbar=false,title=
 
 plt = plot(plt_original, plt_single, plt_single_retrained, plt_single_repeat, layout=(1,4), legend=false, axis=nothing, size=(600,165))
 savefig(plt, joinpath(www_path, "poc.png"))
+savefig(plt, "paper/www/poc.png")
+display(plt)
+```
+
+## Mitigation Strategies
+
+In the paper, we propose three simple mitigation strategies:
+
+1. More Conservative Decision Thresholds
+2. Classifier Preserving ROAR
+3. Gravitational Counterfactual Explanations 
+
+@fig-mitigate shows an illustrative example that demonstrates the differences in counterfactual outcomes when using the various mitigation strategies compared to the baseline approach, that is, Wachter with $\gamma=0.5$: choosing a higher decision threshold pushes the counterfactual a little further into the target domain; this effect is even stronger for ClaPROAR; finally, using the Gravitational generator the counterfactual ends up all the way inside the target domain. 
+
+```{julia}
+#| output: true
+#| label: fig-mitigate
+#| fig-cap: "Mitigation strategies."
+
+# Generators:
+generators = Dict(
+    "Generic (γ=0.5)" => GenericGenerator(opt = opt, decision_threshold=0.5),
+    "Generic (γ=0.9)" => GenericGenerator(opt = opt, decision_threshold=0.9),
+    "Gravitational" => GravitationalGenerator(opt = opt),
+    "ClaPROAR" => ClapROARGenerator(opt = opt)
+)
+
+# Counterfactuals
+x = select_factual(counterfactual_data, rand(candidates)) 
+counterfactuals = Dict([name => generate_counterfactual(x, 1, counterfactual_data, mod_orig, gen;) for (name, gen) in generators])
+
+# Plots:
+plts = []
+for (name,ce) ∈ counterfactuals
+    plt = plot(ce; title=name, colorbar=false, ticks = false, legend=false, zoom=0)
+    plts = vcat(plts..., plt)
+end
+plt = plot(plts..., size=(750,200), layout=(1,4))
+savefig(plt, joinpath(www_path, "mitigation.png"))
+savefig(plt, "paper/www/mitigation.png")
 display(plt)
 ```
