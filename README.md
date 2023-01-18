@@ -13,16 +13,6 @@ repository:
     Slides](https://www.paltmeyer.com/content/talks/posts/2023-ieee-satml/presentation.html)
 4.  [IEEE SaTML Poster](dev/poster/poster.pdf)
 
-> ⚠️⚠️⚠️ [Camera-ready
-> branch](https://github.com/pat-alt/endogenous-macrodynamics-in-algorithmic-recourse/tree/camera-ready-branch)
->
-> You are on the
-> [\#camera-ready-branch](https://github.com/pat-alt/endogenous-macrodynamics-in-algorithmic-recourse/tree/camera-ready-branch).
-> This branch was last updated when the camera-ready version of the
-> paper was submitted to IEEE SaTML ’23. The
-> [\#main](https://github.com/pat-alt/endogenous-macrodynamics-in-algorithmic-recourse)
-> branch may have diverged to incorporate minor updates.
-
 ## Motivation
 
 The chart below illustrates what we define as macrodynamics in
