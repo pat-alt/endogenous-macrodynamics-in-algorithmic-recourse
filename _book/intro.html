@@ -198,11 +198,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul>
   <li><a href="#data" id="toc-data" class="nav-link active" data-scroll-target="#data"><span class="toc-section-number">1.1</span>  Data</a></li>
   <li><a href="#classifier" id="toc-classifier" class="nav-link" data-scroll-target="#classifier"><span class="toc-section-number">1.2</span>  Classifier</a></li>
-  <li><a href="#implementation-of-recourse" id="toc-implementation-of-recourse" class="nav-link" data-scroll-target="#implementation-of-recourse"><span class="toc-section-number">1.3</span>  Implementation of Recourse</a></li>
-  <li><a href="#generate-counterfactual" id="toc-generate-counterfactual" class="nav-link" data-scroll-target="#generate-counterfactual"><span class="toc-section-number">1.4</span>  Generate counterfactual</a></li>
-  <li><a href="#retrain" id="toc-retrain" class="nav-link" data-scroll-target="#retrain"><span class="toc-section-number">1.5</span>  Retrain</a></li>
-  <li><a href="#repeat" id="toc-repeat" class="nav-link" data-scroll-target="#repeat"><span class="toc-section-number">1.6</span>  Repeat</a></li>
-  <li><a href="#mitigation-strategies" id="toc-mitigation-strategies" class="nav-link" data-scroll-target="#mitigation-strategies"><span class="toc-section-number">1.7</span>  Mitigation Strategies</a></li>
+  <li><a href="#implementation-of-recourse" id="toc-implementation-of-recourse" class="nav-link" data-scroll-target="#implementation-of-recourse"><span class="toc-section-number">1.3</span>  Implementation of Recourse</a>
+  <ul class="collapse">
+  <li><a href="#generate-counterfactual" id="toc-generate-counterfactual" class="nav-link" data-scroll-target="#generate-counterfactual"><span class="toc-section-number">1.3.1</span>  Generate Counterfactual</a></li>
+  <li><a href="#retrain" id="toc-retrain" class="nav-link" data-scroll-target="#retrain"><span class="toc-section-number">1.3.2</span>  Retrain</a></li>
+  <li><a href="#repeat" id="toc-repeat" class="nav-link" data-scroll-target="#repeat"><span class="toc-section-number">1.3.3</span>  Repeat</a></li>
+  </ul></li>
+  <li><a href="#mitigation-strategies" id="toc-mitigation-strategies" class="nav-link" data-scroll-target="#mitigation-strategies"><span class="toc-section-number">1.4</span>  Mitigation Strategies</a></li>
   </ul>
 </nav>
     </div>
@@ -274,9 +276,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="implementation-of-recourse" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="implementation-of-recourse"><span class="header-section-number">1.3</span> Implementation of Recourse</h2>
-</section>
-<section id="generate-counterfactual" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="generate-counterfactual"><span class="header-section-number">1.4</span> Generate counterfactual</h2>
+<section id="generate-counterfactual" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="generate-counterfactual"><span class="header-section-number">1.3.1</span> Generate Counterfactual</h3>
 <div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>γ <span class="op">=</span> <span class="fl">0.50</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>μ <span class="op">=</span> <span class="fl">0.10</span></span>
@@ -313,8 +314,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="retrain" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="retrain"><span class="header-section-number">1.5</span> Retrain</h2>
+<section id="retrain" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="retrain"><span class="header-section-number">1.3.2</span> Retrain</h3>
 <p>Suppose the agent in charge of the black-box system has provided recourse to a share of individuals leading to the outcome in <a href="#fig-round-1">Figure&nbsp;<span>1.3</span></a>. In practice, models are regularly updated through retraining to account for concept drift, for example. For our experiments, we assume that the agent accepts <span class="math inline">\(\mathcal{D}^{\prime}\)</span> as its new ground truth. To isolate the endogenous effects we are interested in here from any other effect, we further assume away any exogenous changes to the data that we might expect to occur in practice. Retraining the model on <span class="math inline">\(\mathcal{D}^{\prime}\)</span> leads to a shift of the decision boundary <strong>in the direction of the non-target class</strong> (<a href="#fig-retrain">Figure&nbsp;<span>1.4</span></a>).</p>
 <div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mod <span class="op">=</span> Models.<span class="fu">train</span>(mod, counterfactual_data′)</span>
@@ -330,8 +331,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="repeat" class="level2" data-number="1.6">
-<h2 data-number="1.6" class="anchored" data-anchor-id="repeat"><span class="header-section-number">1.6</span> Repeat</h2>
+<section id="repeat" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="repeat"><span class="header-section-number">1.3.3</span> Repeat</h3>
 <p>We finally go on to repeat this process of recourse followed by model updates for multiple rounds. <a href="#fig-final">Figure&nbsp;<span>1.5</span></a> below presents the different stages of the experiment side-by-side, where panel (d) represents the outcome after ten rounds.</p>
 <p>At first glance, it seems that costs to individuals seeking recourse are gradually reduced as the decision boundary moves in the direction of the non-target class: they need to exert less effort to move to valid counterfactual states. The problem with this idea is, of course, that there is no free lunch. This reduction inflicts a burden on the agent in charge of the black-box: the group of individuals that are now classified as target class individuals looks entirely different from the original group.</p>
 <p>Why is this a problem? Let’s assume, for example, that the two synthetic features accurately describe the creditworthiness of individuals seeking loans, where creditworthiness increases in the South-West direction. Non-target class individuals (orange) are denied credit, while target class individuals (blue) receive a loan. Then the population of borrowers in (d) is much riskier than in (a). Any lender (bank) aware of such dynamics would avoid them in practice. They might choose not to offer recourse in the first place, generating a cost to all individuals seeking recourse. Alternatively, they may reward first movers, but stop offering recourse after a few rounds.</p>
@@ -366,8 +367,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="mitigation-strategies" class="level2" data-number="1.7">
-<h2 data-number="1.7" class="anchored" data-anchor-id="mitigation-strategies"><span class="header-section-number">1.7</span> Mitigation Strategies</h2>
+</section>
+<section id="mitigation-strategies" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="mitigation-strategies"><span class="header-section-number">1.4</span> Mitigation Strategies</h2>
 <p>In the paper, we propose three simple mitigation strategies:</p>
 <ol type="1">
 <li>More Conservative Decision Thresholds</li>

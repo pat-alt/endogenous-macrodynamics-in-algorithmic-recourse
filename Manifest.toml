@@ -24,9 +24,9 @@ version = "3.4.0"
 
 [[deps.AlgorithmicRecourseDynamics]]
 deps = ["CSV", "CounterfactualExplanations", "DataFrames", "Distances", "Flux", "Images", "KernelFunctions", "LazyArtifacts", "LinearAlgebra", "Logging", "MLJBase", "MLUtils", "Parameters", "Plots", "ProgressMeter", "RCall", "Random", "Serialization", "Statistics", "StatsBase"]
-git-tree-sha1 = "13b13967a8b46916b16b9182d08cb1a208bf44b4"
+git-tree-sha1 = "e3b52d3cfc03f7335bb8c36c2a91c84be03ba0f0"
 uuid = "3d1ede72-abb8-4340-bf8e-2ae06849b5ec"
-version = "0.1.1"
+version = "0.1.2"
 
 [[deps.ArgCheck]]
 git-tree-sha1 = "a3a402a35a2f7e0b87828ccabbd5ebfbebe356b4"
