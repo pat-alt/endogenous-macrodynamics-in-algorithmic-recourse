@@ -1,4 +1,4 @@
-# Mitigation Strategies
+# Results: Mitigation Strategies
 
 ```{julia}
 #| echo: false
