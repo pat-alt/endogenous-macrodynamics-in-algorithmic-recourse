@@ -15,12 +15,12 @@ lazy = true
     url = "https://github.com/pat-alt/endogenous-macrodynamics-in-algorithmic-recourse/releases/download/dec-2022/dev-artifacts-upload-data-synthetic.tar.gz"
 
 [dev-artifacts-upload-output-mitigation_strategies]
-git-tree-sha1 = "b5ba00540562a633dfe3e01fa8c9daa376e57528"
+git-tree-sha1 = "b13bc41f544109a60356e91bef7820740b2051d4"
 lazy = true
 
     [[dev-artifacts-upload-output-mitigation_strategies.download]]
-    sha256 = "c6fe6b3f88640c80de8567ebb97038663eec94bd97872278aa298cbd937db478"
-    url = "https://github.com/pat-alt/endogenous-macrodynamics-in-algorithmic-recourse/releases/download/dec-2022/dev-artifacts-upload-output-mitigation_strategies.tar.gz"
+    sha256 = "3b8d3078ced9b75cbc2c2c202f609cf445dfc281ba64b977a5cfd7a2de1e2ad7"
+    url = "https://github.com/pat-alt/endogenous-macrodynamics-in-algorithmic-recourse/releases/download/jan-2023/dev-artifacts-upload-output-mitigation_strategies.tar.gz"
 
 [dev-artifacts-upload-output-real_world]
 git-tree-sha1 = "4d8de5eab707e33774170d4c96725e2243fce8e2"
@@ -39,12 +39,12 @@ lazy = true
     url = "https://github.com/pat-alt/endogenous-macrodynamics-in-algorithmic-recourse/releases/download/jan-2023/dev-artifacts-upload-output-synthetic.tar.gz"
 
 [dev-artifacts-upload-www-mitigation_strategies]
-git-tree-sha1 = "20c4e93d086e52b2fd150682eaa42d7196df16b8"
+git-tree-sha1 = "7c68bb624bab60703d133283098c53c2321efab3"
 lazy = true
 
     [[dev-artifacts-upload-www-mitigation_strategies.download]]
-    sha256 = "ddb6984aa884db8b04148ce85b64ff19bceca122ffc396e0e118fde14fb7a0ec"
-    url = "https://github.com/pat-alt/endogenous-macrodynamics-in-algorithmic-recourse/releases/download/dec-2022/dev-artifacts-upload-www-mitigation_strategies.tar.gz"
+    sha256 = "14de2d23c8d5db5e9624ceb25fbc19048a38846b783f241874b8fb90598987dc"
+    url = "https://github.com/pat-alt/endogenous-macrodynamics-in-algorithmic-recourse/releases/download/jan-2023/dev-artifacts-upload-www-mitigation_strategies.tar.gz"
 
 [dev-artifacts-upload-www-real_world]
 git-tree-sha1 = "24b6e883fd4f13baf6f2f9421d326a92187ea3f5"

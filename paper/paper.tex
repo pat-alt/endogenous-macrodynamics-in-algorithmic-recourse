@@ -972,7 +972,7 @@ Turning to the real-world data we will go through the findings presented in Figu
 
 Model shifts are shown in the middle row of Figure \ref{fig:real}: the estimated PP MMD is statistically significant across the board and in some cases much larger than in others. We find no evidence that LS search helps to mitigate model shifts, as we did before for the synthetic data. Since these real-world datasets are arguably more complex than the synthetic data, the generative model can be expected to have a harder time learning the data-generating process and hence this increased difficulty appears to affect the performance of REVISE/CLUE.
 
-The out-of-sample model performance also deteriorates across the board and substantially so: the largest average reduction in F-Scores of around 15-20 percentage points is observed for the Credit Default dataset. For this dataset we achieved the lowest initial model performance, indicating once again that weaker classifiers may be more exposed to endogenous dynamics. As with the synthetic data, the estimates for logistic regression are qualitatively in line with the above, but quantitatively even more pronounced.
+The out-of-sample model performance also deteriorates across the board and substantially so: the largest average reduction in F-Scores of more than 10 percentage points is observed for the Credit Default dataset. For this dataset we achieved the lowest initial model performance, indicating once again that weaker classifiers may be more exposed to endogenous dynamics. As with the synthetic data, the estimates for logistic regression are qualitatively in line with the above, but quantitatively even more pronounced.
 
 \begin{figure}
 
@@ -1057,10 +1057,10 @@ An interesting finding is also that the proposed strategies have a complementary
 
 }
 
-\caption{Combinining various mitigation strategies with LS search. Results for synthetic data with overlapping classes. The shown model MMD (PP MMD) was computed over a mesh grid of points. Error bars indicate the standard deviation across folds.}\label{fig:mitigate-latent-results}
+\caption{Combining various mitigation strategies with LS search. Results for synthetic data with overlapping classes. The shown model MMD (PP MMD) was computed over a mesh grid of points. Error bars indicate the standard deviation across folds.}\label{fig:mitigate-latent-results}
 \end{figure}
 
-Finally, Figure \ref{fig:mitigate-real-world-results} shows the results for our real-world data. We note that for both California Housing and Credit Default data our proposed strategies do have a significant attenuating effect on both model shifts and performance deterioration that is on par with Latent Space search\footnote{Estimated domain shifts (not shown) were largely insubstantial, as in Figure \ref{fig:real} in the previous section.}. Both ClaPROAR and Gravitational reduce the negative impact on out-of-sample model performance by around half compared to the baseline approach for the California Housing data. For the GMSC dataset, we observe no notable differences.
+Finally, Figure \ref{fig:mitigate-real-world-results} shows the results for our real-world data. We note that for both the California Housing and GMSC data, ClaPROAR does have an attenuating effect on model performance deterioration\footnote{Estimated domain shifts (not shown) were largely insubstantial, as in Figure \ref{fig:real} in the previous section.}. Overall, the results are less significant, possibly because a somewhat smaller share of individuals from the non-target group received recourse than in the synthetic case\footnote{In \href{https://github.com/pat-alt/endogenous-macrodynamics-in-algorithmic-recourse/releases/tag/dec-2022}{earlier experiments} we moved a larger share of individuals and the results more clearly favoured our mitigation strategies.}.
 
 \begin{figure}
 
