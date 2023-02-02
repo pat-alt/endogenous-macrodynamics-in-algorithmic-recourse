@@ -1,15 +1,20 @@
 ---
 format: commonmark
+bibliography: bib.bib
 ---
 
 # Endogenous Macrodynamics in Algorithmic Recourse
 
-This repository contains all code, notebooks, data and empirical results for our conference paper "Endogenous Macrodynamics in Algorithmic Recourse". Below is a list of relevant resources hosted in this repository:
+This repository contains all code, notebooks, data and empirical results for our conference paper "Endogenous Macrodynamics in Algorithmic Recourse" [@altmeyer2023endogenous]. 
 
-1. [Paper](paper/paper.pdf)
-2. [Online Companion](https://www.paltmeyer.com/endogenous-macrodynamics-in-algorithmic-recourse/)
-3. [IEEE SaTML Presentation Slides](https://www.paltmeyer.com/content/talks/posts/2023-ieee-satml/presentation.html)
-4. [IEEE SaTML Poster](dev/poster/poster.pdf)
+Below is a list of relevant resources hosted in this repository:
+
+1. [Paper](paper/paper.pdf) in this repo 
+2. [Paper](https://openreview.net/pdf?id=-LFT2YicI9v) on OpenReview
+3. [Online Companion](https://www.paltmeyer.com/endogenous-macrodynamics-in-algorithmic-recourse/)
+4. [IEEE SaTML Presentation Slides](https://www.paltmeyer.com/content/talks/posts/2023-ieee-satml/presentation.html)
+5. [IEEE SaTML Poster](dev/poster/poster.pdf)
+6. Software: [`AlgorithmicRecourseDynamics.jl`](https://github.com/pat-alt/AlgorithmicRecourseDynamics.jl) and [`CounterfactualExplanations.jl`](https://github.com/pat-alt/CounterfactualExplanations.jl)
 
 ## Motivation
 
@@ -33,3 +38,5 @@ Existing work on Counterfactual Explanations (CE) and Algorithmic Recourse (AR) 
 By introducing a second penalty term in the counterfactual search objective, we can explicitly penalize external costs. The figure below illustrates how the mitigation strategies compared to the baseline approach, that is, Wachter (Generic) with γ = 0.5: choosing a higher decision threshold pushes the counterfactual a little further into the target domain; this effect is even stronger for ClaPROAR; finally, using the Gravitational generator the counterfactual ends up all the way inside the target domain. Find out more in the [paper](paper/paper.pdf).
 
 ![](paper/www/mitigation.png)
+
+## References

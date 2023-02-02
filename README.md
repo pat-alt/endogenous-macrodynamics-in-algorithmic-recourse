@@ -3,15 +3,21 @@
 
 This repository contains all code, notebooks, data and empirical results
 for our conference paper “Endogenous Macrodynamics in Algorithmic
-Recourse”. Below is a list of relevant resources hosted in this
-repository:
+Recourse” (Altmeyer et al. 2023).
 
-1.  [Paper](paper/paper.pdf)
-2.  [Online
+Below is a list of relevant resources hosted in this repository:
+
+1.  [Paper](paper/paper.pdf) in this repo
+2.  [Paper](https://openreview.net/pdf?id=-LFT2YicI9v) on OpenReview
+3.  [Online
     Companion](https://www.paltmeyer.com/endogenous-macrodynamics-in-algorithmic-recourse/)
-3.  [IEEE SaTML Presentation
+4.  [IEEE SaTML Presentation
     Slides](https://www.paltmeyer.com/content/talks/posts/2023-ieee-satml/presentation.html)
-4.  [IEEE SaTML Poster](dev/poster/poster.pdf)
+5.  [IEEE SaTML Poster](dev/poster/poster.pdf)
+6.  Software:
+    [`AlgorithmicRecourseDynamics.jl`](https://github.com/pat-alt/AlgorithmicRecourseDynamics.jl)
+    and
+    [`CounterfactualExplanations.jl`](https://github.com/pat-alt/CounterfactualExplanations.jl)
 
 ## Motivation
 
@@ -73,3 +79,18 @@ the Gravitational generator the counterfactual ends up all the way
 inside the target domain. Find out more in the [paper](paper/paper.pdf).
 
 ![](paper/www/mitigation.png)
+
+## References
+
+<div id="refs" class="references csl-bib-body hanging-indent">
+
+<div id="ref-altmeyer2023endogenous" class="csl-entry">
+
+Altmeyer, Patrick, Giovan Angela, Aleksander Buszydlik, Karol Dobiczek,
+Arie van Deursen, and Cynthia Liem. 2023. “Endogenous Macrodynamics in
+Algorithmic Recourse.” In *First IEEE Conference on Secure and
+Trustworthy Machine Learning*.
+
+</div>
+
+</div>
