@@ -14,7 +14,7 @@ data_path = data_dir("real_world")
 
 Fetching the data using Python's `sklearn` (run this in the Python REPL):
 
-```python
+```{.python}
 from sklearn.datasets import fetch_california_housing
 df, y = fetch_california_housing(return_X_y=True, as_frame=True)
 df["target"] = y.values
