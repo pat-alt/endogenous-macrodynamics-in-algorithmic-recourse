@@ -1,6 +1,7 @@
 project:
   type: book
   execute-dir: project
+  output-dir: docs
 
 book:
   title: "Endogenous Macrodynamics in Algorithmic Recourse"
@@ -29,7 +30,9 @@ book:
     - index.qmd
     - intro.qmd
     - sections/data_preprocessing/index.qmd
-    - sections/experiments/index.qmd
+    - sections/experiments/synthetic.qmd
+    - sections/experiments/real_world.qmd
+    - sections/experiments/mitigation_strategies.qmd
     - sections/generators/index.qmd
     - references.qmd
 

@@ -55,7 +55,7 @@ display(plt_original)
 
 ## Implementation of Recourse
 
-## Generate counterfactual
+### Generate Counterfactual
 
 ```{julia}
 γ = 0.50
@@ -92,7 +92,7 @@ plt_single = plot(mod,counterfactual_data′;zoom=0,colorbar=false,title="(b)")
 display(plt_single)
 ```
 
-## Retrain
+### Retrain
 
 Suppose the agent in charge of the black-box system has provided recourse to a share of individuals leading to the outcome in @fig-round-1. In practice, models are regularly updated through retraining to account for concept drift, for example. For our experiments, we assume that the agent accepts $\mathcal{D}^{\prime}$ as its new ground truth. To isolate the endogenous effects we are interested in here from any other effect, we further assume away any exogenous changes to the data that we might expect to occur in practice. Retraining the model on $\mathcal{D}^{\prime}$ leads to a shift of the decision boundary **in the direction of the non-target class** (@fig-retrain). 
 
@@ -106,7 +106,7 @@ plt_single_retrained = plot(mod,counterfactual_data′;zoom=0,colorbar=false,tit
 display(plt_single_retrained)
 ```
 
-## Repeat
+### Repeat
 
 We finally go on to repeat this process of recourse followed by model updates for multiple rounds. @fig-final below presents the different stages of the experiment side-by-side, where panel (d) represents the outcome after ten rounds. 
 

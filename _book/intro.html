@@ -198,10 +198,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul>
   <li><a href="#data" id="toc-data" class="nav-link active" data-scroll-target="#data"><span class="toc-section-number">1.1</span>  Data</a></li>
   <li><a href="#classifier" id="toc-classifier" class="nav-link" data-scroll-target="#classifier"><span class="toc-section-number">1.2</span>  Classifier</a></li>
-  <li><a href="#implementation-of-recourse" id="toc-implementation-of-recourse" class="nav-link" data-scroll-target="#implementation-of-recourse"><span class="toc-section-number">1.3</span>  Implementation of Recourse</a></li>
-  <li><a href="#generate-counterfactual" id="toc-generate-counterfactual" class="nav-link" data-scroll-target="#generate-counterfactual"><span class="toc-section-number">1.4</span>  Generate counterfactual</a></li>
-  <li><a href="#retrain" id="toc-retrain" class="nav-link" data-scroll-target="#retrain"><span class="toc-section-number">1.5</span>  Retrain</a></li>
-  <li><a href="#repeat" id="toc-repeat" class="nav-link" data-scroll-target="#repeat"><span class="toc-section-number">1.6</span>  Repeat</a></li>
+  <li><a href="#implementation-of-recourse" id="toc-implementation-of-recourse" class="nav-link" data-scroll-target="#implementation-of-recourse"><span class="toc-section-number">1.3</span>  Implementation of Recourse</a>
+  <ul class="collapse">
+  <li><a href="#generate-counterfactual" id="toc-generate-counterfactual" class="nav-link" data-scroll-target="#generate-counterfactual"><span class="toc-section-number">1.3.1</span>  Generate Counterfactual</a></li>
+  <li><a href="#retrain" id="toc-retrain" class="nav-link" data-scroll-target="#retrain"><span class="toc-section-number">1.3.2</span>  Retrain</a></li>
+  <li><a href="#repeat" id="toc-repeat" class="nav-link" data-scroll-target="#repeat"><span class="toc-section-number">1.3.3</span>  Repeat</a></li>
+  </ul></li>
+  <li><a href="#mitigation-strategies" id="toc-mitigation-strategies" class="nav-link" data-scroll-target="#mitigation-strategies"><span class="toc-section-number">1.4</span>  Mitigation Strategies</a></li>
   </ul>
 </nav>
     </div>
@@ -228,21 +231,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>To start with, we will look at a proof-of-concept that demonstrates the main observation underlying that paper is framed around. In particular, we will use synthetic data to see how endogenous domain shifts and the resulting model shifts can have implications on the validity and cost of algorithmic recourse.</p>
 <section id="data" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="data"><span class="header-section-number">1.1</span> Data</h2>
-<p>We begin by generating the synthetic data for a simple binary classification problem. For illustrative purposes we will use data that is linearly separable. The chart below shows the data <span class="math inline">\(\mathcal{D}\)</span> at time zero, before any implementation of recourse.</p>
+<p>We begin by generating the synthetic data for a simple binary classification problem. For illustrative purposes, we will use data that is linearly separable. The chart below shows the data <span class="math inline">\(\mathcal{D}\)</span> at time zero, before any implementation of recourse.</p>
 <div class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="fl">1000</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>xmax <span class="op">=</span> <span class="fl">2</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>X, ys <span class="op">=</span> <span class="fu">make_blobs</span>(</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    N, <span class="fl">2</span>; </span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    centers<span class="op">=</span><span class="fl">2</span>, as_table<span class="op">=</span><span class="cn">false</span>, center_box<span class="op">=</span>(<span class="op">-</span>xmax <span class="op">=&gt;</span> xmax), cluster_std<span class="op">=</span><span class="fl">0.1</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>ys <span class="op">.=</span> ys<span class="op">.==</span><span class="fl">2</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> X<span class="op">'</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>xs <span class="op">=</span> Flux.<span class="fu">unstack</span>(X,<span class="fl">2</span>)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> <span class="fu">zip</span>(xs,ys)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>counterfactual_data <span class="op">=</span> <span class="fu">CounterfactualData</span>(X,ys<span class="op">'</span>)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>()</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">scatter!</span>(counterfactual_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>max_obs <span class="op">=</span> <span class="fl">1000</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>catalogue <span class="op">=</span> <span class="fu">load_synthetic</span>(max_obs)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>counterfactual_data <span class="op">=</span> catalogue[<span class="op">:</span>linearly_separable]</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> counterfactual_data.X</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>ys <span class="op">=</span> <span class="fu">vec</span>(counterfactual_data.y)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>()</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">scatter!</span>(counterfactual_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <div id="fig-data" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -260,7 +257,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>n_epochs <span class="op">=</span> <span class="fl">100</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> <span class="fu">Chain</span>(<span class="fu">Dense</span>(<span class="fl">2</span>,<span class="fl">1</span>))</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>mod <span class="op">=</span> <span class="fu">FluxModel</span>(model)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>Models.<span class="fu">train</span>(mod, counterfactual_data; n_epochs<span class="op">=</span>n_epochs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>Models.<span class="fu">train</span>(mod, counterfactual_data; n_epochs<span class="op">=</span>n_epochs)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>mod_orig <span class="op">=</span> <span class="fu">deepcopy</span>(mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><a href="#fig-model">Figure&nbsp;<span>1.2</span></a> below shows the linear separation of the two classes.</p>
 <div class="cell" data-execution_count="4">
@@ -278,9 +276,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="implementation-of-recourse" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="implementation-of-recourse"><span class="header-section-number">1.3</span> Implementation of Recourse</h2>
-</section>
-<section id="generate-counterfactual" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="generate-counterfactual"><span class="header-section-number">1.4</span> Generate counterfactual</h2>
+<section id="generate-counterfactual" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="generate-counterfactual"><span class="header-section-number">1.3.1</span> Generate Counterfactual</h3>
 <div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>γ <span class="op">=</span> <span class="fl">0.50</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>μ <span class="op">=</span> <span class="fl">0.10</span></span>
@@ -291,10 +288,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>opt <span class="op">=</span> Flux.<span class="fu">Adam</span>(<span class="fl">0.01</span>)</span>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>opt <span class="op">=</span> Flux.<span class="fu">Descent</span>(<span class="fl">0.01</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>gen <span class="op">=</span> <span class="fu">GenericGenerator</span>(;decision_threshold<span class="op">=</span>γ, opt<span class="op">=</span>opt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><a href="#fig-round-1">Figure&nbsp;<span>1.3</span></a> below shows the recourse outcome, which we denote here as <span class="math inline">\(\mathcal{D}^{\prime}\)</span>. The obvious observation at this point is that the resulting counterfactuals, while valid, are clearly distinguishable from the factuals that were always in the target class. This is not a new observation and nor is it entirely surprising. In fact, a lot of recent work in this field has tried to address this issue. In this work we wonder what happens when we let these sorts of dynamics play out further in practice. While the outcome in (b) is not surprising, it may be much harder to observe so clearly it in practice (when the data is more complex).</p>
+<p><a href="#fig-round-1">Figure&nbsp;<span>1.3</span></a> below shows the recourse outcome, which we denote here as <span class="math inline">\(\mathcal{D}^{\prime}\)</span>. The obvious observation at this point is that the resulting counterfactuals, while valid, are distinguishable from the factuals that were always in the target class. This is not a new observation and nor is it entirely surprising. In fact, a lot of recent work in this field has tried to address this issue. In this work, we wonder what happens when we let these sorts of dynamics play out further in practice. While the outcome in (b) is not surprising, it may be much harder to observe so clearly in practice (when the data is more complex).</p>
 <div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>candidates <span class="op">=</span> <span class="fu">findall</span>(ys<span class="op">.==</span><span class="fl">0</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>chosen_individuals <span class="op">=</span> <span class="fu">rand</span>(candidates, <span class="fu">Int</span>(<span class="fu">round</span>(<span class="fu">μ*length</span>(candidates))))</span>
@@ -317,8 +314,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="retrain" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="retrain"><span class="header-section-number">1.5</span> Retrain</h2>
+<section id="retrain" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="retrain"><span class="header-section-number">1.3.2</span> Retrain</h3>
 <p>Suppose the agent in charge of the black-box system has provided recourse to a share of individuals leading to the outcome in <a href="#fig-round-1">Figure&nbsp;<span>1.3</span></a>. In practice, models are regularly updated through retraining to account for concept drift, for example. For our experiments, we assume that the agent accepts <span class="math inline">\(\mathcal{D}^{\prime}\)</span> as its new ground truth. To isolate the endogenous effects we are interested in here from any other effect, we further assume away any exogenous changes to the data that we might expect to occur in practice. Retraining the model on <span class="math inline">\(\mathcal{D}^{\prime}\)</span> leads to a shift of the decision boundary <strong>in the direction of the non-target class</strong> (<a href="#fig-retrain">Figure&nbsp;<span>1.4</span></a>).</p>
 <div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mod <span class="op">=</span> Models.<span class="fu">train</span>(mod, counterfactual_data′)</span>
@@ -334,11 +331,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="repeat" class="level2" data-number="1.6">
-<h2 data-number="1.6" class="anchored" data-anchor-id="repeat"><span class="header-section-number">1.6</span> Repeat</h2>
-<p>We finally go on to repeat this process of recourse followed by model updates for multiple round. <a href="#fig-final">Figure&nbsp;<span>1.5</span></a> below presents the different stages of the experiment side-by-side, where panel (d) represents the outcome after ten rounds.</p>
-<p>At first glance it seems that costs to individuals seeking recourse are gradually reduced as the decision boundary moves into the direction of the non-target class: they need to exert less effort to move to valid counterfactual states. The problem with this idea is, of course, that there is no free lunch. This reduction inflicts a burden on the agent in charge of the black-box: the group of individuals that is now classified as target class individuals looks entirely different from the original group.</p>
-<p>Why is this a problem? Let’s, for example, that the two synthetic features accurately describe the credit worthiness of individual seeking loans, where credit-worthiness increases in the South-West direction. Non-target class individuals (orange) are denied credit, while target class individuals (blue) receive a loan. Then the population of borrowers in (d) is much more risky than in (a). Clearly, any lender (bank) aware of such dynamics would avoid them in practice. They might choose not to offer recourse in the first place, generating a cost to all individuals seeking recourse. Alternatively, they may reward first movers, but stop offering recourse after a few rounds.</p>
+<section id="repeat" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="repeat"><span class="header-section-number">1.3.3</span> Repeat</h3>
+<p>We finally go on to repeat this process of recourse followed by model updates for multiple rounds. <a href="#fig-final">Figure&nbsp;<span>1.5</span></a> below presents the different stages of the experiment side-by-side, where panel (d) represents the outcome after ten rounds.</p>
+<p>At first glance, it seems that costs to individuals seeking recourse are gradually reduced as the decision boundary moves in the direction of the non-target class: they need to exert less effort to move to valid counterfactual states. The problem with this idea is, of course, that there is no free lunch. This reduction inflicts a burden on the agent in charge of the black-box: the group of individuals that are now classified as target class individuals looks entirely different from the original group.</p>
+<p>Why is this a problem? Let’s assume, for example, that the two synthetic features accurately describe the creditworthiness of individuals seeking loans, where creditworthiness increases in the South-West direction. Non-target class individuals (orange) are denied credit, while target class individuals (blue) receive a loan. Then the population of borrowers in (d) is much riskier than in (a). Any lender (bank) aware of such dynamics would avoid them in practice. They might choose not to offer recourse in the first place, generating a cost to all individuals seeking recourse. Alternatively, they may reward first movers, but stop offering recourse after a few rounds.</p>
 <p>This last point makes it clear that the implementation of recourse by one individual may generate external costs for other individuals. This notion motivates the ideas set out in the paper.</p>
 <div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>i <span class="op">=</span> <span class="fl">2</span></span>
@@ -358,12 +355,56 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plt <span class="op">=</span> <span class="fu">plot</span>(plt_original, plt_single, plt_single_retrained, plt_single_repeat, layout<span class="op">=</span>(<span class="fl">1</span>,<span class="fl">4</span>), legend<span class="op">=</span><span class="cn">false</span>, axis<span class="op">=</span><span class="cn">nothing</span>, size<span class="op">=</span>(<span class="fl">600</span>,<span class="fl">165</span>))</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">savefig</span>(plt, <span class="fu">joinpath</span>(www_path, <span class="st">"poc.png"</span>))</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>(plt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">savefig</span>(plt, <span class="st">"paper/www/poc.png"</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>(plt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div id="fig-final" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="intro_files/figure-html/fig-final-output-1.svg" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Figure&nbsp;1.5: The different stages of the experiment.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="mitigation-strategies" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="mitigation-strategies"><span class="header-section-number">1.4</span> Mitigation Strategies</h2>
+<p>In the paper, we propose three simple mitigation strategies:</p>
+<ol type="1">
+<li>More Conservative Decision Thresholds</li>
+<li>Classifier Preserving ROAR</li>
+<li>Gravitational Counterfactual Explanations</li>
+</ol>
+<p><a href="#fig-mitigate">Figure&nbsp;<span>1.6</span></a> shows an illustrative example that demonstrates the differences in counterfactual outcomes when using the various mitigation strategies compared to the baseline approach, that is, Wachter with <span class="math inline">\(\gamma=0.5\)</span>: choosing a higher decision threshold pushes the counterfactual a little further into the target domain; this effect is even stronger for ClaPROAR; finally, using the Gravitational generator the counterfactual ends up all the way inside the target domain.</p>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generators:</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>generators <span class="op">=</span> <span class="fu">Dict</span>(</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Generic (γ=0.5)"</span> <span class="op">=&gt;</span> <span class="fu">GenericGenerator</span>(opt <span class="op">=</span> opt, decision_threshold<span class="op">=</span><span class="fl">0.5</span>),</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Generic (γ=0.9)"</span> <span class="op">=&gt;</span> <span class="fu">GenericGenerator</span>(opt <span class="op">=</span> opt, decision_threshold<span class="op">=</span><span class="fl">0.9</span>),</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Gravitational"</span> <span class="op">=&gt;</span> <span class="fu">GravitationalGenerator</span>(opt <span class="op">=</span> opt),</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ClaPROAR"</span> <span class="op">=&gt;</span> <span class="fu">ClapROARGenerator</span>(opt <span class="op">=</span> opt)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Counterfactuals</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="fu">select_factual</span>(counterfactual_data, <span class="fu">rand</span>(candidates)) </span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>counterfactuals <span class="op">=</span> <span class="fu">Dict</span>([name <span class="op">=&gt;</span> <span class="fu">generate_counterfactual</span>(x, <span class="fl">1</span>, counterfactual_data, mod_orig, gen;) for (name, gen) <span class="kw">in</span> generators])</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Plots:</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>plts <span class="op">=</span> []</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (name,ce) <span class="op">∈</span> counterfactuals</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    plt <span class="op">=</span> <span class="fu">plot</span>(ce; title<span class="op">=</span>name, colorbar<span class="op">=</span><span class="cn">false</span>, ticks <span class="op">=</span> <span class="cn">false</span>, legend<span class="op">=</span><span class="cn">false</span>, zoom<span class="op">=</span><span class="fl">0</span>)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    plts <span class="op">=</span> <span class="fu">vcat</span>(plts<span class="op">...</span>, plt)</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>plt <span class="op">=</span> <span class="fu">plot</span>(plts<span class="op">...</span>, size<span class="op">=</span>(<span class="fl">750</span>,<span class="fl">200</span>), layout<span class="op">=</span>(<span class="fl">1</span>,<span class="fl">4</span>))</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="fu">savefig</span>(plt, <span class="fu">joinpath</span>(www_path, <span class="st">"mitigation.png"</span>))</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="fu">savefig</span>(plt, <span class="st">"paper/www/mitigation.png"</span>)</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>(plt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="fig-mitigate" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="intro_files/figure-html/fig-mitigate-output-1.svg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.6: Mitigation strategies.</figcaption><p></p>
 </figure>
 </div>
 </div>

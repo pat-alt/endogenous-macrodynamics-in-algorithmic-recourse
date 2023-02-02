@@ -11,13 +11,9 @@ This repository contains all code, notebooks, data and empirical results for our
 3. [IEEE SaTML Presentation Slides](https://www.paltmeyer.com/content/talks/posts/2023-ieee-satml/presentation.html)
 4. [IEEE SaTML Poster](dev/poster/poster.pdf)
 
-> ⚠️⚠️⚠️ [Camera-ready branch](https://github.com/pat-alt/endogenous-macrodynamics-in-algorithmic-recourse/tree/camera-ready-branch)
->
-> You are on the [#camera-ready-branch](https://github.com/pat-alt/endogenous-macrodynamics-in-algorithmic-recourse/tree/camera-ready-branch). This branch was last updated when the camera-ready version of the paper was submitted to IEEE SaTML '23. The [#main](https://github.com/pat-alt/endogenous-macrodynamics-in-algorithmic-recourse) branch may have diverged to incorporate minor updates. 
-
 ## Motivation
 
-The chart below illustrates what we define as macrodynamics in Algorithmic Recourse: (a) we have a simple linear classifier trained for binary classification where samples from the negative class ($y=0$) are marked in blue and samples of the positive class ($y=1$) are marked in orange; (b) the implementation of AR for a random subset of individuals leads to a noticeable domain shift; (c) as the classifier is retrained we observe a corresponding model shift; (d) as this process is repeated, the decision boundary moves away from the target class.
+The chart below illustrates what we define as macrodynamics in Algorithmic Recourse: (a) we have a simple linear classifier trained for binary classification where samples from the negative class ($y=0$) are marked in orange and samples of the positive class ($y=1$) are marked in blue; (b) the implementation of AR for a random subset of individuals leads to a noticeable domain shift; (c) as the classifier is retrained we observe a corresponding model shift; (d) as this process is repeated, the decision boundary moves away from the target class.
 
 ![](paper/www/poc.png)
 

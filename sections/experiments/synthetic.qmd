@@ -1,4 +1,4 @@
-# Synthetic Data {#sec-app-synthetic}
+# Results: Synthetic Data {#sec-app-synthetic}
 
 This notebook was used to run the experiments for the synthetic datasets and can be used to reproduce the results in the paper. In the following we first run the experiments and then generate visualizations and tables.
 
