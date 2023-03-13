@@ -90,6 +90,62 @@ results = Serialization.deserialize(joinpath(output_path,"results.jls"))
 ```
 
 ```{julia}
+#| echo: false
+Plots.scalefontsizes(2)
+df_plot = results[:credit_default].output |>
+    df -> filter(:name => ==(:mmd), df) |>
+    df -> filter(:model => ==(:FluxEnsemble), df) |>
+    df -> filter(:scope => ==(:model), df) |>
+    df -> filter(:n => >(0), df) 
+
+ylims = (0, 1.2 * maximum(df_plot.value))
+
+anim = @animate for i in sort(unique(df_plot.n))
+    df = filter(:n => ==(i) ,df_plot) |>
+        df -> combine(groupby(df, :generator), :value => mean, :value => std)
+    plt = bar(
+        string.(df.generator), df.value_mean, c=:blues, lw=0, widen=false,
+        legend=false,
+        ylims = ylims,
+        title = "Number of rounds: $(i)"
+    )
+    n_gen = length(unique(df.generator))
+    plot!((0:(n_gen-1)) .+ 0.5, df.value_mean, yerror=df.value_std, ms=10, color="transparent")
+    scatter!((0:(n_gen-1)) .+ 0.5, df.value_mean, ms=10, c=:blues)
+end
+gif(anim, "dev/presentation/www/real_world_model.gif", fps=0.5)
+Plots.scalefontsizes()
+```
+
+```{julia}
+#| echo: false
+Plots.scalefontsizes(2)
+df_plot = results[:credit_default].output |>
+    df -> filter(:name => ==(:model_performance), df) |>
+    df -> filter(:model => ==(:FluxEnsemble), df) |>
+    df -> filter(:scope => ==(:model), df) |>
+    df -> filter(:n => >(0), df) 
+
+ylims = (1.2 * minimum(df_plot.value), 0)
+
+anim = @animate for i in sort(unique(df_plot.n))
+    df = filter(:n => ==(i) ,df_plot) |>
+        df -> combine(groupby(df, :generator), :value => mean, :value => std)
+    plt = bar(
+        string.(df.generator), df.value_mean, c=:blues, lw=0, widen=false,
+        legend=false,
+        ylims = ylims,
+        title = "Number of rounds: $(i)"
+    )
+    n_gen = length(unique(df.generator))
+    plot!((0:(n_gen-1)) .+ 0.5, df.value_mean, yerror=df.value_std, ms=10, color="transparent")
+    scatter!((0:(n_gen-1)) .+ 0.5, df.value_mean, ms=10, c=:blues)
+end
+gif(anim, "dev/presentation/www/real_world_performance.gif", fps=0.5)
+Plots.scalefontsizes()
+```
+
+```{julia}
 using Images
 line_charts = Dict()
 errorbar_charts = Dict()

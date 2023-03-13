@@ -49,7 +49,10 @@ mod_orig = deepcopy(mod)
 #| label: fig-model
 #| fig-cap: "The baseline model: contours indicate the predicted label; dots indicate observed data points."
 
-plt_original = plot(mod, counterfactual_data; zoom=0, colorbar=false, title="(a)")
+plt_original = plot(
+    mod, counterfactual_data; zoom=0, colorbar=false, title="(a)", 
+    legend=false, axis=nothing, size=(400,400)
+)
 display(plt_original)
 ```
 
@@ -88,7 +91,10 @@ outcome = generate_counterfactual(factuals, 1, counterfactual_data, mod, gen; in
 X′[:,chosen_individuals] = reduce(hcat, @.(selectdim(counterfactual(outcome), 3, 1)))
 y′[chosen_individuals] = reduce(vcat,@.(selectdim(counterfactual_label(outcome),3,1)))
 counterfactual_data′ = CounterfactualData(X′,y′')
-plt_single = plot(mod,counterfactual_data′;zoom=0,colorbar=false,title="(b)")
+plt_single = plot(
+    mod,counterfactual_data′;zoom=0,colorbar=false,title="(b)",
+    legend=false, axis=nothing, size=(400,400)
+)
 display(plt_single)
 ```
 
@@ -102,7 +108,10 @@ Suppose the agent in charge of the black-box system has provided recourse to a s
 #| fig-cap: "The retrained model."
 
 mod = Models.train(mod, counterfactual_data′)
-plt_single_retrained = plot(mod,counterfactual_data′;zoom=0,colorbar=false,title="(c)")
+plt_single_retrained = plot(
+    mod,counterfactual_data′;zoom=0,colorbar=false,title="(c)",
+    legend=false, axis=nothing, size=(400,400)
+)
 display(plt_single_retrained)
 ```
 
@@ -129,7 +138,10 @@ while i <= 10
     y′[chosen_individuals] = reduce(vcat,@.(selectdim(counterfactual_label(outcome),3,1)))
     i += 1
 end
-plt_single_repeat = plot(mod,counterfactual_data′;zoom=0,colorbar=false,title="(d)")
+plt_single_repeat = plot(
+    mod,counterfactual_data′;zoom=0,colorbar=false,title="(d)",
+    legend=false, axis=nothing, size=(400,400)
+)
 ```
 
 ```{julia}

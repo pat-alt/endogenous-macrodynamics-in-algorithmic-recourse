@@ -24,6 +24,7 @@ setup = quote
     using Random
     using RCall
     using Serialization
+    using Statistics
     using StatsBase
     using StatsPlots
 
