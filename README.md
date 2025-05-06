@@ -10,9 +10,9 @@ Below is a list of relevant resources hosted in this repository:
 1.  [Paper](paper/paper.pdf) in this repo
 2.  [Paper](https://openreview.net/pdf?id=-LFT2YicI9v) on OpenReview
 3.  [Online
-    Companion](https://www.paltmeyer.com/endogenous-macrodynamics-in-algorithmic-recourse/)
+    Companion](https://www.patalt.org/endogenous-macrodynamics-in-algorithmic-recourse/)
 4.  [IEEE SaTML Presentation
-    Slides](https://www.paltmeyer.com/content/talks/posts/2023-ieee-satml/presentation.html)
+    Slides](https://www.patalt.org/content/talks/posts/2023-ieee-satml/presentation.html)
 5.  [IEEE SaTML Poster](dev/poster/poster.pdf)
 6.  Software:
     [`AlgorithmicRecourseDynamics.jl`](https://github.com/pat-alt/AlgorithmicRecourseDynamics.jl)
