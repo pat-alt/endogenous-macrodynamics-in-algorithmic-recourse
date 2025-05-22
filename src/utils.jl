@@ -55,6 +55,11 @@ function data_dir(dir="")
     return _path
 end
 
+"""
+    load_synthetic(max_obs::Union{Nothing,Int}=nothing; artifact_name::Union{Nothing,String}=nothing, root=".", tag="camera-ready")
+
+Downloads artifacts for the synthetic data for the given `tag`.
+"""
 function load_synthetic(max_obs::Union{Nothing,Int}=nothing; artifact_name::Union{Nothing,String}=nothing, root=".", tag="camera-ready")
     artifact_name = create_artifact_name_from_path(data_dir("synthetic"), artifact_name)
     _hash = artifact_hash(artifact_name, artifact_toml)
@@ -79,6 +84,11 @@ function load_synthetic(max_obs::Union{Nothing,Int}=nothing; artifact_name::Unio
     return data
 end
 
+"""
+    load_real_world(max_obs::Union{Nothing,Int}=nothing; artifact_name::Union{Nothing,String}=nothing, root=".", tag="camera-ready")
+
+Downloads artifacts for real world data for the given `tag`.
+"""
 function load_real_world(max_obs::Union{Nothing,Int}=nothing; artifact_name::Union{Nothing,String}=nothing, root=".", tag="camera-ready")
     artifact_name = create_artifact_name_from_path(data_dir("real_world"), artifact_name)
     _hash = artifact_hash(artifact_name, artifact_toml)
@@ -173,6 +183,15 @@ function get_git_remote_url(repo_path::String)
     return LibGit2.url(origin)
 end
 
+"""
+    artifacts_to_local_dev(
+        ;
+        tag::String="jan-2023",
+        root="."
+    )
+
+Downloads all artifacts from Github to local `dev/artifacts/downloads` folder.
+"""
 function artifacts_to_local_dev(
     ;
     tag::String="jan-2023",
