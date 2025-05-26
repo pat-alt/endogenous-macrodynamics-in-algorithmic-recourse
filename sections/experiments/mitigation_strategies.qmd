@@ -6,7 +6,7 @@
 
 using Pkg; Pkg.activate(".")
 using EMAR
-using PrettyTable
+using PrettyTables
 output_path = output_dir("mitigation_strategies")
 www_path = www_dir("mitigation_strategies")
 
@@ -253,7 +253,7 @@ df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstra
 #| eval: true
 #| echo: false
 
-df = EMAR.load_bs_mitigation_synthetic()
+df = EMAR.aggregate_bs_mitigation_synthetic()
 ENV["LINES"] = size(df, 1)
 pretty_table(df)
 ```
@@ -653,7 +653,7 @@ df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstra
 #| eval: true
 #| echo: false
 
-df = EMAR.load_bs_mitigation_real_world()
+df = EMAR.aggregate_bs_mitigation_real_world()
 ENV["LINES"] = size(df, 1)
 pretty_table(df)
 ```
