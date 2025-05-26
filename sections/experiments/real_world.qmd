@@ -6,7 +6,7 @@
 
 using Pkg; Pkg.activate(".")
 using EMAR
-using PrettyTable
+using PrettyTables
 output_path = output_dir("real_world")
 www_path = www_dir("real_world")
 
@@ -84,11 +84,13 @@ results = run_experiments(
 Serialization.serialize(joinpath(output_path,"results.jls"),results)
 ```
 
-### Plots
+## Plots
 
 ```{julia}
 results = load_real_world_results()
 ```
+
+### Animated GIFs
 
 ```{julia}
 #| echo: false
@@ -218,11 +220,7 @@ df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstra
 #| eval: true
 #| echo: false
 
-_file = readdir(output_artifact_path)[contains.(readdir(output_artifact_path),"bootstrap")]
-_file = joinpath.(output_artifact_path, _file)
-df = CSV.File(_file) |> DataFrame
-df = df[.!(ismissing.(df.p_value)),:]
-df = combine(groupby(df, [:name, :scope, :data, :model, :generator]), :p_value => mean)
+df = EMAR.aggregate_bs_real_world()
 ENV["LINES"] = size(df, 1)
 pretty_table(df)
 ```
