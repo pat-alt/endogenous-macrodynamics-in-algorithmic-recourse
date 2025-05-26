@@ -145,6 +145,8 @@ gif(anim, "dev/presentation/www/real_world_performance.gif", fps=0.5)
 Plots.scalefontsizes()
 ```
 
+### Plots in Annex
+
 ```{julia}
 using Images
 line_charts = Dict()
@@ -153,7 +155,7 @@ for (data_name, res) in results
     plt = plot_res(res)
     Images.save(joinpath(www_path, "line_chart_$(data_name).png"), plt)
     line_charts[data_name] = plt
-    plt = plot(res,maximum(res.output.n))
+    plt = plot_res(res,maximum(res.output.n))
     Images.save(joinpath(www_path, "errorbar_chart_$(data_name).png"), plt)
     errorbar_charts[data_name] = plt
 end

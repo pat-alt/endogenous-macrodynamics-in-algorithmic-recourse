@@ -1,5 +1,8 @@
 using RCall
 
+"""
+Plots line charts for the results.
+"""
 function plot_res(results::ExperimentResults, scope::Symbol=:model; size=3, title=nothing, dpi=600, kwargs...)
 
     df = results.output
@@ -37,6 +40,9 @@ function plot_res(results::ExperimentResults, scope::Symbol=:model; size=3, titl
 
 end
 
+"""
+Plots error bar charts for the results.
+"""
 function plot_res(results::ExperimentResults, n::Int, scope::Symbol=:model; size=3, title=nothing, dpi=600, kwargs...)
 
     df = results.output
@@ -48,6 +54,11 @@ function plot_res(results::ExperimentResults, n::Int, scope::Symbol=:model; size
     df_plot = mapcols(x -> typeof(x) == Vector{Symbol} ? string.(x) : x, df_plot)
     df_plot.name .= [r[:name] == "mmd" ? "$(r[:name])_$(r[:scope])" : r[:name] for r in eachrow(df_plot)]
     select!(df_plot, Not(:scope))
+
+    # Variable names:
+    replace!(df_plot.model, "FluxEnsemble" => "Deep Ensemble", "FluxModel" => "MLP", "LogisticRegression" => "Linear")
+    df_plot.name = replace(df_plot.name, "mmd_domain" => "MMD (domain)", "mmd_model" => "MMD (model)", "model_performance" => "Performance", "mmd_grid" => "MMD (grid)") |> 
+        x -> uppercasefirst.(x)
 
     ncol = length(unique(df_plot.model))
     nrow = length(unique(df_plot.name))
