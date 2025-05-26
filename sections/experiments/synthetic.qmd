@@ -10,6 +10,7 @@ This notebook was used to run the experiments for the synthetic datasets and can
 
 using Pkg; Pkg.activate(".")
 using EMAR
+using PrettyTables
 output_path = output_dir("synthetic") # output directory for artifacts
 www_path = www_dir("synthetic")       # output directory for images
 data_path = data_dir("synthetic")

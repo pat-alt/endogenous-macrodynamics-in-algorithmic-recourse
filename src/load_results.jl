@@ -30,19 +30,36 @@ function load_synthetic(max_obs::Union{Nothing,Int}=nothing; artifact_name::Unio
     return data
 end
 
-function load_results(cat::String="synthetic")
-    output_path = output_dir(cat)
+function load_results(cat::String="synthetic", mitigation::Bool=false, latent::Bool=false)
+
+    # Determine output path based on inputs:
+    if mitigation
+        output_path = output_dir("mitigation_strategies")
+        if latent
+            output_path = joinpath(output_path, "results_$(cat)_latent.jls")
+        else
+            output_path = joinpath(output_path, "results_$(cat).jls")
+        end
+    else
+        output_path = joinpath(output_dir(cat), "results.jls")
+    end
+
+    # Load from correct folder:
     results = try
-        Serialization.deserialize(joinpath(output_path,"results.jls"))
+        Serialization.deserialize(output_path)
     catch
         output_path = replace(output_path, "upload" => "download")
-        Serialization.deserialize(joinpath(output_path,"results.jls"))
+        Serialization.deserialize(output_path)
     end
+
     return results
 end
 
 load_synthetic_results() = load_results("synthetic")
 load_real_world_results() = load_results("real_world")
+load_synthetic_mitigation() = load_results("synthetic", true)
+load_synthetic_mitigation_latent() = load_results("synthetic", true, true)
+load_real_world_mitigation() = load_results("real_world", true)
 
 """
     load_real_world(max_obs::Union{Nothing,Int}=nothing; artifact_name::Union{Nothing,String}=nothing, root=".", tag="camera-ready")
@@ -173,3 +190,32 @@ function artifacts_to_local_dev(
         cp(old_path, new_path, force=true)
     end
 end
+
+using CSV
+using DataFrames
+
+function load_bootstrap(cat::String="synthetic", mitigation::Bool=false, latent::Bool=false)
+    # Determine output path based on inputs:
+    if mitigation
+        output_path = output_dir("mitigation_strategies")
+        if latent
+            output_path = joinpath(output_path, "bootstrap_latent.csv")
+        else
+            output_path = joinpath(output_path, "bootstrap_$(cat).csv")
+        end
+    else
+        output_path = joinpath(output_dir(cat), "bootstrap.csv")
+    end
+    output_path = output_dir(cat)
+    _file = readdir(output_path)[contains.(readdir(output_path),"bootstrap")]
+    _file = joinpath.(output_path, _file)
+    df = CSV.File(_file) |> DataFrame
+    return df
+end
+
+load_bootstrap_synthetic() = load_bootstrap("synthetic")
+load_bootstrap_real_world() = load_bootstrap("real_world")
+load_bs_mitigation_synthetic() = load_bootstrap("synthetic", true)
+load_bs_mitigation_latent() = load_bootstrap("synthetic", true, true)
+load_bs_mitigation_real_world() = load_bootstrap("real_world", true)
+

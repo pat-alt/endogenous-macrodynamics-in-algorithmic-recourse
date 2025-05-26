@@ -6,6 +6,7 @@
 
 using Pkg; Pkg.activate(".")
 using EMAR
+using PrettyTable
 output_path = output_dir("real_world")
 www_path = www_dir("real_world")
 

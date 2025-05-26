@@ -4,8 +4,9 @@
 #| echo: false
 #| eval: true
 
-include("src/setup.jl")
-eval(setup)
+using Pkg; Pkg.activate(".")
+using EMAR
+using PrettyTable
 output_path = output_dir("mitigation_strategies")
 www_path = www_dir("mitigation_strategies")
 
@@ -71,8 +72,10 @@ Serialization.serialize(joinpath(output_path,"results_synthetic.jls"),results)
 ## Plots
 
 ```{julia}
-results = Serialization.deserialize(joinpath(output_path,"results_synthetic.jls"))
+results = EMAR.load_synthetic_mitigation()
 ```
+
+### Animated GIFs
 
 ```{julia}
 #| echo: false
@@ -156,15 +159,17 @@ gif(anim, "dev/presentation/www/mitigation_performance.gif", fps=0.5)
 Plots.scalefontsizes()
 ```
 
+### Charts in Annex
+
 ```{julia}
 using Images
 line_charts = Dict()
 errorbar_charts = Dict()
 for (data_name, res) in results
-    plt = plot(res)
+    plt = plot_res(res)
     Images.save(joinpath(www_path, "line_chart_$(data_name).png"), plt)
     line_charts[data_name] = plt
-    plt = plot(res,maximum(res.output.n))
+    plt = plot_res(res,maximum(res.output.n))
     Images.save(joinpath(www_path, "errorbar_chart_$(data_name).png"), plt)
     errorbar_charts[data_name] = plt
 end
@@ -248,11 +253,7 @@ df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstra
 #| eval: true
 #| echo: false
 
-_file = readdir(output_artifact_path)[contains.(readdir(output_artifact_path),"bootstrap_synthetic")]
-_file = joinpath.(output_artifact_path, _file)
-df = CSV.File(_file) |> DataFrame
-df = df[.!(ismissing.(df.p_value)),:]
-df = combine(groupby(df, [:name, :scope, :data, :model, :generator]), :p_value => mean)
+df = EMAR.load_bs_mitigation_synthetic()
 ENV["LINES"] = size(df, 1)
 pretty_table(df)
 ```
@@ -359,8 +360,7 @@ Serialization.serialize(joinpath(output_path,"results_synthetic_latent.jls"),res
 ```
 
 ```{julia}
-using Serialization
-results = Serialization.deserialize(joinpath(output_path,"results_synthetic_latent.jls"))
+results = EMAR.load_synthetic_mitigation_latent()
 ```
 
 ```{julia}
@@ -368,10 +368,10 @@ using Images
 line_charts = Dict()
 errorbar_charts = Dict()
 for (data_name, res) in results
-    plt = plot(res)
+    plt = plot_res(res)
     Images.save(joinpath(www_path, "line_chart_latent_$(data_name).png"), plt)
     line_charts[data_name] = plt
-    plt = plot(res,maximum(res.output.n))
+    plt = plot_res(res,maximum(res.output.n))
     Images.save(joinpath(www_path, "errorbar_chart_latent_$(data_name).png"), plt)
     errorbar_charts[data_name] = plt
 end
@@ -568,8 +568,7 @@ Serialization.serialize(joinpath(output_path,"results_real_world.jls"),results)
 ```
 
 ```{julia}
-using Serialization
-results = Serialization.deserialize(joinpath(output_path,"results_real_world.jls"))
+results = EMAR.load_real_world_mitigation()
 ```
 
 ```{julia}
@@ -577,10 +576,10 @@ using Images
 line_charts = Dict()
 errorbar_charts = Dict()
 for (data_name, res) in results
-    plt = plot(res)
+    plt = plot_res(res)
     Images.save(joinpath(www_path, "line_chart_$(data_name).png"), plt)
     line_charts[data_name] = plt
-    plt = plot(res,maximum(res.output.n))
+    plt = plot_res(res,maximum(res.output.n))
     Images.save(joinpath(www_path, "errorbar_chart_$(data_name).png"), plt)
     errorbar_charts[data_name] = plt
 end
@@ -654,11 +653,7 @@ df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstra
 #| eval: true
 #| echo: false
 
-_file = readdir(output_artifact_path)[contains.(readdir(output_artifact_path),"bootstrap_real_world")]
-_file = joinpath.(output_artifact_path, _file)
-df = CSV.File(_file) |> DataFrame
-df = df[.!(ismissing.(df.p_value)),:]
-df = combine(groupby(df, [:name, :scope, :data, :model, :generator]), :p_value => mean)
+df = EMAR.load_bs_mitigation_real_world()
 ENV["LINES"] = size(df, 1)
 pretty_table(df)
 ```

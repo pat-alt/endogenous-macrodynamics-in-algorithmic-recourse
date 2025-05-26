@@ -3,7 +3,7 @@ using RCall
 """
 Plots line charts for the results.
 """
-function plot_res(results::ExperimentResults, scope::Symbol=:model; size=3, title=nothing, dpi=600, kwargs...)
+function plot_res(results::ExperimentResults, scope::Symbol=:model; size=3, title=nothing, dpi=300, kwargs...)
 
     df = results.output
 
@@ -17,6 +17,8 @@ function plot_res(results::ExperimentResults, scope::Symbol=:model; size=3, titl
     replace!(df_plot.model, "FluxEnsemble" => "Deep Ensemble", "FluxModel" => "MLP", "LogisticRegression" => "Linear")
     df_plot.name = replace(df_plot.name, "mmd_domain" => "MMD (domain)", "mmd_model" => "MMD (model)", "model_performance" => "Performance", "mmd_grid" => "MMD (grid)") |> 
         x -> uppercasefirst.(x)
+    replace!(df_plot.generator, "Generic_conservative" => "Generic (γ=0.5)", "Generic" => "Generic (γ=0.9)", "REVISE" => "Latent")
+
 
     ncol = length(unique(df_plot.model))
     nrow = length(unique(df_plot.name))
@@ -25,6 +27,8 @@ function plot_res(results::ExperimentResults, scope::Symbol=:model; size=3, titl
     plt <- ggplot($df_plot,aes(x=n, y=mean, ymin=ymin, ymax=ymax, color=generator)) +
         geom_ribbon(aes(fill=generator), alpha=0.5) +
         geom_line() +
+        scale_fill_discrete(name="Generator:") +
+        scale_colour_discrete(name="Generator:") +
         facet_wrap(name ~ model, scale="free_y", ncol=$ncol) +
         labs(
             x = "Round",
@@ -32,7 +36,7 @@ function plot_res(results::ExperimentResults, scope::Symbol=:model; size=3, titl
             title = $title
         )
     temp_path <- file.path(tempdir(), "plot.png")
-    ggsave(temp_path,width=$ncol * $size,height=$nrow * $size * 0.8, dpi=$dpi)
+    ggsave(temp_path,width=$ncol * $size,height=$nrow * $size * 0.55, dpi=$dpi)
     """
 
     img = Images.load(rcopy(R"temp_path"))
@@ -43,7 +47,7 @@ end
 """
 Plots error bar charts for the results.
 """
-function plot_res(results::ExperimentResults, n::Int, scope::Symbol=:model; size=3, title=nothing, dpi=600, kwargs...)
+function plot_res(results::ExperimentResults, n::Int, scope::Symbol=:model; size=3, title=nothing, dpi=300, kwargs...)
 
     df = results.output
     @assert n in unique(df.n) "No results for round `n`."
@@ -59,6 +63,7 @@ function plot_res(results::ExperimentResults, n::Int, scope::Symbol=:model; size
     replace!(df_plot.model, "FluxEnsemble" => "Deep Ensemble", "FluxModel" => "MLP", "LogisticRegression" => "Linear")
     df_plot.name = replace(df_plot.name, "mmd_domain" => "MMD (domain)", "mmd_model" => "MMD (model)", "model_performance" => "Performance", "mmd_grid" => "MMD (grid)") |> 
         x -> uppercasefirst.(x)
+    replace!(df_plot.generator, "Generic_conservative" => "Generic (γ=0.5)", "Generic" => "Generic (γ=0.9)", "REVISE" => "Latent")
 
     ncol = length(unique(df_plot.model))
     nrow = length(unique(df_plot.name))
@@ -68,6 +73,8 @@ function plot_res(results::ExperimentResults, n::Int, scope::Symbol=:model; size
         geom_bar(aes(x=n, y=mean, fill=generator), stat="identity", alpha=0.5, position="dodge") +
         geom_pointrange( aes(x=n, y=mean, ymin=ymin, ymax=ymax, colour=generator), alpha=0.9, position=position_dodge(width=0.9), size=1.0) +
         facet_wrap(name ~ model, scale="free_y", ncol=$ncol) +
+        scale_fill_discrete(name="Generator:") +
+        scale_colour_discrete(name="Generator:") +
         labs(
             x = "Round",
             y = "Value",
@@ -79,7 +86,7 @@ function plot_res(results::ExperimentResults, n::Int, scope::Symbol=:model; size
             axis.ticks.x=element_blank()
         )
     temp_path <- file.path(tempdir(), "plot.png")
-    ggsave(temp_path,width=$ncol * $size,height=$nrow * $size * 0.8, dpi=$dpi)
+    ggsave(temp_path,width=$ncol * $size,height=$nrow * $size * 0.55, dpi=$dpi)
     """
 
     img = Images.load(rcopy(R"temp_path"))
@@ -142,3 +149,24 @@ function kable(
     return println(rcopy(R"ktab"))
 end
 
+"""
+Aggregate results from bootstrap.
+"""
+function aggregate_bs(cat::String="synthetic", mitigation::Bool=false, latent::Bool=false)
+    df = EMAR.load_bootstrap(cat, mitigation, latent)
+    df = df[.!(ismissing.(df.p_value)),:]
+    df = combine(groupby(df, [:name, :scope, :data, :model, :generator]), :p_value => mean)
+
+    # Variable names:
+    replace!(df.model, "FluxEnsemble" => "Deep Ensemble", "FluxModel" => "MLP", "LogisticRegression" => "Linear")
+    replace!(df.name, "mmd_grid" => "MMD (grid)", "mmd" => "MMD")
+    df.data = [replace(x, "_" => " ") |> titlecase for x in df.data]
+
+    return df
+end
+
+aggregate_bs_synthetic() = aggregate_bs("synthetic")
+aggregate_bs_real_world() = aggregate_bs("real_world")
+aggregate_bs_mitigation_synthetic() = aggregate_bs("synthetic", true)
+aggregate_bs_mitigation_latent() = aggregate_bs("synthetic", true, true)
+aggregate_bs_mitigation_real_world() = aggregate_bs("real_world", true)

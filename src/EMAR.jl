@@ -36,7 +36,7 @@ theme(:wong)
 
 # Utils
 include("utils.jl")
-include("post_processing.jl")
 include("load_results.jl")
+include("post_processing.jl")
 
 end
