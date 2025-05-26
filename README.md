@@ -1,4 +1,5 @@
 
+
 # Endogenous Macrodynamics in Algorithmic Recourse
 
 This repository contains all code, notebooks, data and empirical results
@@ -80,9 +81,65 @@ inside the target domain. Find out more in the [paper](paper/paper.pdf).
 
 ![](paper/www/mitigation.png)
 
+## Code
+
+The results can be analysed, replicated or reproduced using the code
+provided in this repository.
+
+### Clone Repo
+
+To begin with, simply clone this repository to you machine:
+
+    git clone https://github.com/pat-alt/endogenous-macrodynamics-in-algorithmic-recourse.git
+    cd endogenous-macrodynamics-in-algorithmic-recourse/ 
+
+### Julia Legacy Version
+
+The code base and its core dependency (`AlgorithmicRecourseDynamics.jl`)
+were built around 2022-2023 and have not been actively developed since
+then. For this reason, we recommend you to use one of the legacy
+versions of Julia specified in the [Project.toml](Project.toml) file.
+You can use the recommend
+[juliaup](https://github.com/JuliaLang/juliaup) version manager to do
+so. Specifically, we recommend to use Julia 1.9 as follows:
+
+    juliaup add 1.9
+    julia +1.9
+
+### Instantiate and Use Package
+
+The code in this repo is packaged. After cloning the repo and following
+the previous step to run an interactive Julia (1.9) session, you need to
+instantiate the package:
+
+``` julia
+using Pkg
+Pkg.activate(".")
+Plg.instantiate()
+```
+
+You can then start using the package:
+
+``` julia
+using EMAR
+```
+
+### Analysing Results
+
+Results are lazily loaded. To download all of them at once, simply run
+the following command:
+
+``` julia
+artifacts_to_local_dev()
+```
+
+This will create a local copy of the results in
+`dev/artifacts/download/`.
+
 ## References
 
-<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0">
 
 <div id="ref-altmeyer2023endogenous" class="csl-entry">
 

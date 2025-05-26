@@ -8,8 +8,8 @@ This notebook was used to run the experiments for the synthetic datasets and can
 #| echo: false
 #| eval: true
 
-include("src/setup.jl")
-eval(setup)
+using Pkg; Pkg.activate(".")
+using EMAR
 output_path = output_dir("synthetic") # output directory for artifacts
 www_path = www_dir("synthetic")       # output directory for images
 data_path = data_dir("synthetic")
@@ -164,9 +164,12 @@ end
 
 ## Plots
 
+
 ```{julia}
-results = Serialization.deserialize(joinpath(output_path,"results.jls"));
+results = load_synthetic_results()
 ```
+
+### Animated GIFs for Presentation
 
 ```{julia}
 #| echo: false
@@ -230,17 +233,17 @@ bar(df.group, df.total, c=:blues, lw=0, widen=false)
 plot!(1/2:(ncol(df)-1/2), df.total, lw=0, yerror=20*df.std_error, ms=10)
 ```
 
-
+### Plots in Annex
 
 ```{julia}
 using Images
 line_charts = Dict()
 errorbar_charts = Dict()
 for (data_name, res) in results
-    plt = plot(res)
+    plt = plot_res(res)
     Images.save(joinpath(www_path, "line_chart_$(data_name).png"), plt)
     line_charts[data_name] = plt
-    plt = plot(res,maximum(res.output.n))
+    plt = plot_res(res,maximum(res.output.n))
     Images.save(joinpath(www_path, "errorbar_chart_$(data_name).png"), plt)
     errorbar_charts[data_name] = plt
 end

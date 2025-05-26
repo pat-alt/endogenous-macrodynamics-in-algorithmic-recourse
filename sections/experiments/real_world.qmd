@@ -4,8 +4,8 @@
 #| echo: false
 #| eval: true
 
-include("src/setup.jl")
-eval(setup)
+using Pkg; Pkg.activate(".")
+using EMAR
 output_path = output_dir("real_world")
 www_path = www_dir("real_world")
 
@@ -86,7 +86,7 @@ Serialization.serialize(joinpath(output_path,"results.jls"),results)
 ### Plots
 
 ```{julia}
-results = Serialization.deserialize(joinpath(output_path,"results.jls"))
+results = load_real_world_results()
 ```
 
 ```{julia}
@@ -150,7 +150,7 @@ using Images
 line_charts = Dict()
 errorbar_charts = Dict()
 for (data_name, res) in results
-    plt = plot(res)
+    plt = plot_res(res)
     Images.save(joinpath(www_path, "line_chart_$(data_name).png"), plt)
     line_charts[data_name] = plt
     plt = plot(res,maximum(res.output.n))
