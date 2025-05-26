@@ -1,10 +1,19 @@
+---
+julia:
+  exeflags: ["+1.8"]
+---
+
 # Introduction
 
 ```{julia}
 #| echo: false
 
-include("src/setup.jl")
-eval(setup)
+using Pkg; Pkg.activate(".")
+using CounterfactualExplanations
+using EMAR
+using Flux
+using Markdown
+using Plots
 output_path = output_dir("poc") # output directory for artifacts
 www_path = www_dir("poc")       # output directory for images
 ```
@@ -22,7 +31,7 @@ We begin by generating the synthetic data for a simple binary classification pro
 #| fig-cap: "Linearly separable synthetic data"
 
 max_obs = 1000
-catalogue = load_synthetic(max_obs)
+catalogue = EMAR.load_synthetic(max_obs)
 counterfactual_data = catalogue[:linearly_separable]
 X = counterfactual_data.X
 ys = vec(counterfactual_data.y)
@@ -37,9 +46,9 @@ To model this data $\mathcal{D}$ we will use a linear classifier. In particular,
 ```{julia}
 n_epochs = 100
 model = Chain(Dense(2,1))
-mod = FluxModel(model)
-Models.train(mod, counterfactual_data; n_epochs=n_epochs)
-mod_orig = deepcopy(mod)
+_mod = EMAR.FluxModel(model)
+EMAR.Models.train(_mod, counterfactual_data; n_epochs=n_epochs)
+mod_orig = deepcopy(_mod)
 ```
 
 @fig-model below shows the linear separation of the two classes.
@@ -50,7 +59,7 @@ mod_orig = deepcopy(mod)
 #| fig-cap: "The baseline model: contours indicate the predicted label; dots indicate observed data points."
 
 plt_original = plot(
-    mod, counterfactual_data; zoom=0, colorbar=false, title="(a)", 
+    _mod, counterfactual_data; zoom=0, colorbar=false, title="(a)", 
     legend=false, axis=nothing, size=(400,400)
 )
 display(plt_original)
@@ -87,12 +96,12 @@ chosen_individuals = rand(candidates, Int(round(μ*length(candidates))))
 X′ = copy(X)
 y′ = copy(ys)
 factuals = select_factual(counterfactual_data,chosen_individuals)
-outcome = generate_counterfactual(factuals, 1, counterfactual_data, mod, gen; initialization=:identity)
-X′[:,chosen_individuals] = reduce(hcat, @.(selectdim(counterfactual(outcome), 3, 1)))
-y′[chosen_individuals] = reduce(vcat,@.(selectdim(counterfactual_label(outcome),3,1)))
+outcome = generate_counterfactual(factuals, 1, counterfactual_data, _mod, gen; initialization=:identity)
+X′[:,chosen_individuals] = reduce(hcat, @.(selectdim(EMAR.counterfactual(outcome), 3, 1)))
+y′[chosen_individuals] = reduce(vcat,@.(selectdim(EMAR.counterfactual_label(outcome),3,1)))
 counterfactual_data′ = CounterfactualData(X′,y′')
 plt_single = plot(
-    mod,counterfactual_data′;zoom=0,colorbar=false,title="(b)",
+    _mod,counterfactual_data′;zoom=0,colorbar=false,title="(b)",
     legend=false, axis=nothing, size=(400,400)
 )
 display(plt_single)
@@ -107,9 +116,9 @@ Suppose the agent in charge of the black-box system has provided recourse to a s
 #| label: fig-retrain
 #| fig-cap: "The retrained model."
 
-mod = Models.train(mod, counterfactual_data′)
+_mod = EMAR.Models.train(_mod, counterfactual_data′)
 plt_single_retrained = plot(
-    mod,counterfactual_data′;zoom=0,colorbar=false,title="(c)",
+    _mod,counterfactual_data′;zoom=0,colorbar=false,title="(c)",
     legend=false, axis=nothing, size=(400,400)
 )
 display(plt_single_retrained)
@@ -131,15 +140,15 @@ while i <= 10
     counterfactual_data′ = CounterfactualData(X′,y′')
     candidates = findall(y′.==0)
     chosen_individuals = rand(candidates, Int(round(μ*length(candidates))))
-    Models.train(mod, counterfactual_data′)
+    EMAR.Models.train(_mod, counterfactual_data′)
     factuals = select_factual(counterfactual_data′,chosen_individuals)
-    outcome = generate_counterfactual(factuals, 1, counterfactual_data′, mod, gen; initialization=:identity)
-    X′[:,chosen_individuals] = reduce(hcat, @.(selectdim(counterfactual(outcome), 3, 1)))
-    y′[chosen_individuals] = reduce(vcat,@.(selectdim(counterfactual_label(outcome),3,1)))
+    outcome = generate_counterfactual(factuals, 1, counterfactual_data′, _mod, gen; initialization=:identity)
+    X′[:,chosen_individuals] = reduce(hcat, @.(selectdim(EMAR.counterfactual(outcome), 3, 1)))
+    y′[chosen_individuals] = reduce(vcat,@.(selectdim(EMAR.counterfactual_label(outcome),3,1)))
     i += 1
 end
 plt_single_repeat = plot(
-    mod,counterfactual_data′;zoom=0,colorbar=false,title="(d)",
+    _mod,counterfactual_data′;zoom=0,colorbar=false,title="(d)",
     legend=false, axis=nothing, size=(400,400)
 )
 ```

@@ -54,7 +54,8 @@ execute:
   echo: true
   output: false
 
-jupyter: julia-1.8
-
+engines: ['julia']
+julia:
+  exeflags: ["+1.8"]
 
 
