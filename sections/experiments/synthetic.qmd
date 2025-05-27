@@ -3,6 +3,15 @@ julia:
   exeflags: ["+1.8"]
 ---
 
+```{julia}
+#| eval: true
+
+projectdir = splitpath(pwd()) |>
+    ss -> joinpath(ss[1:findall([s == "endogenous-macrodynamics-in-algorithmic-recourse" for s in ss])[1]]...) 
+cd(projectdir)
+```
+
+
 # Results: Synthetic Data {#sec-app-synthetic}
 
 This notebook was used to run the experiments for the synthetic datasets and can be used to reproduce the results in the paper. In the following we first run the experiments and then generate visualizations and tables.
@@ -23,11 +32,11 @@ data_path = data_dir("synthetic")
 # Artifacts:
 # Images:
 artifact_name = create_artifact_name_from_path(www_path, nothing)
-_hash = artifact_hash(artifact_name, artifact_toml)
+_hash = artifact_hash(artifact_name, artifact_toml())
 www_artifact_path = joinpath(artifact_path(_hash), artifact_name)
 # Output:
 artifact_name = create_artifact_name_from_path(output_path, nothing)
-_hash = artifact_hash(artifact_name, artifact_toml)
+_hash = artifact_hash(artifact_name, artifact_toml())
 output_artifact_path = joinpath(artifact_path(_hash), artifact_name)
 ```
 
@@ -312,7 +321,7 @@ df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstra
 
 ```{julia}
 #| output: true
-#| eval: false
+#| eval: true
 #| echo: false
 
 df = EMAR.aggregate_bs_synthetic()
@@ -328,7 +337,7 @@ pretty_table(df)
 ```{julia}
 #| echo: false
 
-using DataFrames, Statistics
+using DataFrames, Statistics, RCall
 df = results[:overlapping].output
 df = df[[x ∈ maximum(df.n) for x in df.n],:]
 gdf = groupby(df, [:generator, :model, :n, :name, :scope])
@@ -382,7 +391,7 @@ plt <- ggplot(df_plot) +
         legend.position="bottom"
     )
 temp_path <- file.path(tempdir(), "plot.png")
-ggsave(temp_path, width=$ncol * $scale_,height=$nrow * $scale_ * 0.75) 
+ggsave(temp_path, width=$ncol * $scale_,height=$nrow * $scale_ * 0.75, dpi=300) 
 """
 
 img = Images.load(rcopy(R"temp_path"))

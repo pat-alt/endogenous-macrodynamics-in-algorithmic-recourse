@@ -3,6 +3,14 @@ julia:
   exeflags: ["+1.8"]
 ---
 
+```{julia}
+#| eval: true
+
+projectdir = splitpath(pwd()) |>
+    ss -> joinpath(ss[1:findall([s == "endogenous-macrodynamics-in-algorithmic-recourse" for s in ss])[1]]...) 
+cd(projectdir)
+```
+
 # Results: Real-World Data
 
 ```{julia}
@@ -18,11 +26,11 @@ www_path = www_dir("real_world")
 # Artifacts:
 # Images:
 artifact_name = create_artifact_name_from_path(www_path, nothing)
-_hash = artifact_hash(artifact_name, EMAR.artifact_toml)
+_hash = artifact_hash(artifact_name, artifact_toml())
 www_artifact_path = joinpath(artifact_path(_hash), artifact_name)
 # Output:
 artifact_name = create_artifact_name_from_path(output_path, nothing)
-_hash = artifact_hash(artifact_name, EMAR.artifact_toml)
+_hash = artifact_hash(artifact_name, artifact_toml())
 output_artifact_path = joinpath(artifact_path(_hash), artifact_name)
 ```
 
@@ -286,7 +294,7 @@ plt <- ggplot($df_plot) +
         legend.position="bottom"
     )
 temp_path <- file.path(tempdir(), "plot.png")
-ggsave(temp_path,width=$ncol * $scale_,height=$nrow * $scale_ * 0.8) 
+ggsave(temp_path,width=$ncol * $scale_,height=$nrow * $scale_ * 0.8, dpi=300) 
 """
 
 img = Images.load(rcopy(R"temp_path"))

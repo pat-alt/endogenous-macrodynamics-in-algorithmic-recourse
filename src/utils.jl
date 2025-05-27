@@ -10,7 +10,7 @@ using StatsBase
 
 
 # Artifacts:
-artifact_toml = LazyArtifacts.find_artifacts_toml(".")
+artifact_toml(dir=".") = LazyArtifacts.find_artifacts_toml(".")
 
 """
     output_dir(dir="")

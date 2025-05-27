@@ -3,6 +3,14 @@ julia:
   exeflags: ["+1.8"]
 ---
 
+```{julia}
+#| eval: true
+
+projectdir = splitpath(pwd()) |>
+    ss -> joinpath(ss[1:findall([s == "endogenous-macrodynamics-in-algorithmic-recourse" for s in ss])[1]]...) 
+cd(projectdir)
+```
+
 # Results: Mitigation Strategies
 
 ```{julia}
@@ -18,11 +26,11 @@ www_path = www_dir("mitigation_strategies")
 # Artifacts:
 # Images:
 artifact_name = create_artifact_name_from_path(www_path, nothing)
-_hash = artifact_hash(artifact_name, artifact_toml)
+_hash = artifact_hash(artifact_name, artifact_toml())
 www_artifact_path = joinpath(artifact_path(_hash), artifact_name)
 # Output:
 artifact_name = create_artifact_name_from_path(output_path, nothing)
-_hash = artifact_hash(artifact_name, artifact_toml)
+_hash = artifact_hash(artifact_name, artifact_toml())
 output_artifact_path = joinpath(artifact_path(_hash), artifact_name)
 ```
 
@@ -317,7 +325,7 @@ plt <- ggplot($df_plot) +
     ) +
     guides(fill=guide_legend(ncol=3))
 temp_path <- file.path(tempdir(), "plot.png")
-ggsave(temp_path,width=$ncol * $scale_,height=$nrow * $scale_ * 0.8) 
+ggsave(temp_path,width=$ncol * $scale_,height=$nrow * $scale_ * 0.8, dpi=300) 
 """
 
 img = Images.load(rcopy(R"temp_path"))
@@ -491,7 +499,7 @@ plt <- ggplot($df_plot) +
     ) +
     guides(fill=guide_legend(ncol=4))
 temp_path <- file.path(tempdir(), "plot.png")
-ggsave(temp_path,width=$ncol * $scale_,height=$nrow * $scale_ * 0.8) 
+ggsave(temp_path,width=$ncol * $scale_,height=$nrow * $scale_ * 0.8, dpi=300) 
 """
 
 img = Images.load(rcopy(R"temp_path"))
