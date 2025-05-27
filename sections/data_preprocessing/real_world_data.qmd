@@ -1,10 +1,15 @@
+---
+julia:
+  exeflags: ["+1.8"]
+---
+
 ## Preprocessing Real-World Data
 
 ```{julia}
 #| echo: false
 
-include("src/setup.jl")
-eval(setup)
+using Pkg; Pkg.activate(".")
+using EMAR
 output_path = output_dir("real_world")
 www_path = www_dir("real_world")
 data_path = data_dir("real_world")

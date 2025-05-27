@@ -1,10 +1,15 @@
+---
+julia:
+  exeflags: ["+1.8"]
+---
+
 ## Generating Synthetic Data
 
 ```{julia}
 #| echo: false
 
-include("src/setup.jl")
-eval(setup)
+using Pkg; Pkg.activate(".")
+using EMAR
 output_path = output_dir("synthetic") # output directory for artifacts
 www_path = www_dir("synthetic")       # output directory for images
 data_path = data_dir("synthetic")

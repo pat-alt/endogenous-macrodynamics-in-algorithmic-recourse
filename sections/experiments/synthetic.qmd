@@ -1,3 +1,8 @@
+---
+julia:
+  exeflags: ["+1.8"]
+---
+
 # Results: Synthetic Data {#sec-app-synthetic}
 
 This notebook was used to run the experiments for the synthetic datasets and can be used to reproduce the results in the paper. In the following we first run the experiments and then generate visualizations and tables.
@@ -8,9 +13,9 @@ This notebook was used to run the experiments for the synthetic datasets and can
 #| echo: false
 #| eval: true
 
-using Pkg; Pkg.activate(".")
 using EMAR
 using PrettyTables
+using Images
 output_path = output_dir("synthetic") # output directory for artifacts
 www_path = www_dir("synthetic")       # output directory for images
 data_path = data_dir("synthetic")
@@ -307,14 +312,10 @@ df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstra
 
 ```{julia}
 #| output: true
-#| eval: true
+#| eval: false
 #| echo: false
 
-_file = readdir(output_artifact_path)[contains.(readdir(output_artifact_path),"bootstrap")]
-_file = joinpath.(output_artifact_path, _file)
-df = CSV.File(_file) |> DataFrame
-df = df[.!(ismissing.(df.p_value)),:]
-df = combine(groupby(df, [:name, :scope, :data, :model, :generator]), :p_value => mean)
+df = EMAR.aggregate_bs_synthetic()
 ENV["LINES"] = size(df, 1)
 pretty_table(df)
 ```

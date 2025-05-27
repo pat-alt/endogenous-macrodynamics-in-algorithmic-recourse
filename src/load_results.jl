@@ -93,7 +93,7 @@ function generate_artifacts(
     root=".",
     artifact_toml=joinpath(root, "Artifacts.toml"),
     deploy=true,
-    tag="jan-2023"
+    tag="thesis"
 )
 
     if deploy && !haskey(ENV, "GITHUB_TOKEN")
