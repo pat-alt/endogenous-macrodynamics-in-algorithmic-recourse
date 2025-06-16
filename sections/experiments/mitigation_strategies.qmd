@@ -85,6 +85,8 @@ Serialization.serialize(joinpath(output_path,"results_synthetic.jls"),results)
 ## Plots
 
 ```{julia}
+#| eval: true
+
 results = EMAR.load_synthetic_mitigation()
 ```
 
@@ -175,6 +177,8 @@ Plots.scalefontsizes()
 ### Charts in Annex
 
 ```{julia}
+#| eval: true
+
 using Images
 line_charts = Dict()
 errorbar_charts = Dict()
@@ -277,6 +281,7 @@ pretty_table(df)
 
 ```{julia}
 #| echo: false
+#| eval: true
 
 using DataFrames, Statistics
 df = results[:overlapping].output
@@ -373,10 +378,14 @@ Serialization.serialize(joinpath(output_path,"results_synthetic_latent.jls"),res
 ```
 
 ```{julia}
+#| eval: true
+
 results = EMAR.load_synthetic_mitigation_latent()
 ```
 
 ```{julia}
+#| eval: true
+
 using Images
 line_charts = Dict()
 errorbar_charts = Dict()
@@ -451,6 +460,7 @@ df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstra
 
 ```{julia}
 #| echo: false
+#| eval: true
 
 using DataFrames, Statistics
 df = results[:overlapping].output
@@ -581,10 +591,14 @@ Serialization.serialize(joinpath(output_path,"results_real_world.jls"),results)
 ```
 
 ```{julia}
+#| eval: true
+
 results = EMAR.load_real_world_mitigation()
 ```
 
 ```{julia}
+#| eval: true
+
 using Images
 line_charts = Dict()
 errorbar_charts = Dict()
@@ -677,6 +691,7 @@ pretty_table(df)
 
 ```{julia}
 #| echo: false
+#| eval: true
 
 using DataFrames, Statistics
 model_ = :FluxModel
@@ -728,7 +743,7 @@ plt <- ggplot($df_plot) +
     ) +
     guides(fill=guide_legend(ncol=3))
 temp_path <- file.path(tempdir(), "plot.png")
-ggsave(temp_path,width=$ncol * $scale_,height=$nrow * $scale_ * 0.85) 
+ggsave(temp_path,width=$ncol * $scale_,height=$nrow * $scale_ * 0.85, dpi=300) 
 """
 
 img = Images.load(rcopy(R"temp_path"))

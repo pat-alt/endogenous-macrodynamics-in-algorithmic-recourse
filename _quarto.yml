@@ -36,6 +36,7 @@ book:
     - sections/generators/index.qmd
     - references.qmd
 
+lightbox: true
 crossref:
   fig-prefix: Figure
   tbl-prefix: Table

@@ -17,7 +17,7 @@ function plot_res(results::ExperimentResults, scope::Symbol=:model; size=3, titl
     replace!(df_plot.model, "FluxEnsemble" => "Deep Ensemble", "FluxModel" => "MLP", "LogisticRegression" => "Linear")
     df_plot.name = replace(df_plot.name, "mmd_domain" => "MMD (domain)", "mmd_model" => "MMD (model)", "model_performance" => "Performance", "mmd_grid" => "MMD (grid)") |> 
         x -> uppercasefirst.(x)
-    replace!(df_plot.generator, "Generic_conservative" => "Generic (γ=0.5)", "Generic" => "Generic (γ=0.9)", "REVISE" => "Latent")
+    replace!(df_plot.generator, "Generic_conservative" => "Generic (γ=0.9)", "Generic" => "Generic (γ=0.5)", "REVISE" => "Latent")
 
 
     ncol = length(unique(df_plot.model))
@@ -36,7 +36,7 @@ function plot_res(results::ExperimentResults, scope::Symbol=:model; size=3, titl
             title = $title
         )
     temp_path <- file.path(tempdir(), "plot.png")
-    ggsave(temp_path,width=$ncol * $size,height=$nrow * $size * 0.55, dpi=$dpi)
+    ggsave(temp_path,width=$ncol * $size,height=$nrow * $size * 0.7, dpi=$dpi)
     """
 
     img = Images.load(rcopy(R"temp_path"))
@@ -63,7 +63,7 @@ function plot_res(results::ExperimentResults, n::Int, scope::Symbol=:model; size
     replace!(df_plot.model, "FluxEnsemble" => "Deep Ensemble", "FluxModel" => "MLP", "LogisticRegression" => "Linear")
     df_plot.name = replace(df_plot.name, "mmd_domain" => "MMD (domain)", "mmd_model" => "MMD (model)", "model_performance" => "Performance", "mmd_grid" => "MMD (grid)") |> 
         x -> uppercasefirst.(x)
-    replace!(df_plot.generator, "Generic_conservative" => "Generic (γ=0.5)", "Generic" => "Generic (γ=0.9)", "REVISE" => "Latent")
+    replace!(df_plot.generator, "Generic_conservative" => "Generic (γ=0.9)", "Generic" => "Generic (γ=0.5)", "REVISE" => "Latent")
 
     ncol = length(unique(df_plot.model))
     nrow = length(unique(df_plot.name))
@@ -86,7 +86,7 @@ function plot_res(results::ExperimentResults, n::Int, scope::Symbol=:model; size
             axis.ticks.x=element_blank()
         )
     temp_path <- file.path(tempdir(), "plot.png")
-    ggsave(temp_path,width=$ncol * $size,height=$nrow * $size * 0.55, dpi=$dpi)
+    ggsave(temp_path,width=$ncol * $size,height=$nrow * $size * 0.7, dpi=$dpi)
     """
 
     img = Images.load(rcopy(R"temp_path"))

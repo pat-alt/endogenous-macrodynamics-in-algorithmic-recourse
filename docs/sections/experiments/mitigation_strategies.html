@@ -305,7 +305,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="plots" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="plots"><span class="header-section-number">5.2</span> Plots</h2>
-<div id="14" class="cell" data-execution_count="0">
+<div id="14" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> EMAR.<span class="fu">load_synthetic_mitigation</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="animated-gifs" class="level3" data-number="5.2.1">
@@ -313,7 +313,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="charts-in-annex" class="level3" data-number="5.2.2">
 <h3 data-number="5.2.2" class="anchored" data-anchor-id="charts-in-annex"><span class="header-section-number">5.2.2</span> Charts in Annex</h3>
-<div id="20" class="cell" data-execution_count="0">
+<div id="20" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Images</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>line_charts <span class="op">=</span> <span class="fu">Dict</span>()</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>errorbar_charts <span class="op">=</span> <span class="fu">Dict</span>()</span>
@@ -541,10 +541,10 @@ Figure&nbsp;5.3: Chart in paper
 <span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="bu">Serialization</span>.<span class="fu">serialize</span>(<span class="fu">joinpath</span>(output_path,<span class="st">"results_synthetic_latent.jls"</span>),results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="40" class="cell" data-execution_count="0">
+<div id="40" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> EMAR.<span class="fu">load_synthetic_mitigation_latent</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="42" class="cell" data-execution_count="0">
+<div id="42" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Images</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>line_charts <span class="op">=</span> <span class="fu">Dict</span>()</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>errorbar_charts <span class="op">=</span> <span class="fu">Dict</span>()</span>
@@ -793,10 +793,10 @@ Figure&nbsp;5.6: Chart in paper
 <span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="bu">Serialization</span>.<span class="fu">serialize</span>(<span class="fu">joinpath</span>(output_path,<span class="st">"results_real_world.jls"</span>),results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="64" class="cell" data-execution_count="0">
+<div id="64" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> EMAR.<span class="fu">load_real_world_mitigation</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="66" class="cell" data-execution_count="0">
+<div id="66" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Images</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>line_charts <span class="op">=</span> <span class="fu">Dict</span>()</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>errorbar_charts <span class="op">=</span> <span class="fu">Dict</span>()</span>

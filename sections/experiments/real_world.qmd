@@ -100,6 +100,8 @@ Serialization.serialize(joinpath(output_path,"results.jls"),results)
 ## Plots
 
 ```{julia}
+#| eval: true
+
 results = load_real_world_results()
 ```
 
@@ -164,6 +166,8 @@ Plots.scalefontsizes()
 ### Plots in Annex
 
 ```{julia}
+#| eval: true
+
 using Images
 line_charts = Dict()
 errorbar_charts = Dict()
@@ -244,6 +248,7 @@ pretty_table(df)
 
 ```{julia}
 #| echo: false
+#| eval: true
 
 using DataFrames, Statistics
 model_ = :FluxEnsemble

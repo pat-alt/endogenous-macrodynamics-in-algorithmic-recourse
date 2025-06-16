@@ -181,6 +181,8 @@ end
 
 
 ```{julia}
+#| eval: true
+
 results = load_synthetic_results()
 ```
 
@@ -251,6 +253,8 @@ plot!(1/2:(ncol(df)-1/2), df.total, lw=0, yerror=20*df.std_error, ms=10)
 ### Plots in Annex
 
 ```{julia}
+#| eval: true
+
 using Images
 line_charts = Dict()
 errorbar_charts = Dict()
@@ -335,6 +339,7 @@ pretty_table(df)
 @fig-paper shows the chart that went into the paper.
 
 ```{julia}
+#| eval: true
 #| echo: false
 
 using DataFrames, Statistics, RCall
