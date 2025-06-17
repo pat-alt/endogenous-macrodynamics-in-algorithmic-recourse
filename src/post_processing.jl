@@ -170,3 +170,15 @@ aggregate_bs_real_world() = aggregate_bs("real_world")
 aggregate_bs_mitigation_synthetic() = aggregate_bs("synthetic", true)
 aggregate_bs_mitigation_latent() = aggregate_bs("synthetic", true, true)
 aggregate_bs_mitigation_real_world() = aggregate_bs("real_world", true)
+
+"""
+Helper function to quickly generate a Markdown image include.
+"""
+function get_img_command(data_names, full_paths, fig_labels; fig_caption="", width=100)
+    fig_cap = fig_caption == "" ? fig_caption : "$fig_caption "
+    return [
+        "![$(fig_cap)Data: $(nm).](/$pth){#$(lbl) width=$(width)%}"
+        for (nm, pth, lbl) in zip(data_names, full_paths, fig_labels)
+    ]
+end
+

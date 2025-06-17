@@ -16,7 +16,7 @@ cd(projectdir)
 
 This notebook was used to run the experiments for the synthetic datasets and can be used to reproduce the results in the paper. In the following we first run the experiments and then generate visualizations and tables.
 
-## Experiment
+## Running the Experiment
 
 ```{julia}
 #| echo: false
@@ -28,6 +28,8 @@ using Images
 output_path = output_dir("synthetic") # output directory for artifacts
 www_path = www_dir("synthetic")       # output directory for images
 data_path = data_dir("synthetic")
+www_paper_path = mkpath("paper/www/appendix/synthetic/")
+data_names = ["Circles", "Linearly Separable", "Moons", "Overlapping"]
 
 # Artifacts:
 # Images:
@@ -177,8 +179,7 @@ for (name, plts) in plot_dict
 end
 ```
 
-## Plots
-
+## Results
 
 ```{julia}
 #| eval: true
@@ -261,62 +262,69 @@ errorbar_charts = Dict()
 for (data_name, res) in results
     plt = plot_res(res)
     Images.save(joinpath(www_path, "line_chart_$(data_name).png"), plt)
+    Images.save(joinpath(www_paper_path, "line_chart_$(data_name).png"), plt)
     line_charts[data_name] = plt
     plt = plot_res(res,maximum(res.output.n))
     Images.save(joinpath(www_path, "errorbar_chart_$(data_name).png"), plt)
+    Images.save(joinpath(www_paper_path, "errorbar_chart_$(data_name).png"), plt)
     errorbar_charts[data_name] = plt
 end
 ```
 
 ### Line Charts
 
-@fig-line shows the evolution of the evaluation metrics over the course of the experiment.
-
 ```{julia}
-#| output: true
-#| fig-cap: "Line Charts"
-#| fig-subcap: 
-#|      - "Circles"
-#|      - "Linearly Separable"
-#|      - "Moons"
-#|      - "Overlapping"
-#| layout-ncol: 1
-#| label: fig-line
 #| eval: true
+#| output: asis
 #| echo: false
 
-img_files = readdir(www_artifact_path)[contains.(readdir(www_artifact_path),"line_chart")]
-img_files = joinpath.(www_artifact_path,img_files)
-for img in img_files
-    display(Images.load(img))
-end
+fig_label_prefix = "line"
+fig_labels = (nm -> "fig-$(fig_label_prefix)-$nm").(replace.(lowercase.(data_names), " " => "-"))
+_str = "The evolution of the evaluation metrics over the course of the experiment is shown for different datasets in @$(fig_labels[1]) to @$(fig_labels[end])."
+println(_str)
 ```
+
+```{julia}
+#| eval: true
+#| output: asis
+#| echo: false
+ 
+str_pattern = "line_chart"
+fig_caption = "Evolution of evaluation metrics over the course of the experiment."
+full_paths = joinpath.(www_paper_path, readdir(www_paper_path)[contains.(readdir(www_paper_path), str_pattern)])
+include_img_commands = EMAR.get_img_command(data_names, full_paths, fig_labels; fig_caption) 
+_str = join(include_img_commands, "\n\n")
+println(_str)
+```
+
 
 ### Error Bar Charts
 
-@fig-error shows the evaluation metrics at the end of the experiments.
-
 ```{julia}
-#| output: true
-#| fig-cap: "Error Bar Charts"
-#| fig-subcap: 
-#|      - "Circles"
-#|      - "Linearly Separable"
-#|      - "Moons"
-#|      - "Overlapping"
-#| layout-ncol: 1
-#| label: fig-error
 #| eval: true
+#| output: asis
 #| echo: false
 
-img_files = readdir(www_artifact_path)[contains.(readdir(www_artifact_path),"errorbar_chart")]
-img_files = joinpath.(www_artifact_path,img_files)
-for img in img_files
-    display(Images.load(img))
-end
+fig_label_prefix = "errorbar"
+fig_labels = (nm -> "fig-$(fig_label_prefix)-$nm").(replace.(lowercase.(data_names), " " => "-"))
+_str = "The evaluation metrics at the end of the experiment are shown for different datasets in @$(fig_labels[1]) to @$(fig_labels[end])."
+println(_str)
 ```
 
-## Bootstrap
+```{julia}
+#| eval: true
+#| output: asis
+#| echo: false
+ 
+str_pattern = "errorbar"
+fig_caption = "Evaluation metrics at the end of the experiment."
+full_paths = joinpath.(www_paper_path, readdir(www_paper_path)[contains.(readdir(www_paper_path), str_pattern)])
+include_img_commands = EMAR.get_img_command(data_names, full_paths, fig_labels; fig_caption) 
+_str = join(include_img_commands, "\n\n")
+println(_str)
+```
+
+### Bootstrap
 
 ```{julia}
 n_bootstrap = 100
@@ -334,7 +342,7 @@ pretty_table(df)
 ```
 
 
-## Chart in paper {#sec-app-synthetic-paper}
+### Chart in paper (Figure 3) {#sec-app-synthetic-paper}
 
 @fig-paper shows the chart that went into the paper.
 

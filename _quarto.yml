@@ -36,7 +36,6 @@ book:
     - sections/generators/index.qmd
     - references.qmd
 
-lightbox: true
 crossref:
   fig-prefix: Figure
   tbl-prefix: Table
@@ -46,8 +45,16 @@ bibliography: bib.bib
 format:
   html:
     theme: cosmo
+    toc: true
+    toc-depth: 5
+    code-fold: true
   epub:
     cover-image: paper/www/poc.png
+
+lightbox:
+  match: auto
+  effect: zoom
+  loop: false
 
 execute: 
   freeze: auto

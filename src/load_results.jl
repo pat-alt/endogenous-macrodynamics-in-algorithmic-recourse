@@ -171,7 +171,7 @@ Downloads all artifacts from Github to local `dev/artifacts/download` folder.
 """
 function artifacts_to_local_dev(
     ;
-    tag::String="jan-2023",
+    tag::String="thesis",
     root="."
 )
     artifact_toml = joinpath(root, "Artifacts.toml")

@@ -159,6 +159,8 @@ plt_single_repeat = plot(
 )
 ```
 
+### Chart in paper (Figure 1)
+
 ```{julia}
 #| output: true
 #| label: fig-final
@@ -179,6 +181,8 @@ In the paper, we propose three simple mitigation strategies:
 3. Gravitational Counterfactual Explanations 
 
 @fig-mitigate shows an illustrative example that demonstrates the differences in counterfactual outcomes when using the various mitigation strategies compared to the baseline approach, that is, Wachter with $\gamma=0.5$: choosing a higher decision threshold pushes the counterfactual a little further into the target domain; this effect is even stronger for ClaPROAR; finally, using the Gravitational generator the counterfactual ends up all the way inside the target domain. 
+
+### Chart in paper (Figure 5)
 
 ```{julia}
 #| eval: false

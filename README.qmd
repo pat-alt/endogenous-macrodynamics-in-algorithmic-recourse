@@ -54,11 +54,11 @@ cd endogenous-macrodynamics-in-algorithmic-recourse/
 
 ### Julia Legacy Version
 
-The code base and its core dependency (`AlgorithmicRecourseDynamics.jl`) were built around 2022-2023 and have not been actively developed since then. For this reason, we recommend you to use one of the legacy versions of Julia specified in the [Project.toml](Project.toml) file. You can use the recommend [juliaup](https://github.com/JuliaLang/juliaup) version manager to do so. Specifically, we recommend to use Julia 1.9 as follows:
+The code base and its core dependency (`AlgorithmicRecourseDynamics.jl`) were built around 2022-2023 and have not been actively developed since then. For this reason, we recommend you to use one of the legacy versions of Julia specified in the [Project.toml](Project.toml) file. You can use the recommend [juliaup](https://github.com/JuliaLang/juliaup) version manager to do so. Specifically, we recommend to use Julia 1.8 as follows:
 
 ```
-juliaup add 1.9
-julia +1.9
+juliaup add 1.8
+julia +1.8
 ```
 
 ### Instantiate and Use Package
@@ -93,7 +93,5 @@ Alternatively, you can download results selectively:
 synthetic = load_synthetic()    # synthetic datasets
 real_world = load_real_world()  # real-world datasets
 ```
-
-
 
 ## References
