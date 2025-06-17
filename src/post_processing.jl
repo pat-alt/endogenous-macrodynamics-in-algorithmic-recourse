@@ -158,9 +158,14 @@ function aggregate_bs(cat::String="synthetic", mitigation::Bool=false, latent::B
     df = combine(groupby(df, [:name, :scope, :data, :model, :generator]), :p_value => mean)
 
     # Variable names:
-    replace!(df.model, "FluxEnsemble" => "Deep Ensemble", "FluxModel" => "MLP", "LogisticRegression" => "Linear")
-    replace!(df.name, "mmd_grid" => "MMD (grid)", "mmd" => "MMD")
+    df.name[df.scope .== "model" .&& df.name .== "mmd_grid"] .= "PP MMD (grid)"
+    df.name[df.scope .== "model" .&& df.name .== "mmd"] .= "PP MMD"
+    df.name[df.scope .== "domain" .&& df.name .== "mmd"] .= "MMD"
     df.data = [replace(x, "_" => " ") |> titlecase for x in df.data]
+    replace!(df.model, "FluxEnsemble" => "Deep Ensemble", "FluxModel" => "MLP", "LogisticRegression" => "Linear")
+    df.generator .= convert.(String, df.generator)
+    replace!(df.generator, "Generic_conservative" => "Generic (γ=0.9)", "Generic" => "Generic (γ=0.5)", "REVISE" => "Latent")
+    select!(df, Not(:scope))
 
     return df
 end

@@ -338,7 +338,19 @@ df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstra
 
 df = EMAR.aggregate_bs_synthetic()
 ENV["LINES"] = size(df, 1)
-pretty_table(df)
+header = [
+    "Metric",
+    "Data",
+    "Model",
+    "Generator",
+    "p-value",
+]
+
+pretty_table(
+    df;
+    backend = Val(:html),
+    header = header,
+)
 ```
 
 
