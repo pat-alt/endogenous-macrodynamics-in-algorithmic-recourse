@@ -1,5 +1,11 @@
 
 
+<figure>
+<a href="https://doi.org/10.5281/zenodo.15309163"><img
+src="https://zenodo.org/badge/580005033.svg" /></a>
+<figcaption>DOI</figcaption>
+</figure>
+
 # Endogenous Macrodynamics in Algorithmic Recourse
 
 This repository contains all code, notebooks, data and empirical results
