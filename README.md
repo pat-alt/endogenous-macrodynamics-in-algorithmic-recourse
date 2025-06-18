@@ -2,11 +2,13 @@
 
 # Endogenous Macrodynamics in Algorithmic Recourse
 
-[![](https://zenodo.org/badge/580005033.svg)](https://doi.org/10.5281/zenodo.15309163)
-
 This repository contains all code, notebooks, data and empirical results
 for our conference paper “Endogenous Macrodynamics in Algorithmic
 Recourse” (Altmeyer et al. 2023).
+
+[![](https://zenodo.org/badge/580005033.svg)](https://doi.org/10.5281/zenodo.15309163)
+[![License:
+MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Below is a list of relevant resources hosted in this repository:
 
