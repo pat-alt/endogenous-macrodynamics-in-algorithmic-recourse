@@ -51,7 +51,7 @@ git-tree-sha1 = "4b3e59909edf2d30af92d390fcf5a6e2592f7ae0"
 lazy = true
 
     [[dev-artifacts-upload-www-mitigation_strategies.download]]
-    sha256 = "01b73a8f4d69f4d059f55f01118bea22a62e02bb69f7d5501cb5f257361d8013"
+    sha256 = "cbe549c62feb2f1843c3272ee5c6d4dc9ecaa33266b61291c995286a7ab099a9"
     url = "https://github.com/pat-alt/endogenous-macrodynamics-in-algorithmic-recourse/releases/download/thesis/dev-artifacts-upload-www-mitigation_strategies.tar.gz"
 
 [dev-artifacts-upload-www-real_world]
@@ -59,13 +59,13 @@ git-tree-sha1 = "ade6ba6b4298a3abee96b1744b51c077ad47c8ad"
 lazy = true
 
     [[dev-artifacts-upload-www-real_world.download]]
-    sha256 = "b559fb4ee7ec75fc6d8f7d497fdf1c19866e3c10acd2dd077492fafeef732548"
+    sha256 = "7a4fcf619b45f77e4f66d24ab33a1ca88a22f75c5c4bddcd69bf91e06be578a5"
     url = "https://github.com/pat-alt/endogenous-macrodynamics-in-algorithmic-recourse/releases/download/thesis/dev-artifacts-upload-www-real_world.tar.gz"
 
 [dev-artifacts-upload-www-synthetic]
-git-tree-sha1 = "1703737e8a6c7102d6fdf360e0a52c572302aac7"
+git-tree-sha1 = "bd563eedc5c78fa5c2cc22b808d7724a64f37b2a"
 lazy = true
 
     [[dev-artifacts-upload-www-synthetic.download]]
-    sha256 = "d328e748e06d2b985d4efb24af544811d0db2f4984daf535d7a72ca6fc5635f0"
+    sha256 = "83702c250cbb80d6ce411afcd0cfa89d9c4d944a6a0635c8eec490de4d1172d3"
     url = "https://github.com/pat-alt/endogenous-macrodynamics-in-algorithmic-recourse/releases/download/thesis/dev-artifacts-upload-www-synthetic.tar.gz"
