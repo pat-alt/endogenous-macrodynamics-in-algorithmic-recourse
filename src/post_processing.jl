@@ -193,8 +193,13 @@ function aggregate_bs(
     df.data = [replace(x, "_" => " ") |> titlecase for x in df.data]
     replace!(df.model, "FluxEnsemble" => "Deep Ensemble", "FluxModel" => "MLP", "LogisticRegression" => "Linear")
     df.generator .= convert.(String, df.generator)
-    replace!(df.generator, "Generic_conservative" => "Generic (γ=0.9)", "Generic" => "Generic (γ=0.5)", "REVISE" => "Latent")
+    replace!(df.generator, "Generic_conservative" => "Generic (γ=0.9)", "Generic" => "Generic (γ=0.5)", "REVISE" => "Latent", "Latent_conservative" => "Latent (γ=0.9)")
+    if any(df.generator .== "Latent (γ=0.9)")
+        replace!(df.generator, "Latent" => "Latent (γ=0.5)")
+    end
     select!(df, Not(:scope))
+    select!(df, :name, :generator, Not(:name, :generator))
+    sort!(df)
 
     if !isnothing(backend)
         return tabulate_bs(df, backend, alpha; header, kwrgs...)

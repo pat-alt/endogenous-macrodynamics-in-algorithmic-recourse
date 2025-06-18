@@ -206,10 +206,7 @@ function load_bootstrap(cat::String="synthetic", mitigation::Bool=false, latent:
     else
         output_path = joinpath(output_dir(cat), "bootstrap.csv")
     end
-    output_path = output_dir(cat)
-    _file = readdir(output_path)[contains.(readdir(output_path),"bootstrap")]
-    _file = joinpath.(output_path, _file)
-    df = CSV.File(_file) |> DataFrame
+    df = CSV.read(output_path, DataFrame) 
     return df
 end
 
