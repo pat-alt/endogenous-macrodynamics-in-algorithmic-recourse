@@ -7,8 +7,6 @@ for our conference paper “Endogenous Macrodynamics in Algorithmic
 Recourse” (Altmeyer et al. 2023).
 
 [![](https://zenodo.org/badge/580005033.svg)](https://doi.org/10.5281/zenodo.15309163)
-[![License:
-MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![License](https://img.shields.io/github/license/pat-alt/endogenous-macrodynamics-in-algorithmic-recourse.png)](LICENSE)
 
 Below is a list of relevant resources hosted in this repository:
