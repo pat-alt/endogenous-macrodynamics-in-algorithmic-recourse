@@ -1,3 +1,4 @@
+using PrettyTables
 using RCall
 
 """
@@ -149,10 +150,38 @@ function kable(
     return println(rcopy(R"ktab"))
 end
 
+function tabulate_bs(df::DataFrame, backend::Val{:html}, alpha::AbstractFloat; kwrgs...)
+    hl = HtmlHighlighter(
+       (data, i, j) -> (j == 5) && data[i, 5] < alpha,
+       HtmlDecoration(font_weight = "bold")
+    )
+    pretty_table(
+        df;
+        backend = backend,
+        highlighters = (hl,),
+        kwrgs...
+    )
+end
+
 """
 Aggregate results from bootstrap.
 """
-function aggregate_bs(cat::String="synthetic", mitigation::Bool=false, latent::Bool=false)
+function aggregate_bs(
+    cat::String="synthetic", 
+    mitigation::Bool=false, 
+    latent::Bool=false;
+    alpha::AbstractFloat = 0.05,
+    backend::Union{Nothing,Val} = nothing,
+    header = [
+        "Metric",
+        "Data",
+        "Model",
+        "Generator",
+        "p-value",
+    ],
+    kwrgs...
+)
+
     df = EMAR.load_bootstrap(cat, mitigation, latent)
     df = df[.!(ismissing.(df.p_value)),:]
     df = combine(groupby(df, [:name, :scope, :data, :model, :generator]), :p_value => mean)
@@ -167,10 +196,14 @@ function aggregate_bs(cat::String="synthetic", mitigation::Bool=false, latent::B
     replace!(df.generator, "Generic_conservative" => "Generic (γ=0.9)", "Generic" => "Generic (γ=0.5)", "REVISE" => "Latent")
     select!(df, Not(:scope))
 
+    if !isnothing(backend)
+        return tabulate_bs(df, backend, alpha; header, kwrgs...)
+    end
+
     return df
 end
 
-aggregate_bs_synthetic() = aggregate_bs("synthetic")
+aggregate_bs_synthetic(; kwrgs...) = aggregate_bs("synthetic"; kwrgs...)
 aggregate_bs_real_world() = aggregate_bs("real_world")
 aggregate_bs_mitigation_synthetic() = aggregate_bs("synthetic", true)
 aggregate_bs_mitigation_latent() = aggregate_bs("synthetic", true, true)

@@ -345,11 +345,15 @@ header = [
     "Generator",
     "p-value",
 ]
-
+hl = HtmlHighlighter(
+   (data, i, j) -> (j == 5) && data[i, 5] < 0.05,
+   HtmlDecoration(font_weight = "bold")
+)
 pretty_table(
     df;
     backend = Val(:html),
     header = header,
+    highlighters = (hl,),
 )
 ```
 
