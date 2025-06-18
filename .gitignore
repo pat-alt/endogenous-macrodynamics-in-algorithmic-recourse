@@ -3,3 +3,4 @@ dev/artifacts/upload/
 dev/artifacts/download/
 
 *.DS_Store
+Manifest.toml
