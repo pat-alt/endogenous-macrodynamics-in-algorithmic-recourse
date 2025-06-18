@@ -1,15 +1,31 @@
+```{julia}
+#| eval: true
+
+projectdir = splitpath(pwd()) |>
+    ss -> joinpath(ss[1:findall([s == "endogenous-macrodynamics-in-algorithmic-recourse" for s in ss])[1]]...) 
+cd(projectdir)
+```
+
 ## Generating Synthetic Data
 
 ```{julia}
 #| echo: false
+#| eval: true
 
-include("src/setup.jl")
-eval(setup)
+using CSV
+using DataFrames
+using EMAR
+using MLJBase
+using Plots
+using Random
 output_path = output_dir("synthetic") # output directory for artifacts
 www_path = www_dir("synthetic")       # output directory for images
 data_path = data_dir("synthetic")
-```
 
+# Setup
+Random.seed!(42)              # global seed to allow for reproducibility
+theme(:wong)
+```
 
 ```{julia}
 n = 1000
@@ -45,9 +61,11 @@ CSV.write(joinpath(data_path, "moons.csv"),df)
 generate_artifacts(data_path)
 ```
 
+### Chart in paper (Figure 2)
 
 ```{julia}
 #| output: true
+#| eval: true
 
 catalogue = load_synthetic()
 function plot_data(data,title)

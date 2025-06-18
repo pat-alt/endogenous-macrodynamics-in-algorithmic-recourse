@@ -1,22 +1,37 @@
-# Results: Mitigation Strategies
+---
+julia:
+  exeflags: ["+1.8"]
+---
+
+```{julia}
+#| eval: true
+
+projectdir = splitpath(pwd()) |>
+    ss -> joinpath(ss[1:findall([s == "endogenous-macrodynamics-in-algorithmic-recourse" for s in ss])[1]]...) 
+cd(projectdir)
+```
+
+# Mitigation Strategies
 
 ```{julia}
 #| echo: false
 #| eval: true
 
-include("src/setup.jl")
-eval(setup)
+using EMAR
+using PrettyTables
+using Images
 output_path = output_dir("mitigation_strategies")
 www_path = www_dir("mitigation_strategies")
+www_paper_path = mkpath("paper/www/appendix/mitigation/")
 
 # Artifacts:
 # Images:
 artifact_name = create_artifact_name_from_path(www_path, nothing)
-_hash = artifact_hash(artifact_name, artifact_toml)
+_hash = artifact_hash(artifact_name, artifact_toml())
 www_artifact_path = joinpath(artifact_path(_hash), artifact_name)
 # Output:
 artifact_name = create_artifact_name_from_path(output_path, nothing)
-_hash = artifact_hash(artifact_name, artifact_toml)
+_hash = artifact_hash(artifact_name, artifact_toml())
 output_artifact_path = joinpath(artifact_path(_hash), artifact_name)
 ```
 
@@ -36,7 +51,11 @@ generators = Dict(
 )
 ```
 
-## Synthetic
+## Mitigation Strategies
+
+### Running the Experiment
+
+#### Synthetic
 
 ```{julia}
 max_obs = 1000
@@ -68,11 +87,89 @@ results = run_experiments(
 Serialization.serialize(joinpath(output_path,"results_synthetic.jls"),results)
 ```
 
-## Plots
+#### Real World
 
 ```{julia}
-results = Serialization.deserialize(joinpath(output_path,"results_synthetic.jls"))
+models = [
+    :LogisticRegression, 
+    :FluxModel, 
+    :FluxEnsemble,
+]
+opt = Flux.Descent(0.01) 
+generators = Dict(
+    :Generic=>GenericGenerator(opt = opt, decision_threshold=0.5),
+    :Latent=>REVISEGenerator(opt = opt),
+    :Generic_conservative=>GenericGenerator(opt = opt, decision_threshold=0.9),
+    :Gravitational=>GravitationalGenerator(opt = opt),
+    :ClapROAR=>ClapROARGenerator(opt = opt)
+)
 ```
+
+```{julia}
+max_obs = 2500
+data_path = data_dir("real_world")
+data_sets = load_real_world(max_obs)
+choices = [
+    :cal_housing, 
+    :credit_default, 
+    :gmsc, 
+]
+data_sets = filter(p -> p[1] in choices, data_sets)
+```
+
+```{julia}
+using CounterfactualExplanations.DataPreprocessing: unpack
+bs = 500
+function data_loader(data::CounterfactualData)
+    X, y = unpack(data)
+    data = Flux.DataLoader((X,y),batchsize=bs)
+    return data
+end
+model_params = (batch_norm=false,n_hidden=64,n_layers=3,dropout=true,p_dropout=0.1)
+```
+
+```{julia}
+experiments = set_up_experiments(
+    data_sets,models,generators; 
+    pre_train_models=100, model_params=model_params, 
+    data_loader=data_loader
+)
+```
+
+```{julia}
+n_evals = 5
+n_rounds = 50
+evaluate_every = Int(round(n_rounds/n_evals))
+n_folds = 5
+n_samples = 10000
+T = 100
+generative_model_params = (epochs=250, latent_dim=8)
+results = run_experiments(
+    experiments;
+    save_path=output_path,evaluate_every=evaluate_every,n_rounds=n_rounds, n_folds=n_folds, T=T, n_samples=n_samples,
+    generative_model_params=generative_model_params
+)
+Serialization.serialize(joinpath(output_path,"results_real_world.jls"),results)
+```
+
+### Results
+
+```{julia}
+#| eval: true
+
+data_names = [
+    "California Housing",
+    "Circles",
+    "Credit Default",
+    "GMSC",
+    "Linearly Separable", 
+    "Moons", 
+    "Overlapping"
+]
+results = merge(EMAR.load_synthetic_mitigation(), EMAR.load_real_world_mitigation()) 
+```
+
+#### Animated GIFs
 
 ```{julia}
 #| echo: false
@@ -156,113 +253,126 @@ gif(anim, "dev/presentation/www/mitigation_performance.gif", fps=0.5)
 Plots.scalefontsizes()
 ```
 
+
 ```{julia}
+#| eval: true
+
 using Images
 line_charts = Dict()
 errorbar_charts = Dict()
 for (data_name, res) in results
-    plt = plot(res)
+    plt = plot_res(res)
     Images.save(joinpath(www_path, "line_chart_$(data_name).png"), plt)
+    Images.save(joinpath(www_paper_path, "line_chart_$(data_name).png"), plt)
     line_charts[data_name] = plt
-    plt = plot(res,maximum(res.output.n))
+    plt = plot_res(res,maximum(res.output.n))
     Images.save(joinpath(www_path, "errorbar_chart_$(data_name).png"), plt)
+    Images.save(joinpath(www_paper_path, "errorbar_chart_$(data_name).png"), plt)
     errorbar_charts[data_name] = plt
 end
 ```
 
-### Line Charts
-
-@fig-mit-line shows the evolution of the evaluation metrics over the course of the experiment.
+#### Line Charts
 
 ```{julia}
-#| output: true
-#| fig-cap: "Line Charts"
-#| fig-subcap: 
-#|      - "California Housing"
-#|      - "Circles"
-#|      - "Credit Default"
-#|      - "GMSC"
-#|      - "Linearly Separable"
-#|      - "Moons"
-#|      - "Overlapping"
-#| layout-ncol: 1
-#| label: fig-mit-line
 #| eval: true
+#| output: asis
+#| echo: false
 
-choices = [
-    :linearly_separable, 
-    :overlapping, 
-    :circles, 
-    :moons,
-]
-img_files = readdir(www_artifact_path)[contains.(readdir(www_artifact_path),"line_chart") .&& .!contains.(readdir(www_artifact_path),"latent")]
-img_files = img_files[Bool.(reduce(+, map(choice -> contains.(img_files, string(choice)), choices)))]
-img_files = joinpath.(www_artifact_path,img_files)
-for img in img_files
-    display(load(img))
-end
+fig_label_prefix = "mit-line"
+fig_labels = (nm -> "fig-$(fig_label_prefix)-$nm").(replace.(lowercase.(data_names), " " => "-"))
+_str = "The evolution of the evaluation metrics over the course of the experiment is shown for different datasets in @$(fig_labels[1]) to @$(fig_labels[end])."
+println(_str)
 ```
-
-### Error Bar Charts
-
-@fig-mit-error shows the evaluation metrics at the end of the experiments.
 
 ```{julia}
-#| output: true
-#| fig-cap: "Error Bar Charts"
-#| fig-subcap: 
-#|      - "California Housing"
-#|      - "Circles"
-#|      - "Credit Default"
-#|      - "GMSC"
-#|      - "Linearly Separable"
-#|      - "Moons"
-#|      - "Overlapping"
-#| layout-ncol: 1
-#| label: fig-mit-error
 #| eval: true
-
-choices = [
-    :linearly_separable, 
-    :overlapping, 
-    :circles, 
-    :moons,
-]
-img_files = readdir(www_artifact_path)[contains.(readdir(www_artifact_path),"errorbar_chart") .&& .!contains.(readdir(www_artifact_path),"latent")]
-img_files = img_files[Bool.(reduce(+, map(choice -> contains.(img_files, string(choice)), choices)))]
-img_files = joinpath.(www_artifact_path,img_files)
-for img in img_files
-    display(load(img))
-end
+#| output: asis
+#| echo: false
+ 
+str_pattern = "line_chart"
+fig_caption = "Evolution of evaluation metrics over the course of the experiment."
+full_paths = joinpath.(www_paper_path, readdir(www_paper_path)[contains.(readdir(www_paper_path), str_pattern)])
+include_img_commands = EMAR.get_img_command(data_names, full_paths, fig_labels; fig_caption) 
+_str = join(include_img_commands, "\n\n")
+println(_str)
 ```
 
-## Bootstrap
+
+#### Error Bar Charts
+
+```{julia}
+#| eval: true
+#| output: asis
+#| echo: false
+
+fig_label_prefix = "mit-errorbar"
+fig_labels = (nm -> "fig-$(fig_label_prefix)-$nm").(replace.(lowercase.(data_names), " " => "-"))
+_str = "The evaluation metrics at the end of the experiment are shown for different datasets in @$(fig_labels[1]) to @$(fig_labels[end])."
+println(_str)
+```
+
+```{julia}
+#| eval: true
+#| output: asis
+#| echo: false
+ 
+str_pattern = "errorbar"
+fig_caption = "Evaluation metrics at the end of the experiment."
+full_paths = joinpath.(www_paper_path, readdir(www_paper_path)[contains.(readdir(www_paper_path), str_pattern)])
+include_img_commands = EMAR.get_img_command(data_names, full_paths, fig_labels; fig_caption) 
+_str = join(include_img_commands, "\n\n")
+println(_str)
+```
+
+#### Bootstrap
+
+##### Synthetic
 
 ```{julia}
 n_bootstrap = 100
 df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstrap_synthetic.csv"))
 ```
 
-```{julia}
-#| output: true
-#| eval: true
-#| echo: false
+@tbl-bs-mit-synthetic presents the tests for statistical significance of the estimated MMD metrics.
 
-_file = readdir(output_artifact_path)[contains.(readdir(output_artifact_path),"bootstrap_synthetic")]
-_file = joinpath.(output_artifact_path, _file)
-df = CSV.File(_file) |> DataFrame
-df = df[.!(ismissing.(df.p_value)),:]
-df = combine(groupby(df, [:name, :scope, :data, :model, :generator]), :p_value => mean)
-ENV["LINES"] = size(df, 1)
-pretty_table(df)
+::: {#tbl-bs-mit-synthetic}
+
+```{julia}
+#| output: asis
+#| eval: true
+
+EMAR.aggregate_bs_mitigation_synthetic(backend=Val(:html))
 ```
 
-## Chart in paper
+Tests for statistical significance of the estimated MMD metrics using mitigation strategies. We have highlighted p-values smaller than the significance level $\alpha=0.05$ in bold. Data: Synthetic.
+
+:::
+
+##### Real-World
+
+@tbl-bs-mit-real-world presents the tests for statistical significance of the estimated MMD metrics.
+
+::: {#tbl-bs-mit-real-world}
+
+```{julia}
+#| output: asis
+#| eval: true
+
+EMAR.aggregate_bs_mitigation_real_world(backend=Val(:html))
+```
+
+Tests for statistical significance of the estimated MMD metrics using mitigation strategies. We have highlighted p-values smaller than the significance level $\alpha=0.05$ in bold. Data: Real-World.
+
+:::
+
+#### Chart in paper (Figure 6)
 
 @fig-mit-paper shows the chart that went into the paper.
 
 ```{julia}
 #| echo: false
+#| eval: true
 
 using DataFrames, Statistics
 df = results[:overlapping].output
@@ -311,7 +421,7 @@ plt <- ggplot($df_plot) +
     ) +
     guides(fill=guide_legend(ncol=3))
 temp_path <- file.path(tempdir(), "plot.png")
-ggsave(temp_path,width=$ncol * $scale_,height=$nrow * $scale_ * 0.8) 
+ggsave(temp_path,width=$ncol * $scale_,height=$nrow * $scale_ * 0.8, dpi=300) 
 """
 
 img = Images.load(rcopy(R"temp_path"))
@@ -328,347 +438,19 @@ Images.load(joinpath(www_artifact_path,"paper_synthetic_results.png"))
 ```
 
 
-## Latent Space Search
+#### Chart in paper (Figure 8)
 
 ```{julia}
-generators = Dict(
-    :Latent=>GenericGenerator(opt = opt, decision_threshold=0.5),
-    :Latent_conservative=>GenericGenerator(opt = opt, decision_threshold=0.9),
-    :Gravitational=>GravitationalGenerator(opt = opt),
-    :ClapROAR=>ClapROARGenerator(opt = opt)
-)
-```
-
-```{julia}
-experiments = set_up_experiments(data_sets,models,generators)
-```
-
-```{julia}
-n_evals = 5
-n_rounds = 50
-evaluate_every = Int(round(n_rounds/n_evals))
-n_folds = 5
-T = 100
-using Serialization
-results = run_experiments(
-    experiments;
-    save_path=output_path, evaluate_every=evaluate_every, n_rounds=n_rounds, n_folds=n_folds, T=T, 
-    latent_space = true
-)
-Serialization.serialize(joinpath(output_path,"results_synthetic_latent.jls"),results)
-```
-
-```{julia}
-using Serialization
-results = Serialization.deserialize(joinpath(output_path,"results_synthetic_latent.jls"))
-```
-
-```{julia}
-using Images
-line_charts = Dict()
-errorbar_charts = Dict()
-for (data_name, res) in results
-    plt = plot(res)
-    Images.save(joinpath(www_path, "line_chart_latent_$(data_name).png"), plt)
-    line_charts[data_name] = plt
-    plt = plot(res,maximum(res.output.n))
-    Images.save(joinpath(www_path, "errorbar_chart_latent_$(data_name).png"), plt)
-    errorbar_charts[data_name] = plt
-end
-```
-
-## Plots
-
-### Line Charts
-
-@fig-mit-line-latent shows the evolution of the evaluation metrics over the course of the experiment.
-
-```{julia}
-#| output: true
-#| fig-cap: "Line Charts"
-#| fig-subcap: 
-#|      - "Circles"
-#|      - "Linearly Separable"
-#|      - "Moons"
-#|      - "Overlapping"
-#| layout-ncol: 1
-#| label: fig-mit-line-latent
 #| eval: true
 
-img_files = readdir(www_artifact_path)[contains.(readdir(www_artifact_path),"line_chart") .&& contains.(readdir(www_artifact_path),"latent")]
-img_files = joinpath.(www_artifact_path,img_files)
-for img in img_files
-    display(load(img))
-end
+results = EMAR.load_real_world_mitigation()
 ```
-
-### Error Bar Charts
-
-@fig-mit-error-latent shows the evaluation metrics at the end of the experiments.
-
-```{julia}
-#| output: true
-#| fig-cap: "Error Bar Charts"
-#| fig-subcap: 
-#|      - "Circles"
-#|      - "Linearly Separable"
-#|      - "Moons"
-#|      - "Overlapping"
-#| layout-ncol: 1
-#| label: fig-mit-error-latent
-#| eval: true
-
-img_files = readdir(www_artifact_path)[contains.(readdir(www_artifact_path),"errorbar_chart") .&& contains.(readdir(www_artifact_path),"latent")]
-img_files = joinpath.(www_artifact_path,img_files)
-for img in img_files
-    display(load(img))
-end
-```
-
-## Bootstrap
-
-```{julia}
-n_bootstrap = 100
-df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstrap_latent.csv"))
-```
-
-## Chart in paper
-
-@fig-mit-latent-paper shows the chart that went into the paper.
-
-```{julia}
-#| echo: false
-
-using DataFrames, Statistics
-df = results[:overlapping].output
-df = df[df.n .== maximum(df.n),:]
-gdf = groupby(df, [:generator, :model, :n, :name, :scope])
-df_plot = combine(gdf, :value => (x -> [(mean(x),mean(x)+std(x),mean(x)-std(x))]) => [:mean, :ymax, :ymin])
-df_plot = df_plot[[name in [:mmd, :mmd_grid, :model_performance] for name in df_plot.name],:]
-df_plot = df_plot[.!(df_plot.name.==:mmd .&& df_plot.scope.==:model),:]
-df_plot = mapcols(x -> typeof(x) == Vector{Symbol} ? string.(x) : x, df_plot)
-transform!(df_plot, :name => (X -> [x=="mmd" ? "MMD (domain)" : x for x in X]) => :name)
-transform!(df_plot, :name => (X -> [x=="mmd_grid" ? "MMD (model)" : x for x in X]) => :name)
-transform!(df_plot, :name => (X -> [x=="model_performance" ? "Performance" : x for x in X]) => :name)
-transform!(df_plot, :generator => (X -> [x=="Latent" ? "Latent (γ=0.5)" : x for x in X]) => :generator)
-transform!(df_plot, :generator => (X -> [x=="Latent_conservative" ? "Latent (γ=0.9)" : x for x in X]) => :generator)
-transform!(df_plot, :model => (X -> [x=="FluxEnsemble" ? "Deep Ensemble" : x for x in X]) => :model)
-transform!(df_plot, :model => (X -> [x=="FluxModel" ? "MLP" : x for x in X]) => :model)
-transform!(df_plot, :model => (X -> [x=="LogisticRegression" ? "Linear" : x for x in X]) => :model)
-
-ncol = length(unique(df_plot.model))
-nrow = length(unique(df_plot.name))
-
-using RCall
-scale_ = 1.9
-R"""
-library(data.table)
-df_plot <- data.table($df_plot)
-model_order <- c("Linear", "MLP", "Deep Ensemble")
-df_plot[,model:=factor(model, levels=model_order)]
-library(ggplot2)
-plt <- ggplot($df_plot) +
-    geom_bar(aes(x=n, y=mean, fill=generator), stat="identity", alpha=0.5, position="dodge") +
-    geom_pointrange( aes(x=n, y=mean, ymin=ymin, ymax=ymax, colour=generator), alpha=0.9, position=position_dodge(width=0.9), size=0.5) +
-    facet_grid(
-        rows = vars(name),
-        cols =  vars(model), 
-        scales = "free_y"
-    ) +
-    labs(y = "Value") + 
-    scale_fill_discrete(name="Generator:") +
-    scale_colour_discrete(name="Generator:") +
-    theme(
-        axis.title.x=element_blank(),
-        axis.text.x=element_blank(),
-        axis.ticks.x=element_blank(),
-        legend.position="bottom"
-    ) +
-    guides(fill=guide_legend(ncol=4))
-temp_path <- file.path(tempdir(), "plot.png")
-ggsave(temp_path,width=$ncol * $scale_,height=$nrow * $scale_ * 0.8) 
-"""
-
-img = Images.load(rcopy(R"temp_path"))
-Images.save(joinpath(www_path,"paper_synthetic_latent_results.png"), img)
-```
-
-```{julia}
-#| output: true
-#| label: fig-mit-latent-paper
-#| fig-cap: "Chart in paper"
-#| eval: true
-
-Images.load(joinpath(www_artifact_path,"paper_synthetic_latent_results.png"))
-```
-
-## Real World
-
-```{julia}
-models = [
-    :LogisticRegression, 
-    :FluxModel, 
-    :FluxEnsemble,
-]
-opt = Flux.Descent(0.01) 
-generators = Dict(
-    :Generic=>GenericGenerator(opt = opt, decision_threshold=0.5),
-    :Latent=>REVISEGenerator(opt = opt),
-    :Generic_conservative=>GenericGenerator(opt = opt, decision_threshold=0.9),
-    :Gravitational=>GravitationalGenerator(opt = opt),
-    :ClapROAR=>ClapROARGenerator(opt = opt)
-)
-```
-
-```{julia}
-max_obs = 2500
-data_path = data_dir("real_world")
-data_sets = load_real_world(max_obs)
-choices = [
-    :cal_housing, 
-    :credit_default, 
-    :gmsc, 
-]
-data_sets = filter(p -> p[1] in choices, data_sets)
-```
-
-```{julia}
-using CounterfactualExplanations.DataPreprocessing: unpack
-bs = 500
-function data_loader(data::CounterfactualData)
-    X, y = unpack(data)
-    data = Flux.DataLoader((X,y),batchsize=bs)
-    return data
-end
-model_params = (batch_norm=false,n_hidden=64,n_layers=3,dropout=true,p_dropout=0.1)
-```
-
-```{julia}
-experiments = set_up_experiments(
-    data_sets,models,generators; 
-    pre_train_models=100, model_params=model_params, 
-    data_loader=data_loader
-)
-```
-
-```{julia}
-n_evals = 5
-n_rounds = 50
-evaluate_every = Int(round(n_rounds/n_evals))
-n_folds = 5
-n_samples = 10000
-T = 100
-generative_model_params = (epochs=250, latent_dim=8)
-results = run_experiments(
-    experiments;
-    save_path=output_path,evaluate_every=evaluate_every,n_rounds=n_rounds, n_folds=n_folds, T=T, n_samples=n_samples,
-    generative_model_params=generative_model_params
-)
-Serialization.serialize(joinpath(output_path,"results_real_world.jls"),results)
-```
-
-```{julia}
-using Serialization
-results = Serialization.deserialize(joinpath(output_path,"results_real_world.jls"))
-```
-
-```{julia}
-using Images
-line_charts = Dict()
-errorbar_charts = Dict()
-for (data_name, res) in results
-    plt = plot(res)
-    Images.save(joinpath(www_path, "line_chart_$(data_name).png"), plt)
-    line_charts[data_name] = plt
-    plt = plot(res,maximum(res.output.n))
-    Images.save(joinpath(www_path, "errorbar_chart_$(data_name).png"), plt)
-    errorbar_charts[data_name] = plt
-end
-```
-
-### Line Charts
-
-@fig-real-line shows the evolution of the evaluation metrics over the course of the experiment.
-
-```{julia}
-#| output: true
-#| fig-cap: "Line Charts"
-#| fig-subcap: 
-#|      - "California Housing"
-#|      - "Credit Default"
-#|      - "GMSC"
-#| layout-ncol: 1
-#| label: fig-mit-real-line
-#| eval: true
-
-choices = [
-    :cal_housing, 
-    :credit_default, 
-    :gmsc, 
-]
-img_files = readdir(www_artifact_path)[contains.(readdir(www_artifact_path),"line_chart")]
-img_files = img_files[Bool.(reduce(+, map(choice -> contains.(img_files, string(choice)), choices)))]
-img_files = joinpath.(www_artifact_path,img_files)
-for img in img_files
-    display(load(img))
-end
-```
-
-### Error Bar Charts
-
-@fig-real-error shows the evaluation metrics at the end of the experiments.
-
-```{julia}
-#| output: true
-#| fig-cap: "Error Bar Charts"
-#| fig-subcap: 
-#|      - "California Housing"
-#|      - "Credit Default"
-#|      - "GMSC"
-#| layout-ncol: 1
-#| label: fig-mit-real-error
-#| eval: true
-
-choices = [
-    :cal_housing, 
-    :credit_default, 
-    :gmsc, 
-]
-img_files = readdir(www_artifact_path)[contains.(readdir(www_artifact_path),"errorbar_chart")]
-img_files = img_files[Bool.(reduce(+, map(choice -> contains.(img_files, string(choice)), choices)))]
-img_files = joinpath.(www_artifact_path,img_files)
-for img in img_files
-    display(load(img))
-end
-```
-
-### Bootstrap
-
-```{julia}
-n_bootstrap = 100
-df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstrap_real_world.csv"))
-```
-
-```{julia}
-#| output: true
-#| eval: true
-#| echo: false
-
-_file = readdir(output_artifact_path)[contains.(readdir(output_artifact_path),"bootstrap_real_world")]
-_file = joinpath.(output_artifact_path, _file)
-df = CSV.File(_file) |> DataFrame
-df = df[.!(ismissing.(df.p_value)),:]
-df = combine(groupby(df, [:name, :scope, :data, :model, :generator]), :p_value => mean)
-ENV["LINES"] = size(df, 1)
-pretty_table(df)
-```
-
-### Chart in paper
 
 @fig-mit-real-paper shows the chart that went into the paper.
 
 ```{julia}
 #| echo: false
+#| eval: true
 
 using DataFrames, Statistics
 model_ = :FluxModel
@@ -720,7 +502,7 @@ plt <- ggplot($df_plot) +
     ) +
     guides(fill=guide_legend(ncol=3))
 temp_path <- file.path(tempdir(), "plot.png")
-ggsave(temp_path,width=$ncol * $scale_,height=$nrow * $scale_ * 0.85) 
+ggsave(temp_path,width=$ncol * $scale_,height=$nrow * $scale_ * 0.85, dpi=300) 
 """
 
 img = Images.load(rcopy(R"temp_path"))
@@ -734,6 +516,214 @@ Images.save(joinpath(www_path,"paper_real_world_results.png"), img)
 #| eval: true
 
 Images.load(joinpath(www_artifact_path,"paper_real_world_results.png"))
+```
+
+## Mitigation and Latent Space Search
+
+For the synthetic datasets, we investigate the effect of combining latent space search with the mitigation strategies. 
+
+### Running the Experiment
+
+```{julia}
+generators = Dict(
+    :Latent=>GenericGenerator(opt = opt, decision_threshold=0.5),
+    :Latent_conservative=>GenericGenerator(opt = opt, decision_threshold=0.9),
+    :Gravitational=>GravitationalGenerator(opt = opt),
+    :ClapROAR=>ClapROARGenerator(opt = opt)
+)
+```
+
+```{julia}
+experiments = set_up_experiments(data_sets,models,generators)
+```
+
+```{julia}
+n_evals = 5
+n_rounds = 50
+evaluate_every = Int(round(n_rounds/n_evals))
+n_folds = 5
+T = 100
+using Serialization
+results = run_experiments(
+    experiments;
+    save_path=output_path, evaluate_every=evaluate_every, n_rounds=n_rounds, n_folds=n_folds, T=T, 
+    latent_space = true
+)
+Serialization.serialize(joinpath(output_path,"results_synthetic_latent.jls"),results)
+```
+
+```{julia}
+#| eval: true
+
+data_names = ["Circles", "Linearly Separable", "Moons", "Overlapping"]
+results = EMAR.load_synthetic_mitigation_latent()
+```
+
+```{julia}
+#| eval: true
+
+using Images
+line_charts = Dict()
+errorbar_charts = Dict()
+for (data_name, res) in results
+    plt = plot_res(res)
+    Images.save(joinpath(www_path, "line_chart_latent_$(data_name).png"), plt)
+    Images.save(joinpath(www_paper_path, "line_chart_latent_$(data_name).png"), plt)
+    line_charts[data_name] = plt
+    plt = plot_res(res,maximum(res.output.n))
+    Images.save(joinpath(www_path, "errorbar_chart_latent_$(data_name).png"), plt)
+    Images.save(joinpath(www_paper_path, "errorbar_chart_latent_$(data_name).png"), plt)
+    errorbar_charts[data_name] = plt
+end
+```
+
+### Results
+
+#### Line Charts
+
+```{julia}
+#| eval: true
+#| output: asis
+#| echo: false
+
+fig_label_prefix = "mit-line-latent"
+fig_labels = (nm -> "fig-$(fig_label_prefix)-$nm").(replace.(lowercase.(data_names), " " => "-"))
+_str = "The evolution of the evaluation metrics over the course of the experiment is shown for different datasets in @$(fig_labels[1]) to @$(fig_labels[end])."
+println(_str)
+```
+
+```{julia}
+#| eval: true
+#| output: asis
+#| echo: false
+ 
+str_pattern = "line_chart_latent"
+fig_caption = "Evolution of evaluation metrics over the course of the experiment."
+full_paths = joinpath.(www_paper_path, readdir(www_paper_path)[contains.(readdir(www_paper_path), str_pattern)])
+include_img_commands = EMAR.get_img_command(data_names, full_paths, fig_labels; fig_caption) 
+_str = join(include_img_commands, "\n\n")
+println(_str)
+```
+
+
+#### Error Bar Charts
+
+```{julia}
+#| eval: true
+#| output: asis
+#| echo: false
+
+fig_label_prefix = "mit-errorbar-latent"
+fig_labels = (nm -> "fig-$(fig_label_prefix)-$nm").(replace.(lowercase.(data_names), " " => "-"))
+_str = "The evaluation metrics at the end of the experiment are shown for different datasets in @$(fig_labels[1]) to @$(fig_labels[end])."
+println(_str)
+```
+
+```{julia}
+#| eval: true
+#| output: asis
+#| echo: false
+ 
+str_pattern = "errorbar_chart_latent"
+fig_caption = "Evaluation metrics at the end of the experiment."
+full_paths = joinpath.(www_paper_path, readdir(www_paper_path)[contains.(readdir(www_paper_path), str_pattern)])
+include_img_commands = EMAR.get_img_command(data_names, full_paths, fig_labels; fig_caption) 
+_str = join(include_img_commands, "\n\n")
+println(_str)
+```
+
+#### Bootstrap
+
+@tbl-bs-mit-latent presents the tests for statistical significance of the estimated MMD metrics.
+
+```{julia}
+n_bootstrap = 100
+df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstrap_latent.csv"))
+```
+
+::: {#tbl-bs-mit-latent}
+
+```{julia}
+#| output: true
+#| eval: true
+#| echo: false
+
+df = EMAR.aggregate_bs_mitigation_latent(backend = Val(:html))
+```
+
+Tests for statistical significance of the estimated MMD metrics using mitigation strategies with Latent Space Search. We have highlighted p-values smaller than the significance level $\alpha=0.05$ in bold.
+
+:::
+
+#### Chart in paper (Figure 7)
+
+@fig-mit-latent-paper shows the chart that went into the paper.
+
+```{julia}
+#| echo: false
+#| eval: true
+
+using DataFrames, Statistics
+df = results[:overlapping].output
+df = df[df.n .== maximum(df.n),:]
+gdf = groupby(df, [:generator, :model, :n, :name, :scope])
+df_plot = combine(gdf, :value => (x -> [(mean(x),mean(x)+std(x),mean(x)-std(x))]) => [:mean, :ymax, :ymin])
+df_plot = df_plot[[name in [:mmd, :mmd_grid, :model_performance] for name in df_plot.name],:]
+df_plot = df_plot[.!(df_plot.name.==:mmd .&& df_plot.scope.==:model),:]
+df_plot = mapcols(x -> typeof(x) == Vector{Symbol} ? string.(x) : x, df_plot)
+transform!(df_plot, :name => (X -> [x=="mmd" ? "MMD (domain)" : x for x in X]) => :name)
+transform!(df_plot, :name => (X -> [x=="mmd_grid" ? "MMD (model)" : x for x in X]) => :name)
+transform!(df_plot, :name => (X -> [x=="model_performance" ? "Performance" : x for x in X]) => :name)
+transform!(df_plot, :generator => (X -> [x=="Latent" ? "Latent (γ=0.5)" : x for x in X]) => :generator)
+transform!(df_plot, :generator => (X -> [x=="Latent_conservative" ? "Latent (γ=0.9)" : x for x in X]) => :generator)
+transform!(df_plot, :model => (X -> [x=="FluxEnsemble" ? "Deep Ensemble" : x for x in X]) => :model)
+transform!(df_plot, :model => (X -> [x=="FluxModel" ? "MLP" : x for x in X]) => :model)
+transform!(df_plot, :model => (X -> [x=="LogisticRegression" ? "Linear" : x for x in X]) => :model)
+
+ncol = length(unique(df_plot.model))
+nrow = length(unique(df_plot.name))
+
+using RCall
+scale_ = 1.9
+R"""
+library(data.table)
+df_plot <- data.table($df_plot)
+model_order <- c("Linear", "MLP", "Deep Ensemble")
+df_plot[,model:=factor(model, levels=model_order)]
+library(ggplot2)
+plt <- ggplot($df_plot) +
+    geom_bar(aes(x=n, y=mean, fill=generator), stat="identity", alpha=0.5, position="dodge") +
+    geom_pointrange( aes(x=n, y=mean, ymin=ymin, ymax=ymax, colour=generator), alpha=0.9, position=position_dodge(width=0.9), size=0.5) +
+    facet_grid(
+        rows = vars(name),
+        cols =  vars(model), 
+        scales = "free_y"
+    ) +
+    labs(y = "Value") + 
+    scale_fill_discrete(name="Generator:") +
+    scale_colour_discrete(name="Generator:") +
+    theme(
+        axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        legend.position="bottom"
+    ) +
+    guides(fill=guide_legend(ncol=4))
+temp_path <- file.path(tempdir(), "plot.png")
+ggsave(temp_path,width=$ncol * $scale_,height=$nrow * $scale_ * 0.8, dpi=300) 
+"""
+
+img = Images.load(rcopy(R"temp_path"))
+Images.save(joinpath(www_path,"paper_synthetic_latent_results.png"), img)
+```
+
+```{julia}
+#| output: true
+#| label: fig-mit-latent-paper
+#| fig-cap: "Chart in paper"
+#| eval: true
+
+Images.load(joinpath(www_artifact_path,"paper_synthetic_latent_results.png"))
 ```
 
 ```{julia}

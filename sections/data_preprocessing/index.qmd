@@ -1,5 +1,9 @@
 ---
 title: Data Preprocessing
+julia:
+  exeflags: ["+1.8"]
+execute:
+  eval: false
 ---
 
 {{< include synthetic_data.qmd >}}

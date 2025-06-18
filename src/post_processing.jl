@@ -1,0 +1,249 @@
+using PrettyTables
+using RCall
+
+"""
+Plots line charts for the results.
+"""
+function plot_res(results::ExperimentResults, scope::Symbol=:model; size=3, title=nothing, dpi=300, kwargs...)
+
+    df = results.output
+
+    gdf = groupby(df, [:generator, :model, :n, :name, :scope])
+    df_plot = combine(gdf, :value => (x -> [(mean(x), mean(x) + std(x), mean(x) - std(x))]) => [:mean, :ymax, :ymin])
+    df_plot = mapcols(x -> typeof(x) == Vector{Symbol} ? string.(x) : x, df_plot)
+    df_plot.name .= [r[:name] == "mmd" ? "$(r[:name])_$(r[:scope])" : r[:name] for r in eachrow(df_plot)]
+    select!(df_plot, Not(:scope))
+   
+    # Variable names:
+    replace!(df_plot.model, "FluxEnsemble" => "Deep Ensemble", "FluxModel" => "MLP", "LogisticRegression" => "Linear")
+    df_plot.name = replace(df_plot.name, "mmd_domain" => "MMD (domain)", "mmd_model" => "MMD (model)", "model_performance" => "Performance", "mmd_grid" => "MMD (grid)") |> 
+        x -> uppercasefirst.(x)
+    replace!(df_plot.generator, "Generic_conservative" => "Generic (γ=0.9)", "Generic" => "Generic (γ=0.5)", "REVISE" => "Latent")
+
+
+    ncol = length(unique(df_plot.model))
+    nrow = length(unique(df_plot.name))
+    R"""
+    library(ggplot2)
+    plt <- ggplot($df_plot,aes(x=n, y=mean, ymin=ymin, ymax=ymax, color=generator)) +
+        geom_ribbon(aes(fill=generator), alpha=0.5) +
+        geom_line() +
+        scale_fill_discrete(name="Generator:") +
+        scale_colour_discrete(name="Generator:") +
+        facet_wrap(name ~ model, scale="free_y", ncol=$ncol) +
+        labs(
+            x = "Round",
+            y = "Value",
+            title = $title
+        )
+    temp_path <- file.path(tempdir(), "plot.png")
+    ggsave(temp_path,width=$ncol * $size,height=$nrow * $size * 0.7, dpi=$dpi)
+    """
+
+    img = Images.load(rcopy(R"temp_path"))
+    return img
+
+end
+
+"""
+Plots error bar charts for the results.
+"""
+function plot_res(results::ExperimentResults, n::Int, scope::Symbol=:model; size=3, title=nothing, dpi=300, kwargs...)
+
+    df = results.output
+    @assert n in unique(df.n) "No results for round `n`."
+    df = df[df.n.==n, :]
+
+    gdf = groupby(df, [:generator, :model, :n, :name, :scope])
+    df_plot = combine(gdf, :value => (x -> [(mean(x), mean(x) + std(x), mean(x) - std(x))]) => [:mean, :ymax, :ymin])
+    df_plot = mapcols(x -> typeof(x) == Vector{Symbol} ? string.(x) : x, df_plot)
+    df_plot.name .= [r[:name] == "mmd" ? "$(r[:name])_$(r[:scope])" : r[:name] for r in eachrow(df_plot)]
+    select!(df_plot, Not(:scope))
+
+    # Variable names:
+    replace!(df_plot.model, "FluxEnsemble" => "Deep Ensemble", "FluxModel" => "MLP", "LogisticRegression" => "Linear")
+    df_plot.name = replace(df_plot.name, "mmd_domain" => "MMD (domain)", "mmd_model" => "MMD (model)", "model_performance" => "Performance", "mmd_grid" => "MMD (grid)") |> 
+        x -> uppercasefirst.(x)
+    replace!(df_plot.generator, "Generic_conservative" => "Generic (γ=0.9)", "Generic" => "Generic (γ=0.5)", "REVISE" => "Latent")
+
+    ncol = length(unique(df_plot.model))
+    nrow = length(unique(df_plot.name))
+    R"""
+    library(ggplot2)
+    plt <- ggplot($df_plot) +
+        geom_bar(aes(x=n, y=mean, fill=generator), stat="identity", alpha=0.5, position="dodge") +
+        geom_pointrange( aes(x=n, y=mean, ymin=ymin, ymax=ymax, colour=generator), alpha=0.9, position=position_dodge(width=0.9), size=1.0) +
+        facet_wrap(name ~ model, scale="free_y", ncol=$ncol) +
+        scale_fill_discrete(name="Generator:") +
+        scale_colour_discrete(name="Generator:") +
+        labs(
+            x = "Round",
+            y = "Value",
+            title = $title
+        ) + 
+        theme(
+            axis.title.x=element_blank(),
+            axis.text.x=element_blank(),
+            axis.ticks.x=element_blank()
+        )
+    temp_path <- file.path(tempdir(), "plot.png")
+    ggsave(temp_path,width=$ncol * $size,height=$nrow * $size * 0.7, dpi=$dpi)
+    """
+
+    img = Images.load(rcopy(R"temp_path"))
+    return img
+
+end
+
+function kable(result::ExperimentResults, n::Vector{Int}; format="latex")
+    df = deepcopy(result.output)
+    mapcols!(x -> eltype(x) == Symbol ? string.(x) : x, df)
+    R"""
+    library(data.table)
+    dt <- data.table($df)
+    n_ <- $n
+    dt <- dt[n %in% n_]
+    dt[,name:=ifelse(name=="mmd",paste0(name,scope),name)][,scope:=NULL]
+    dt <- dt[,.(value=mean(value,na.rm=TRUE),sd=sd(value)),by=.(model,generator,name,n)]
+    dt[,text:=sprintf("%0.3f (%0.3f)",value,sd)][,value:=NULL][,sd:=NULL]
+    dt <- dcast(dt, ... ~ name, value.var="text")
+    library(kableExtra)
+    dt <- dt[order(n)]
+    setcolorder(dt, c("n"))
+    ktab <- kbl(dt, booktabs = T, align = "c", format=$format) %>%
+        column_spec(1, bold = T, width = "5em") %>%
+        collapse_rows(columns = 1:3, latex_hline = "major", valign = "middle")
+    """
+    return println(rcopy(R"ktab"))
+end
+
+using DataFrames
+function kable(
+    results::Dict{Symbol,ExperimentResults},
+    n::Vector{Int};
+    format="latex",
+    exclude_metric::Vector{Symbol}=[:mmd_grid]
+)
+    df = DataFrame()
+    for (key, val) in results
+        df_ = deepcopy(val.output)
+        df_.dataset .= key
+        df = vcat(df, df_)
+    end
+    mapcols!(x -> eltype(x) == Symbol ? string.(x) : x, df)
+    R"""
+    library(data.table)
+    dt <- data.table($df)
+    n_ <- $n
+    dt <- dt[n %in% n_]
+    dt[,name:=ifelse(name=="mmd",paste0(name,"_",scope),name)][,scope:=NULL]
+    dt <- dt[,.(value=mean(value,na.rm=TRUE),sd=sd(value)),by=.(dataset,model,generator,name,n)]
+    dt[,text:=sprintf("%0.3f (%0.3f)",value,sd)][,value:=NULL][,sd:=NULL]
+    dt <- dcast(dt, ... ~ name, value.var="text")
+    library(kableExtra)
+    dt <- dt[order(-dataset,n)]
+    setcolorder(dt, c("dataset","n"))
+    ktab <- kbl(dt, booktabs = T, align = "c", format=$format) %>%
+        column_spec(1, bold = T, width = "5em") %>%
+        collapse_rows(columns = 1:4, latex_hline = "major", valign = "middle")
+    """
+    return println(rcopy(R"ktab"))
+end
+
+"""
+Tabulate the bootstrap results for HTML.
+"""
+function tabulate_bs(df::DataFrame, backend::Val{:html}, alpha::AbstractFloat; kwrgs...)
+    hl = HtmlHighlighter(
+       (data, i, j) -> (j == 5) && data[i, 5] < alpha,
+       HtmlDecoration(font_weight = "bold")
+    )
+    pretty_table(
+        df;
+        backend = backend,
+        highlighters = (hl,),
+        kwrgs...
+    )
+end
+
+"""
+Tabulate the bootstrap results for LaTeX.
+"""
+function tabulate_bs(df::DataFrame, backend::Val{:latex}, alpha::AbstractFloat; kwrgs...)
+    hl = LatexHighlighter(
+        (data, i, j) -> (j == 5) && data[i, 5] < alpha,
+        ["textbf"]
+    )
+    pretty_table(
+        df;
+        backend = backend,
+        highlighters = (hl,),
+        table_type = :longtable,
+        longtable_footer = "Continued below.",
+        kwrgs...
+    )
+end
+
+"""
+Aggregate results from bootstrap.
+"""
+function aggregate_bs(
+    cat::String="synthetic", 
+    mitigation::Bool=false, 
+    latent::Bool=false;
+    alpha::AbstractFloat = 0.05,
+    backend::Union{Nothing,Val} = nothing,
+    header = [
+        "Metric",
+        "Data",
+        "Generator",
+        "Model",
+        "p-value",
+    ],
+    kwrgs...
+)
+
+    df = EMAR.load_bootstrap(cat, mitigation, latent)
+    df = df[.!(ismissing.(df.p_value)),:]
+    df = combine(groupby(df, [:name, :scope, :data, :model, :generator]), :p_value => mean)
+
+    # Variable names:
+    df.name[df.scope .== "model" .&& df.name .== "mmd_grid"] .= "PP MMD (grid)"
+    df.name[df.scope .== "model" .&& df.name .== "mmd"] .= "PP MMD"
+    df.name[df.scope .== "domain" .&& df.name .== "mmd"] .= "MMD"
+    df.data = [replace(x, "_" => " ") |> titlecase for x in df.data]
+    replace!(df.data, "Gmsc" => "GMSC")
+    replace!(df.model, "FluxEnsemble" => "Deep Ensemble", "FluxModel" => "MLP", "LogisticRegression" => "Linear")
+    df.generator .= convert.(String, df.generator)
+    replace!(df.generator, "Generic_conservative" => "Generic (γ=0.9)", "Generic" => "Generic (γ=0.5)", "REVISE" => "Latent", "Latent_conservative" => "Latent (γ=0.9)")
+    if any(df.generator .== "Latent (γ=0.9)")
+        replace!(df.generator, "Latent" => "Latent (γ=0.5)")
+    end
+    select!(df, Not(:scope))
+    select!(df, :name, :data, :generator, Not(:name, :data, :generator))
+    sort!(df)
+
+    if !isnothing(backend)
+        return tabulate_bs(df, backend, alpha; header, kwrgs...)
+    end
+
+    return df
+end
+
+aggregate_bs_synthetic(; kwrgs...) = aggregate_bs("synthetic"; kwrgs...)
+aggregate_bs_real_world(; kwrgs...) = aggregate_bs("real_world"; kwrgs...)
+aggregate_bs_mitigation_synthetic(; kwrgs...) = aggregate_bs("synthetic", true; kwrgs...)
+aggregate_bs_mitigation_latent(; kwrgs...) = aggregate_bs("synthetic", true, true; kwrgs...)
+aggregate_bs_mitigation_real_world(; kwrgs...) = aggregate_bs("real_world", true; kwrgs...)
+
+"""
+Helper function to quickly generate a Markdown image include.
+"""
+function get_img_command(data_names, full_paths, fig_labels; fig_caption="", width=100)
+    fig_cap = fig_caption == "" ? fig_caption : "$fig_caption "
+    return [
+        "![$(fig_cap)Data: $(nm).](/$pth){#$(lbl) width=$(width)%}"
+        for (nm, pth, lbl) in zip(data_names, full_paths, fig_labels)
+    ]
+end
+

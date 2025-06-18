@@ -1,10 +1,17 @@
+```{julia}
+#| eval: true
+
+projectdir = splitpath(pwd()) |>
+    ss -> joinpath(ss[1:findall([s == "endogenous-macrodynamics-in-algorithmic-recourse" for s in ss])[1]]...) 
+cd(projectdir)
+```
+
 ## Preprocessing Real-World Data
 
 ```{julia}
 #| echo: false
 
-include("src/setup.jl")
-eval(setup)
+using EMAR
 output_path = output_dir("real_world")
 www_path = www_dir("real_world")
 data_path = data_dir("real_world")

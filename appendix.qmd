@@ -1,0 +1,360 @@
+---
+julia:
+  exeflags: ["+1.8"]
+format: pdf
+execute:
+  echo: false
+  output: false
+header-includes: |
+  \usepackage{placeins}
+---
+
+```{julia}
+#| eval: true
+
+projectdir = splitpath(pwd()) |>
+    ss -> joinpath(ss[1:findall([s == "endogenous-macrodynamics-in-algorithmic-recourse" for s in ss])[1]]...) 
+cd(projectdir)
+```
+
+## Supplementary Material {#sec-satml-appendices .appendix}
+
+```{julia}
+using EMAR
+www_paper_root = "paper/www/appendix/"
+```
+
+\FloatBarrier
+
+### Detailed Results: Synthetic Data
+
+```{julia}
+data_names = ["Circles", "Linearly Separable", "Moons", "Overlapping"]
+www_paper_path = joinpath(www_paper_root, "synthetic")
+```
+
+#### Line Charts
+
+```{julia}
+#| eval: true
+#| output: asis
+#| echo: false
+
+fig_label_prefix = "line"
+fig_labels = (nm -> "fig-$(fig_label_prefix)-$nm").(replace.(lowercase.(data_names), " " => "-"))
+_str = "The evolution of the evaluation metrics over the course of the experiment is shown for different datasets in @$(fig_labels[1]) to @$(fig_labels[end])."
+println(_str)
+```
+
+```{julia}
+#| eval: true
+#| output: asis
+#| echo: false
+ 
+str_pattern = "line_chart"
+fig_caption = "Evolution of evaluation metrics over the course of the experiment."
+full_paths = joinpath.(www_paper_path, readdir(www_paper_path)[contains.(readdir(www_paper_path), str_pattern)])
+include_img_commands = EMAR.get_img_command(data_names, full_paths, fig_labels; fig_caption) 
+_str = join(include_img_commands, "\n\n")
+println(_str)
+```
+
+#### Error Bar Charts
+
+```{julia}
+#| eval: true
+#| output: asis
+#| echo: false
+
+fig_label_prefix = "errorbar"
+fig_labels = (nm -> "fig-$(fig_label_prefix)-$nm").(replace.(lowercase.(data_names), " " => "-"))
+_str = "The evaluation metrics at the end of the experiment are shown for different datasets in @$(fig_labels[1]) to @$(fig_labels[end])."
+println(_str)
+```
+
+```{julia}
+#| eval: true
+#| output: asis
+#| echo: false
+ 
+str_pattern = "errorbar"
+fig_caption = "Evaluation metrics at the end of the experiment."
+full_paths = joinpath.(www_paper_path, readdir(www_paper_path)[contains.(readdir(www_paper_path), str_pattern)])
+include_img_commands = EMAR.get_img_command(data_names, full_paths, fig_labels; fig_caption) 
+_str = join(include_img_commands, "\n\n")
+println(_str)
+```
+
+#### Statistical Significance
+
+@tbl-bs-synthetic presents the tests for statistical significance of the estimated MMD metrics.
+
+::: {#tbl-bs-synthetic}
+
+
+```{julia}
+#| output: asis
+#| eval: true
+
+EMAR.aggregate_bs_synthetic(backend=Val(:latex))
+```
+
+Tests for statistical significance of the estimated MMD metrics. We have highlighted p-values smaller than the significance level $\alpha=0.05$ in bold. Data: Synthetic.
+
+:::
+
+\FloatBarrier
+
+### Detailed Results: Real-World Data
+
+```{julia}
+data_names = ["California Housing", "Credit Default", "GMSC"]
+www_paper_path = joinpath(www_paper_root, "real-world")
+```
+
+#### Line Charts
+
+```{julia}
+#| eval: true
+#| output: asis
+#| echo: false
+
+fig_label_prefix = "line"
+fig_labels = (nm -> "fig-$(fig_label_prefix)-$nm").(replace.(lowercase.(data_names), " " => "-"))
+_str = "The evolution of the evaluation metrics over the course of the experiment is shown for different datasets in @$(fig_labels[1]) to @$(fig_labels[end])."
+println(_str)
+```
+
+```{julia}
+#| eval: true
+#| output: asis
+#| echo: false
+ 
+str_pattern = "line_chart"
+fig_caption = "Evolution of evaluation metrics over the course of the experiment."
+full_paths = joinpath.(www_paper_path, readdir(www_paper_path)[contains.(readdir(www_paper_path), str_pattern)])
+include_img_commands = EMAR.get_img_command(data_names, full_paths, fig_labels; fig_caption) 
+_str = join(include_img_commands, "\n\n")
+println(_str)
+```
+
+#### Error Bar Charts
+
+```{julia}
+#| eval: true
+#| output: asis
+#| echo: false
+
+fig_label_prefix = "errorbar"
+fig_labels = (nm -> "fig-$(fig_label_prefix)-$nm").(replace.(lowercase.(data_names), " " => "-"))
+_str = "The evaluation metrics at the end of the experiment are shown for different datasets in @$(fig_labels[1]) to @$(fig_labels[end])."
+println(_str)
+```
+
+```{julia}
+#| eval: true
+#| output: asis
+#| echo: false
+ 
+str_pattern = "errorbar"
+fig_caption = "Evaluation metrics at the end of the experiment."
+full_paths = joinpath.(www_paper_path, readdir(www_paper_path)[contains.(readdir(www_paper_path), str_pattern)])
+include_img_commands = EMAR.get_img_command(data_names, full_paths, fig_labels; fig_caption) 
+_str = join(include_img_commands, "\n\n")
+println(_str)
+```
+
+#### Statistical Significance
+
+@tbl-bs-real-world presents the tests for statistical significance of the estimated MMD metrics.
+
+::: {#tbl-bs-real-world}
+
+```{julia}
+#| output: asis
+#| eval: true
+
+EMAR.aggregate_bs_real_world(backend=Val(:latex))
+```
+
+Tests for statistical significance of the estimated MMD metrics. We have highlighted p-values smaller than the significance level $\alpha=0.05$ in bold. Data: Real-World.
+
+:::
+
+\FloatBarrier
+
+### Detailed Results: Mitigation
+
+```{julia}
+data_names = [
+    "California Housing",
+    "Circles",
+    "Credit Default",
+    "GMSC",
+    "Linearly Separable", 
+    "Moons", 
+    "Overlapping"
+]
+www_paper_path = joinpath(www_paper_root, "mitigation")
+```
+
+#### Line Charts
+
+```{julia}
+#| eval: true
+#| output: asis
+#| echo: false
+
+fig_label_prefix = "mit-line"
+fig_labels = (nm -> "fig-$(fig_label_prefix)-$nm").(replace.(lowercase.(data_names), " " => "-"))
+_str = "The evolution of the evaluation metrics over the course of the experiment is shown for different datasets in @$(fig_labels[1]) to @$(fig_labels[end])."
+println(_str)
+```
+
+```{julia}
+#| eval: true
+#| output: asis
+#| echo: false
+ 
+str_pattern = "line_chart"
+fig_caption = "Evolution of evaluation metrics over the course of the experiment."
+full_paths = joinpath.(www_paper_path, readdir(www_paper_path)[contains.(readdir(www_paper_path), str_pattern)])
+include_img_commands = EMAR.get_img_command(data_names, full_paths, fig_labels; fig_caption) 
+_str = join(include_img_commands, "\n\n")
+println(_str)
+```
+
+#### Error Bar Charts
+
+```{julia}
+#| eval: true
+#| output: asis
+#| echo: false
+
+fig_label_prefix = "mit-errorbar"
+fig_labels = (nm -> "fig-$(fig_label_prefix)-$nm").(replace.(lowercase.(data_names), " " => "-"))
+_str = "The evaluation metrics at the end of the experiment are shown for different datasets in @$(fig_labels[1]) to @$(fig_labels[end])."
+println(_str)
+```
+
+```{julia}
+#| eval: true
+#| output: asis
+#| echo: false
+ 
+str_pattern = "errorbar"
+fig_caption = "Evaluation metrics at the end of the experiment."
+full_paths = joinpath.(www_paper_path, readdir(www_paper_path)[contains.(readdir(www_paper_path), str_pattern)])
+include_img_commands = EMAR.get_img_command(data_names, full_paths, fig_labels; fig_caption) 
+_str = join(include_img_commands, "\n\n")
+println(_str)
+```
+
+#### Statistical Significance
+
+@tbl-bs-mit-synthetic presents the tests for statistical significance of the estimated MMD metrics.
+
+::: {#tbl-bs-mit-synthetic}
+
+```{julia}
+#| output: asis
+#| eval: true
+
+EMAR.aggregate_bs_mitigation_synthetic(backend=Val(:latex))
+```
+
+Tests for statistical significance of the estimated MMD metrics using mitigation strategies. We have highlighted p-values smaller than the significance level $\alpha=0.05$ in bold. Data: Synthetic.
+
+:::
+
+@tbl-bs-mit-real-world presents the tests for statistical significance of the estimated MMD metrics.
+
+::: {#tbl-bs-mit-real-world}
+
+```{julia}
+#| output: asis
+#| eval: true
+
+EMAR.aggregate_bs_mitigation_real_world(backend=Val(:latex))
+```
+
+Tests for statistical significance of the estimated MMD metrics using mitigation strategies. We have highlighted p-values smaller than the significance level $\alpha=0.05$ in bold. Data: Real-World.
+
+:::
+
+\FloatBarrier
+
+### Detailed Results: Mitigation with Latent Space Search
+
+```{julia}
+data_names = ["Circles", "Linearly Separable", "Moons", "Overlapping"]
+```
+
+#### Line Charts
+
+```{julia}
+#| eval: true
+#| output: asis
+#| echo: false
+
+fig_label_prefix = "mit-line-latent"
+fig_labels = (nm -> "fig-$(fig_label_prefix)-$nm").(replace.(lowercase.(data_names), " " => "-"))
+_str = "The evolution of the evaluation metrics over the course of the experiment is shown for different datasets in @$(fig_labels[1]) to @$(fig_labels[end])."
+println(_str)
+```
+
+```{julia}
+#| eval: true
+#| output: asis
+#| echo: false
+ 
+str_pattern = "line_chart_latent"
+fig_caption = "Evolution of evaluation metrics over the course of the experiment."
+full_paths = joinpath.(www_paper_path, readdir(www_paper_path)[contains.(readdir(www_paper_path), str_pattern)])
+include_img_commands = EMAR.get_img_command(data_names, full_paths, fig_labels; fig_caption) 
+_str = join(include_img_commands, "\n\n")
+println(_str)
+```
+
+#### Error Bar Charts
+
+```{julia}
+#| eval: true
+#| output: asis
+#| echo: false
+
+fig_label_prefix = "mit-errorbar-latent"
+fig_labels = (nm -> "fig-$(fig_label_prefix)-$nm").(replace.(lowercase.(data_names), " " => "-"))
+_str = "The evaluation metrics at the end of the experiment are shown for different datasets in @$(fig_labels[1]) to @$(fig_labels[end])."
+println(_str)
+```
+
+```{julia}
+#| eval: true
+#| output: asis
+#| echo: false
+ 
+str_pattern = "errorbar_chart_latent"
+fig_caption = "Evaluation metrics at the end of the experiment."
+full_paths = joinpath.(www_paper_path, readdir(www_paper_path)[contains.(readdir(www_paper_path), str_pattern)])
+include_img_commands = EMAR.get_img_command(data_names, full_paths, fig_labels; fig_caption) 
+_str = join(include_img_commands, "\n\n")
+println(_str)
+```
+
+#### Statistical Significance
+
+@tbl-bs-mit-latent presents the tests for statistical significance of the estimated MMD metrics.
+
+::: {#tbl-bs-mit-latent}
+
+```{julia}
+#| output: asis
+#| eval: true
+
+EMAR.aggregate_bs_mitigation_latent(backend=Val(:latex))
+```
+
+Tests for statistical significance of the estimated MMD metrics using mitigation strategies with Latent Space Search. We have highlighted p-values smaller than the significance level $\alpha=0.05$ in bold.
+
+:::

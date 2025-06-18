@@ -1,22 +1,38 @@
-# Results: Real-World Data
+---
+julia:
+  exeflags: ["+1.8"]
+---
+
+```{julia}
+#| eval: true
+
+projectdir = splitpath(pwd()) |>
+    ss -> joinpath(ss[1:findall([s == "endogenous-macrodynamics-in-algorithmic-recourse" for s in ss])[1]]...) 
+cd(projectdir)
+```
+
+# Real-World Data
 
 ```{julia}
 #| echo: false
 #| eval: true
 
-include("src/setup.jl")
-eval(setup)
+using EMAR
+using PrettyTables
+using Images
 output_path = output_dir("real_world")
 www_path = www_dir("real_world")
+www_paper_path = mkpath("paper/www/appendix/real-world/")
+data_names = ["California Housing", "Credit Default", "GMSC"]
 
 # Artifacts:
 # Images:
 artifact_name = create_artifact_name_from_path(www_path, nothing)
-_hash = artifact_hash(artifact_name, artifact_toml)
+_hash = artifact_hash(artifact_name, artifact_toml())
 www_artifact_path = joinpath(artifact_path(_hash), artifact_name)
 # Output:
 artifact_name = create_artifact_name_from_path(output_path, nothing)
-_hash = artifact_hash(artifact_name, artifact_toml)
+_hash = artifact_hash(artifact_name, artifact_toml())
 output_artifact_path = joinpath(artifact_path(_hash), artifact_name)
 ```
 
@@ -65,7 +81,7 @@ experiments = set_up_experiments(
 )
 ```
 
-## Experiment
+## Running the Experiment
 
 ```{julia}
 n_evals = 5
@@ -83,11 +99,15 @@ results = run_experiments(
 Serialization.serialize(joinpath(output_path,"results.jls"),results)
 ```
 
-### Plots
+## Results
 
 ```{julia}
-results = Serialization.deserialize(joinpath(output_path,"results.jls"))
+#| eval: true
+
+results = load_real_world_results()
 ```
+
+### Animated GIFs
 
 ```{julia}
 #| echo: false
@@ -146,90 +166,104 @@ Plots.scalefontsizes()
 ```
 
 ```{julia}
+#| eval: true
+
 using Images
 line_charts = Dict()
 errorbar_charts = Dict()
 for (data_name, res) in results
-    plt = plot(res)
+    plt = plot_res(res)
     Images.save(joinpath(www_path, "line_chart_$(data_name).png"), plt)
+    Images.save(joinpath(www_paper_path, "line_chart_$(data_name).png"), plt)
     line_charts[data_name] = plt
-    plt = plot(res,maximum(res.output.n))
+    plt = plot_res(res,maximum(res.output.n))
     Images.save(joinpath(www_path, "errorbar_chart_$(data_name).png"), plt)
+    Images.save(joinpath(www_paper_path, "errorbar_chart_$(data_name).png"), plt)
     errorbar_charts[data_name] = plt
 end
 ```
 
 ### Line Charts
 
-@fig-real-line shows the evolution of the evaluation metrics over the course of the experiment.
+```{julia}
+#| eval: true
+#| output: asis
+#| echo: false
+
+fig_label_prefix = "line"
+fig_labels = (nm -> "fig-$(fig_label_prefix)-$nm").(replace.(lowercase.(data_names), " " => "-"))
+_str = "The evolution of the evaluation metrics over the course of the experiment is shown for different datasets in @$(fig_labels[1]) to @$(fig_labels[end])."
+println(_str)
+```
 
 ```{julia}
-#| output: true
-#| fig-cap: "Line Charts"
-#| fig-subcap: 
-#|      - "California Housing"
-#|      - "Credit Default"
-#|      - "GMSC"
-#| layout-ncol: 1
-#| label: fig-real-line
 #| eval: true
-
-img_files = readdir(www_artifact_path)[contains.(readdir(www_artifact_path),"line_chart")]
-img_files = joinpath.(www_artifact_path,img_files)
-for img in img_files
-    display(load(img))
-end
+#| output: asis
+#| echo: false
+ 
+str_pattern = "line_chart"
+fig_caption = "Evolution of evaluation metrics over the course of the experiment."
+full_paths = joinpath.(www_paper_path, readdir(www_paper_path)[contains.(readdir(www_paper_path), str_pattern)])
+include_img_commands = EMAR.get_img_command(data_names, full_paths, fig_labels; fig_caption) 
+_str = join(include_img_commands, "\n\n")
+println(_str)
 ```
 
 ### Error Bar Charts
 
-@fig-real-error shows the evaluation metrics at the end of the experiments.
-
 ```{julia}
-#| output: true
-#| fig-cap: "Error Bar Charts"
-#| fig-subcap: 
-#|      - "California Housing"
-#|      - "Credit Default"
-#|      - "GMSC"
-#| layout-ncol: 1
-#| label: fig-real-error
 #| eval: true
+#| output: asis
+#| echo: false
 
-img_files = readdir(www_artifact_path)[contains.(readdir(www_artifact_path),"errorbar_chart")]
-img_files = joinpath.(www_artifact_path,img_files)
-for img in img_files
-    display(load(img))
-end
+fig_label_prefix = "errorbar"
+fig_labels = (nm -> "fig-$(fig_label_prefix)-$nm").(replace.(lowercase.(data_names), " " => "-"))
+_str = "The evaluation metrics at the end of the experiment are shown for different datasets in @$(fig_labels[1]) to @$(fig_labels[end])."
+println(_str)
 ```
 
-## Bootstrap
+```{julia}
+#| eval: true
+#| output: asis
+#| echo: false
+ 
+str_pattern = "errorbar"
+fig_caption = "Evaluation metrics at the end of the experiment."
+full_paths = joinpath.(www_paper_path, readdir(www_paper_path)[contains.(readdir(www_paper_path), str_pattern)])
+include_img_commands = EMAR.get_img_command(data_names, full_paths, fig_labels; fig_caption) 
+_str = join(include_img_commands, "\n\n")
+println(_str)
+```
+
+### Bootstrap
 
 ```{julia}
 n_bootstrap = 100
 df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstrap.csv"))
 ```
 
-```{julia}
-#| output: true
-#| eval: true
-#| echo: false
+@tbl-bs-real-world presents the tests for statistical significance of the estimated MMD metrics.
 
-_file = readdir(output_artifact_path)[contains.(readdir(output_artifact_path),"bootstrap")]
-_file = joinpath.(output_artifact_path, _file)
-df = CSV.File(_file) |> DataFrame
-df = df[.!(ismissing.(df.p_value)),:]
-df = combine(groupby(df, [:name, :scope, :data, :model, :generator]), :p_value => mean)
-ENV["LINES"] = size(df, 1)
-pretty_table(df)
+::: {#tbl-bs-real-world}
+
+```{julia}
+#| output: asis
+#| eval: true
+
+EMAR.aggregate_bs_real_world(backend=Val(:html))
 ```
 
-### Chart in paper
+Tests for statistical significance of the estimated MMD metrics. We have highlighted p-values smaller than the significance level $\alpha=0.05$ in bold. Data: Real-World.
+
+:::
+
+### Chart in paper (Figure 4)
 
 @fig-real-paper shows the chart that went into the paper.
 
 ```{julia}
 #| echo: false
+#| eval: true
 
 using DataFrames, Statistics
 model_ = :FluxEnsemble
@@ -280,7 +314,7 @@ plt <- ggplot($df_plot) +
         legend.position="bottom"
     )
 temp_path <- file.path(tempdir(), "plot.png")
-ggsave(temp_path,width=$ncol * $scale_,height=$nrow * $scale_ * 0.8) 
+ggsave(temp_path,width=$ncol * $scale_,height=$nrow * $scale_ * 0.8, dpi=300) 
 """
 
 img = Images.load(rcopy(R"temp_path"))
@@ -302,7 +336,3 @@ Images.load(joinpath(www_artifact_path,"paper_real_world_results.png"))
 generate_artifacts(output_path)
 generate_artifacts(www_path)
 ```
-
-
-
-
