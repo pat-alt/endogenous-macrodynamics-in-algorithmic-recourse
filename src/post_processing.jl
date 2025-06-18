@@ -175,8 +175,8 @@ function aggregate_bs(
     header = [
         "Metric",
         "Data",
-        "Model",
         "Generator",
+        "Model",
         "p-value",
     ],
     kwrgs...
@@ -198,7 +198,7 @@ function aggregate_bs(
         replace!(df.generator, "Latent" => "Latent (γ=0.5)")
     end
     select!(df, Not(:scope))
-    select!(df, :name, :generator, Not(:name, :generator))
+    select!(df, :name, :data, :generator, Not(:name, :data, :generator))
     sort!(df)
 
     if !isnothing(backend)
