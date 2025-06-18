@@ -204,10 +204,10 @@ function aggregate_bs(
 end
 
 aggregate_bs_synthetic(; kwrgs...) = aggregate_bs("synthetic"; kwrgs...)
-aggregate_bs_real_world() = aggregate_bs("real_world")
-aggregate_bs_mitigation_synthetic() = aggregate_bs("synthetic", true)
-aggregate_bs_mitigation_latent() = aggregate_bs("synthetic", true, true)
-aggregate_bs_mitigation_real_world() = aggregate_bs("real_world", true)
+aggregate_bs_real_world(; kwrgs...) = aggregate_bs("real_world"; kwrgs...)
+aggregate_bs_mitigation_synthetic(; kwrgs...) = aggregate_bs("synthetic", true; kwrgs...)
+aggregate_bs_mitigation_latent(; kwrgs...) = aggregate_bs("synthetic", true, true; kwrgs...)
+aggregate_bs_mitigation_real_world(; kwrgs...) = aggregate_bs("real_world", true; kwrgs...)
 
 """
 Helper function to quickly generate a Markdown image include.

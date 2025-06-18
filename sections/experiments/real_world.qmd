@@ -244,12 +244,10 @@ df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstra
 
 ```{julia}
 #| output: true
-#| eval: false
+#| eval: true
 #| echo: false
 
-df = EMAR.aggregate_bs_real_world()
-ENV["LINES"] = size(df, 1)
-pretty_table(df)
+df = EMAR.aggregate_bs_real_world(backend = Val(:html))
 ```
 
 ### Chart in paper (Figure 4)

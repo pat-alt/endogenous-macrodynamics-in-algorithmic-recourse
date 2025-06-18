@@ -336,25 +336,7 @@ df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstra
 #| eval: true
 #| echo: false
 
-df = EMAR.aggregate_bs_synthetic()
-ENV["LINES"] = size(df, 1)
-header = [
-    "Metric",
-    "Data",
-    "Model",
-    "Generator",
-    "p-value",
-]
-hl = HtmlHighlighter(
-   (data, i, j) -> (j == 5) && data[i, 5] < 0.05,
-   HtmlDecoration(font_weight = "bold")
-)
-pretty_table(
-    df;
-    backend = Val(:html),
-    header = header,
-    highlighters = (hl,),
-)
+EMAR.aggregate_bs_synthetic(backend=Val(:html))
 ```
 
 

@@ -327,6 +327,8 @@ println(_str)
 
 #### Bootstrap
 
+##### Synthetic
+
 ```{julia}
 n_bootstrap = 100
 df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstrap_synthetic.csv"))
@@ -334,12 +336,20 @@ df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstra
 
 ```{julia}
 #| output: true
-#| eval: false
+#| eval: true
 #| echo: false
 
-df = EMAR.aggregate_bs_mitigation_synthetic()
-ENV["LINES"] = size(df, 1)
-pretty_table(df)
+df = EMAR.aggregate_bs_mitigation_synthetic(backend = Val(:html))
+```
+
+##### Real-World
+
+```{julia}
+#| output: true
+#| eval: true
+#| echo: false
+
+df = EMAR.aggregate_bs_mitigation_real_world(backend = Val(:html))
 ```
 
 #### Chart in paper (Figure 6)
@@ -612,6 +622,14 @@ println(_str)
 ```{julia}
 n_bootstrap = 100
 df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstrap_latent.csv"))
+```
+
+```{julia}
+#| output: true
+#| eval: true
+#| echo: false
+
+df = EMAR.aggregate_bs_mitigation_latent(backend = Val(:html))
 ```
 
 #### Chart in paper (Figure 7)

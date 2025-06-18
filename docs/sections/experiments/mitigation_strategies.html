@@ -218,7 +218,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#animated-gifs" id="toc-animated-gifs" class="nav-link" data-scroll-target="#animated-gifs"><span class="header-section-number">5.1.2.1</span> Animated GIFs</a></li>
   <li><a href="#line-charts" id="toc-line-charts" class="nav-link" data-scroll-target="#line-charts"><span class="header-section-number">5.1.2.2</span> Line Charts</a></li>
   <li><a href="#error-bar-charts" id="toc-error-bar-charts" class="nav-link" data-scroll-target="#error-bar-charts"><span class="header-section-number">5.1.2.3</span> Error Bar Charts</a></li>
-  <li><a href="#bootstrap" id="toc-bootstrap" class="nav-link" data-scroll-target="#bootstrap"><span class="header-section-number">5.1.2.4</span> Bootstrap</a></li>
+  <li><a href="#bootstrap" id="toc-bootstrap" class="nav-link" data-scroll-target="#bootstrap"><span class="header-section-number">5.1.2.4</span> Bootstrap</a>
+  <ul class="collapse">
+  <li><a href="#synthetic-1" id="toc-synthetic-1" class="nav-link" data-scroll-target="#synthetic-1"><span class="header-section-number">5.1.2.4.1</span> Synthetic</a></li>
+  <li><a href="#real-world-1" id="toc-real-world-1" class="nav-link" data-scroll-target="#real-world-1"><span class="header-section-number">5.1.2.4.2</span> Real-World</a></li>
+  </ul></li>
   <li><a href="#chart-in-paper-figure-6" id="toc-chart-in-paper-figure-6" class="nav-link" data-scroll-target="#chart-in-paper-figure-6"><span class="header-section-number">5.1.2.5</span> Chart in paper (Figure 6)</a></li>
   <li><a href="#chart-in-paper-figure-8" id="toc-chart-in-paper-figure-8" class="nav-link" data-scroll-target="#chart-in-paper-figure-8"><span class="header-section-number">5.1.2.6</span> Chart in paper (Figure 8)</a></li>
   </ul></li>
@@ -593,6 +597,8 @@ Figure&nbsp;5.14: Evaluation metrics at the end of the experiment. Data: Overlap
 </section>
 <section id="bootstrap" class="level4" data-number="5.1.2.4">
 <h4 data-number="5.1.2.4" class="anchored" data-anchor-id="bootstrap"><span class="header-section-number">5.1.2.4</span> Bootstrap</h4>
+<section id="synthetic-1" class="level5" data-number="5.1.2.4.1">
+<h5 data-number="5.1.2.4.1" class="anchored" data-anchor-id="synthetic-1"><span class="header-section-number">5.1.2.4.1</span> Synthetic</h5>
 <div id="40" class="cell" data-execution_count="0">
 <details class="code-fold">
 <summary>Code</summary>
@@ -600,6 +606,1808 @@ Figure&nbsp;5.14: Evaluation metrics at the end of the experiment. Data: Overlap
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> <span class="fu">run_bootstrap</span>(results, n_bootstrap; filename<span class="op">=</span><span class="fu">joinpath</span>(output_path,<span class="st">"bootstrap_synthetic.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
+<div id="42" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header headerLastRow">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Metric</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Data</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Model</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Generator</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">0.768</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">0.69</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">0.748</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">0.9925</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right;">0.996</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right;">0.994</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right;">0.99</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right;">0.99</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">0.9975</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right;">0.992</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right;">0.988</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right;">0.996</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.012</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.034</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.004</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.002</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.002</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.034</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.002</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.004</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">0.46</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">0.852</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right;">0.684</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right;">0.964</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right;">0.944</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">0.856</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right;">0.716</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right;">0.9525</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right;">0.958</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right;">0.796</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right;">0.996</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">0.994</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right;">0.996</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right;">0.9975</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right;">0.992</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">0.9975</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right;">0.996</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.004</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">0.91</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right;">0.346</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right;">0.87</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right;">0.84</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">0.902</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right;">0.388</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right;">0.865</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right;">0.678</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.02</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">0.342</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.002</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">0.208</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.002</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right;">0.814</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right;">0.994</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">0.996</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right;">0.776</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right;">0.7375</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right;">0.688</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right;">0.568</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right;">0.762</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right;">0.89</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.004</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">0.174</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.01</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.02</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">0.114</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.006</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right;">0.1225</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.016</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="real-world-1" class="level5" data-number="5.1.2.4.2">
+<h5 data-number="5.1.2.4.2" class="anchored" data-anchor-id="real-world-1"><span class="header-section-number">5.1.2.4.2</span> Real-World</h5>
+<div id="44" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header headerLastRow">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Metric</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Data</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Model</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Generator</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right;">0.278</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.006</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right;">0.51</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right;">0.128</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right;">0.338</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right;">0.306</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.032</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right;">0.082</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">0.436</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.044</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.018</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.008</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.02</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.032</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.044</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right;">0.164</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Credit Default</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.01</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.004</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.026</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.006</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Cal Housing</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.03</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.004</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.002</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
 </section>
 <section id="chart-in-paper-figure-6" class="level4" data-number="5.1.2.5">
 <h4 data-number="5.1.2.5" class="anchored" data-anchor-id="chart-in-paper-figure-6"><span class="header-section-number">5.1.2.5</span> Chart in paper (Figure 6)</h4>
@@ -623,7 +2431,7 @@ Figure&nbsp;5.15: Chart in paper
 </section>
 <section id="chart-in-paper-figure-8" class="level4" data-number="5.1.2.6">
 <h4 data-number="5.1.2.6" class="anchored" data-anchor-id="chart-in-paper-figure-8"><span class="header-section-number">5.1.2.6</span> Chart in paper (Figure 8)</h4>
-<div id="48" class="cell" data-execution_count="1">
+<div id="50" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> EMAR.<span class="fu">load_real_world_mitigation</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -654,7 +2462,7 @@ Figure&nbsp;5.16: Chart in paper
 <p>For the synthetic datasets, we investigate the effect of combining latent space search with the mitigation strategies.</p>
 <section id="running-the-experiment-1" class="level3" data-number="5.2.1">
 <h3 data-number="5.2.1" class="anchored" data-anchor-id="running-the-experiment-1"><span class="header-section-number">5.2.1</span> Running the Experiment</h3>
-<div id="54" class="cell" data-execution_count="0">
+<div id="56" class="cell" data-execution_count="0">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>generators <span class="op">=</span> <span class="fu">Dict</span>(</span>
@@ -665,13 +2473,13 @@ Figure&nbsp;5.16: Chart in paper
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="56" class="cell" data-execution_count="0">
+<div id="58" class="cell" data-execution_count="0">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>experiments <span class="op">=</span> <span class="fu">set_up_experiments</span>(data_sets,models,generators)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="58" class="cell" data-execution_count="0">
+<div id="60" class="cell" data-execution_count="0">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>n_evals <span class="op">=</span> <span class="fl">5</span></span>
@@ -688,14 +2496,14 @@ Figure&nbsp;5.16: Chart in paper
 <span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="bu">Serialization</span>.<span class="fu">serialize</span>(<span class="fu">joinpath</span>(output_path,<span class="st">"results_synthetic_latent.jls"</span>),results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="60" class="cell" data-execution_count="1">
+<div id="62" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>data_names <span class="op">=</span> [<span class="st">"Circles"</span>, <span class="st">"Linearly Separable"</span>, <span class="st">"Moons"</span>, <span class="st">"Overlapping"</span>]</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> EMAR.<span class="fu">load_synthetic_mitigation_latent</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="62" class="cell" data-execution_count="1">
+<div id="64" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Images</span></span>
@@ -806,12 +2614,1037 @@ Figure&nbsp;5.24: Evaluation metrics at the end of the experiment. Data: Overlap
 </section>
 <section id="bootstrap-1" class="level4" data-number="5.2.2.3">
 <h4 data-number="5.2.2.3" class="anchored" data-anchor-id="bootstrap-1"><span class="header-section-number">5.2.2.3</span> Bootstrap</h4>
-<div id="72" class="cell" data-execution_count="0">
+<div id="74" class="cell" data-execution_count="0">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>n_bootstrap <span class="op">=</span> <span class="fl">100</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> <span class="fu">run_bootstrap</span>(results, n_bootstrap; filename<span class="op">=</span><span class="fu">joinpath</span>(output_path,<span class="st">"bootstrap_latent.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+</div>
+<div id="76" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header headerLastRow">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Metric</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Data</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Model</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Generator</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">0.768</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">0.69</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">0.748</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">0.9925</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right;">0.996</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right;">0.994</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right;">0.99</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right;">0.99</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">0.9975</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right;">0.992</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right;">0.988</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right;">0.996</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.012</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.034</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.004</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.002</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.002</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.034</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.002</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.004</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">0.46</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">0.852</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right;">0.684</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right;">0.964</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right;">0.944</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">0.856</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right;">0.716</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right;">0.9525</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right;">0.958</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right;">0.796</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right;">0.996</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">0.994</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right;">0.996</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right;">0.9975</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right;">0.992</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">0.9975</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right;">0.996</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.004</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">0.91</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right;">0.346</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right;">0.87</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right;">0.84</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">0.902</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right;">0.388</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right;">0.865</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right;">0.678</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.02</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">0.342</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.002</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">0.208</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.002</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Overlapping</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Linearly Separable</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right;">0.814</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right;">0.994</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">0.996</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right;">0.776</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right;">0.7375</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right;">0.688</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right;">0.568</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right;">0.762</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Circles</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right;">0.89</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right; font-weight: bold;">0.004</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Linear</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">0.174</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right; font-weight: bold;">0.01</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">MLP</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.02</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Latent</td>
+<td style="text-align: right;">0.114</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Greedy</td>
+<td style="text-align: right; font-weight: bold;">0.006</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">DICE</td>
+<td style="text-align: right;">0.1225</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PP MMD (grid)</td>
+<td style="text-align: right;">Moons</td>
+<td style="text-align: right;">Deep Ensemble</td>
+<td style="text-align: right;">Generic (γ=0.5)</td>
+<td style="text-align: right; font-weight: bold;">0.016</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </section>
 <section id="chart-in-paper-figure-7" class="level4" data-number="5.2.2.4">
