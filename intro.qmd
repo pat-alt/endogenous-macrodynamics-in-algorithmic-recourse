@@ -8,7 +8,6 @@ julia:
 ```{julia}
 #| echo: false
 
-using Pkg; Pkg.activate(".")
 using CounterfactualExplanations
 using EMAR
 using Flux
@@ -166,7 +165,7 @@ plt_single_repeat = plot(
 #| label: fig-final
 #| fig-cap: "The different stages of the experiment."
 
-plt = plot(plt_original, plt_single, plt_single_retrained, plt_single_repeat, layout=(1,4), legend=false, axis=nothing, size=(600,165))
+plt = plot(plt_original, plt_single, plt_single_retrained, plt_single_repeat, layout=(1,4), legend=false, axis=nothing, size=(600,165), dpi=300)
 savefig(plt, joinpath(www_path, "poc.png"))
 savefig(plt, "paper/www/poc.png")
 display(plt)
@@ -205,7 +204,7 @@ for (name,ce) ∈ counterfactuals
     plt = plot(ce; title=name, colorbar=false, ticks = false, legend=false, zoom=0)
     plts = vcat(plts..., plt)
 end
-plt = plot(plts..., size=(750,200), layout=(1,4))
+plt = plot(plts..., size=(750,200), layout=(1,4), dpi=300)
 savefig(plt, joinpath(www_path, "mitigation.png"))
 savefig(plt, "paper/www/mitigation.png")
 display(plt)

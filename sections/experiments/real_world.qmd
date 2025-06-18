@@ -11,7 +11,7 @@ projectdir = splitpath(pwd()) |>
 cd(projectdir)
 ```
 
-# Results: Real-World Data
+# Real-World Data
 
 ```{julia}
 #| echo: false
@@ -242,13 +242,20 @@ n_bootstrap = 100
 df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstrap.csv"))
 ```
 
-```{julia}
-#| output: true
-#| eval: true
-#| echo: false
+@tbl-bs-real-world presents the tests for statistical significance of the estimated MMD metrics.
 
-df = EMAR.aggregate_bs_real_world(backend = Val(:html))
+::: {#tbl-bs-real-world}
+
+```{julia}
+#| output: asis
+#| eval: true
+
+EMAR.aggregate_bs_real_world(backend=Val(:html))
 ```
+
+Tests for statistical significance of the estimated MMD metrics. We have highlighted p-values smaller than the significance level $\alpha=0.05$ in bold. Data: Real-World.
+
+:::
 
 ### Chart in paper (Figure 4)
 

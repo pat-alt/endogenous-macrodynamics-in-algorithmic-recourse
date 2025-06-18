@@ -4,6 +4,9 @@ julia:
 format: pdf
 execute:
   echo: false
+  output: false
+header-includes: |
+  \usepackage{placeins}
 ---
 
 ```{julia}
@@ -20,6 +23,8 @@ cd(projectdir)
 using EMAR
 www_paper_root = "paper/www/appendix/"
 ```
+
+\FloatBarrier
 
 ### Detailed Results: Synthetic Data
 
@@ -80,6 +85,26 @@ _str = join(include_img_commands, "\n\n")
 println(_str)
 ```
 
+#### Statistical Significance
+
+@tbl-bs-synthetic presents the tests for statistical significance of the estimated MMD metrics.
+
+::: {#tbl-bs-synthetic}
+
+
+```{julia}
+#| output: asis
+#| eval: true
+
+EMAR.aggregate_bs_synthetic(backend=Val(:latex))
+```
+
+Tests for statistical significance of the estimated MMD metrics. We have highlighted p-values smaller than the significance level $\alpha=0.05$ in bold. Data: Synthetic.
+
+:::
+
+\FloatBarrier
+
 ### Detailed Results: Real-World Data
 
 ```{julia}
@@ -138,6 +163,25 @@ include_img_commands = EMAR.get_img_command(data_names, full_paths, fig_labels; 
 _str = join(include_img_commands, "\n\n")
 println(_str)
 ```
+
+#### Statistical Significance
+
+@tbl-bs-real-world presents the tests for statistical significance of the estimated MMD metrics.
+
+::: {#tbl-bs-real-world}
+
+```{julia}
+#| output: asis
+#| eval: true
+
+EMAR.aggregate_bs_real_world(backend=Val(:latex))
+```
+
+Tests for statistical significance of the estimated MMD metrics. We have highlighted p-values smaller than the significance level $\alpha=0.05$ in bold. Data: Real-World.
+
+:::
+
+\FloatBarrier
 
 ### Detailed Results: Mitigation
 
@@ -206,6 +250,40 @@ _str = join(include_img_commands, "\n\n")
 println(_str)
 ```
 
+#### Statistical Significance
+
+@tbl-bs-mit-synthetic presents the tests for statistical significance of the estimated MMD metrics.
+
+::: {#tbl-bs-mit-synthetic}
+
+```{julia}
+#| output: asis
+#| eval: true
+
+EMAR.aggregate_bs_mitigation_synthetic(backend=Val(:latex))
+```
+
+Tests for statistical significance of the estimated MMD metrics using mitigation strategies. We have highlighted p-values smaller than the significance level $\alpha=0.05$ in bold. Data: Synthetic.
+
+:::
+
+@tbl-bs-mit-real-world presents the tests for statistical significance of the estimated MMD metrics.
+
+::: {#tbl-bs-mit-real-world}
+
+```{julia}
+#| output: asis
+#| eval: true
+
+EMAR.aggregate_bs_mitigation_real_world(backend=Val(:latex))
+```
+
+Tests for statistical significance of the estimated MMD metrics using mitigation strategies. We have highlighted p-values smaller than the significance level $\alpha=0.05$ in bold. Data: Real-World.
+
+:::
+
+\FloatBarrier
+
 ### Detailed Results: Mitigation with Latent Space Search
 
 ```{julia}
@@ -263,3 +341,20 @@ include_img_commands = EMAR.get_img_command(data_names, full_paths, fig_labels; 
 _str = join(include_img_commands, "\n\n")
 println(_str)
 ```
+
+#### Statistical Significance
+
+@tbl-bs-mit-latent presents the tests for statistical significance of the estimated MMD metrics.
+
+::: {#tbl-bs-mit-latent}
+
+```{julia}
+#| output: asis
+#| eval: true
+
+EMAR.aggregate_bs_mitigation_latent(backend=Val(:latex))
+```
+
+Tests for statistical significance of the estimated MMD metrics using mitigation strategies with Latent Space Search. We have highlighted p-values smaller than the significance level $\alpha=0.05$ in bold.
+
+:::

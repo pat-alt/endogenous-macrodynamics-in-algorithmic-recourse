@@ -11,7 +11,7 @@ projectdir = splitpath(pwd()) |>
 cd(projectdir)
 ```
 
-# Results: Mitigation Strategies
+# Mitigation Strategies
 
 ```{julia}
 #| echo: false
@@ -334,23 +334,37 @@ n_bootstrap = 100
 df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstrap_synthetic.csv"))
 ```
 
-```{julia}
-#| output: true
-#| eval: true
-#| echo: false
+@tbl-bs-mit-synthetic presents the tests for statistical significance of the estimated MMD metrics.
 
-df = EMAR.aggregate_bs_mitigation_synthetic(backend = Val(:html))
+::: {#tbl-bs-mit-synthetic}
+
+```{julia}
+#| output: asis
+#| eval: true
+
+EMAR.aggregate_bs_mitigation_synthetic(backend=Val(:html))
 ```
+
+Tests for statistical significance of the estimated MMD metrics using mitigation strategies. We have highlighted p-values smaller than the significance level $\alpha=0.05$ in bold. Data: Synthetic.
+
+:::
 
 ##### Real-World
 
-```{julia}
-#| output: true
-#| eval: true
-#| echo: false
+@tbl-bs-mit-real-world presents the tests for statistical significance of the estimated MMD metrics.
 
-df = EMAR.aggregate_bs_mitigation_real_world(backend = Val(:html))
+::: {#tbl-bs-mit-real-world}
+
+```{julia}
+#| output: asis
+#| eval: true
+
+EMAR.aggregate_bs_mitigation_real_world(backend=Val(:html))
 ```
+
+Tests for statistical significance of the estimated MMD metrics using mitigation strategies. We have highlighted p-values smaller than the significance level $\alpha=0.05$ in bold. Data: Real-World.
+
+:::
 
 #### Chart in paper (Figure 6)
 
@@ -503,6 +517,7 @@ Images.save(joinpath(www_path,"paper_real_world_results.png"), img)
 
 Images.load(joinpath(www_artifact_path,"paper_real_world_results.png"))
 ```
+
 ## Mitigation and Latent Space Search
 
 For the synthetic datasets, we investigate the effect of combining latent space search with the mitigation strategies. 
@@ -619,10 +634,14 @@ println(_str)
 
 #### Bootstrap
 
+@tbl-bs-mit-latent presents the tests for statistical significance of the estimated MMD metrics.
+
 ```{julia}
 n_bootstrap = 100
 df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstrap_latent.csv"))
 ```
+
+::: {#tbl-bs-mit-latent}
 
 ```{julia}
 #| output: true
@@ -631,6 +650,10 @@ df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstra
 
 df = EMAR.aggregate_bs_mitigation_latent(backend = Val(:html))
 ```
+
+Tests for statistical significance of the estimated MMD metrics using mitigation strategies with Latent Space Search. We have highlighted p-values smaller than the significance level $\alpha=0.05$ in bold.
+
+:::
 
 #### Chart in paper (Figure 7)
 

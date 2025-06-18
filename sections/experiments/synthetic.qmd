@@ -12,7 +12,7 @@ cd(projectdir)
 ```
 
 
-# Results: Synthetic Data {#sec-app-synthetic}
+# Synthetic Data {#sec-app-synthetic}
 
 This notebook was used to run the experiments for the synthetic datasets and can be used to reproduce the results in the paper. In the following we first run the experiments and then generate visualizations and tables.
 
@@ -331,14 +331,21 @@ n_bootstrap = 100
 df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstrap.csv"))
 ```
 
+@tbl-bs-synthetic presents the tests for statistical significance of the estimated MMD metrics.
+
+::: {#tbl-bs-synthetic}
+
+
 ```{julia}
-#| output: true
+#| output: asis
 #| eval: true
-#| echo: false
 
 EMAR.aggregate_bs_synthetic(backend=Val(:html))
 ```
 
+Tests for statistical significance of the estimated MMD metrics. We have highlighted p-values smaller than the significance level $\alpha=0.05$ in bold. Data: Synthetic.
+
+:::
 
 ### Chart in paper (Figure 3) {#sec-app-synthetic-paper}
 

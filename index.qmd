@@ -1,5 +1,6 @@
 # Preface {.unnumbered}
 
-This is an online auxiliary companion to our research paper: {{< meta title >}}.
+This is an online auxiliary companion to our research paper: *{{< meta title >}}*. 
 
+The paper was originally published at the 2023 IEEE Conference on Secure and Trustworthy Machine Learning: [open paper on IEEE](https://ieeexplore.ieee.org/abstract/document/10136130) [@altmeyer2023endogenous]. This online companion was updated in 2025 as I prepared the final draft of my PhD thesis.
 

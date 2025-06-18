@@ -150,6 +150,9 @@ function kable(
     return println(rcopy(R"ktab"))
 end
 
+"""
+Tabulate the bootstrap results for HTML.
+"""
 function tabulate_bs(df::DataFrame, backend::Val{:html}, alpha::AbstractFloat; kwrgs...)
     hl = HtmlHighlighter(
        (data, i, j) -> (j == 5) && data[i, 5] < alpha,
@@ -159,6 +162,24 @@ function tabulate_bs(df::DataFrame, backend::Val{:html}, alpha::AbstractFloat; k
         df;
         backend = backend,
         highlighters = (hl,),
+        kwrgs...
+    )
+end
+
+"""
+Tabulate the bootstrap results for LaTeX.
+"""
+function tabulate_bs(df::DataFrame, backend::Val{:latex}, alpha::AbstractFloat; kwrgs...)
+    hl = LatexHighlighter(
+        (data, i, j) -> (j == 5) && data[i, 5] < alpha,
+        ["textbf"]
+    )
+    pretty_table(
+        df;
+        backend = backend,
+        highlighters = (hl,),
+        table_type = :longtable,
+        longtable_footer = "Continued below.",
         kwrgs...
     )
 end
@@ -191,6 +212,7 @@ function aggregate_bs(
     df.name[df.scope .== "model" .&& df.name .== "mmd"] .= "PP MMD"
     df.name[df.scope .== "domain" .&& df.name .== "mmd"] .= "MMD"
     df.data = [replace(x, "_" => " ") |> titlecase for x in df.data]
+    replace!(df.data, "Gmsc" => "GMSC")
     replace!(df.model, "FluxEnsemble" => "Deep Ensemble", "FluxModel" => "MLP", "LogisticRegression" => "Linear")
     df.generator .= convert.(String, df.generator)
     replace!(df.generator, "Generic_conservative" => "Generic (γ=0.9)", "Generic" => "Generic (γ=0.5)", "REVISE" => "Latent", "Latent_conservative" => "Latent (γ=0.9)")

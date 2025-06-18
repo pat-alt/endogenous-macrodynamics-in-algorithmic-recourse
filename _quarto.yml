@@ -5,6 +5,8 @@ project:
 
 book:
   title: "Endogenous Macrodynamics in Algorithmic Recourse"
+  subtitle: "Online Companion"
+  downloads: ["epub"]
   author: 
     - name: Patrick Altmeyer
       url: https://www.paltmeyer.com/
@@ -25,7 +27,7 @@ book:
     - name: Cynthia C. S. Liem
       affiliation: Delft University of Technology
       affiliation-url: https://www.tudelft.nl/en/
-  date: "22/12/2022"
+  date: today
   chapters:
     - index.qmd
     - intro.qmd
@@ -40,7 +42,7 @@ crossref:
   fig-prefix: Figure
   tbl-prefix: Table
 
-bibliography: bib.bib
+bibliography: bibliography.bib
 
 format:
   html:
@@ -48,6 +50,7 @@ format:
     toc: true
     toc-depth: 5
     code-fold: true
+    code-tools: true
   epub:
     cover-image: paper/www/poc.png
 

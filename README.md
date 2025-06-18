@@ -8,17 +8,19 @@ Recourse” (Altmeyer et al. 2023).
 
 Below is a list of relevant resources hosted in this repository:
 
-1.  [Paper](paper/paper.pdf) in this repo
-2.  [Paper](https://openreview.net/pdf?id=-LFT2YicI9v) on OpenReview
+1.  [Paper](https://arxiv.org/pdf/2308.08187) on arxiv (up-to-date).
+2.  Official
+    [publication](https://ieeexplore.ieee.org/abstract/document/10136130)
+    on IEEE.
 3.  [Online
-    Companion](https://www.paltmeyer.com/endogenous-macrodynamics-in-algorithmic-recourse/)
+    Companion](https://www.patalt.org/endogenous-macrodynamics-in-algorithmic-recourse/)
 4.  [IEEE SaTML Presentation
-    Slides](https://www.paltmeyer.com/content/talks/posts/2023-ieee-satml/presentation.html)
+    Slides](https://www.patalt.org/content/talks/posts/2023-ieee-satml/presentation.html)
 5.  [IEEE SaTML Poster](dev/poster/poster.pdf)
 6.  Software:
-    [`AlgorithmicRecourseDynamics.jl`](https://github.com/pat-alt/AlgorithmicRecourseDynamics.jl)
+    [`AlgorithmicRecourseDynamics.jl`](https://github.com/JuliaTrustworthyAI/AlgorithmicRecourseDynamics.jl)
     and
-    [`CounterfactualExplanations.jl`](https://github.com/pat-alt/CounterfactualExplanations.jl)
+    [`CounterfactualExplanations.jl`](https://github.com/JuliaTrustworthyAI/CounterfactualExplanations.jl)
 
 ## Motivation
 
@@ -101,15 +103,15 @@ then. For this reason, we recommend you to use one of the legacy
 versions of Julia specified in the [Project.toml](Project.toml) file.
 You can use the recommend
 [juliaup](https://github.com/JuliaLang/juliaup) version manager to do
-so. Specifically, we recommend to use Julia 1.9 as follows:
+so. Specifically, we recommend to use Julia 1.8 as follows:
 
-    juliaup add 1.9
-    julia +1.9
+    juliaup add 1.8
+    julia +1.8
 
 ### Instantiate and Use Package
 
 The code in this repo is packaged. After cloning the repo and following
-the previous step to run an interactive Julia (1.9) session, you need to
+the previous step to run an interactive Julia (1.8) session, you need to
 instantiate the package:
 
 ``` julia
@@ -136,6 +138,18 @@ artifacts_to_local_dev()
 This will create a local copy of the results in
 `dev/artifacts/download/`.
 
+Alternatively, you can download results selectively:
+
+``` julia
+synthetic = load_synthetic()    # synthetic datasets
+real_world = load_real_world()  # real-world datasets
+```
+
+### Reproducing Results
+
+To reproduce the results step-by-step, please consult the [online
+companion](https://www.patalt.org/endogenous-macrodynamics-in-algorithmic-recourse/).
+
 ## References
 
 <div id="refs" class="references csl-bib-body hanging-indent"
@@ -144,9 +158,9 @@ entry-spacing="0">
 <div id="ref-altmeyer2023endogenous" class="csl-entry">
 
 Altmeyer, Patrick, Giovan Angela, Aleksander Buszydlik, Karol Dobiczek,
-Arie van Deursen, and Cynthia Liem. 2023. “Endogenous Macrodynamics in
-Algorithmic Recourse.” In *First IEEE Conference on Secure and
-Trustworthy Machine Learning*.
+Arie van Deursen, and Cynthia CS Liem. 2023. “Endogenous Macrodynamics
+in Algorithmic Recourse.” In *2023 IEEE Conference on Secure and
+Trustworthy Machine Learning (SaTML)*, 418–31. IEEE.
 
 </div>
 

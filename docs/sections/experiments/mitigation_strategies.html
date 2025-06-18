@@ -111,6 +111,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -123,7 +152,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../sections/experiments/mitigation_strategies.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Results: Mitigation Strategies</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../sections/experiments/mitigation_strategies.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Mitigation Strategies</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -139,6 +168,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="../../">Endogenous Macrodynamics in Algorithmic Recourse</a> 
+        <div class="sidebar-tools-main">
+    <a href="../../Endogenous-Macrodynamics-in-Algorithmic-Recourse.epub" title="Download ePub" class="quarto-navigation-tool px-1" aria-label="Download ePub"><i class="bi bi-journal"></i></a>
+</div>
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -169,19 +201,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../sections/experiments/synthetic.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Results: Synthetic Data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Synthetic Data</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../sections/experiments/real_world.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Results: Real-World Data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Real-World Data</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../sections/experiments/mitigation_strategies.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Results: Mitigation Strategies</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Mitigation Strategies</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -246,7 +278,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Results: Mitigation Strategies</span></h1>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Results: Mitigation Strategies</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -606,9 +638,18 @@ Figure&nbsp;5.14: Evaluation metrics at the end of the experiment. Data: Overlap
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> <span class="fu">run_bootstrap</span>(results, n_bootstrap; filename<span class="op">=</span><span class="fu">joinpath</span>(output_path,<span class="st">"bootstrap_synthetic.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="42" class="cell" data-execution_count="1">
-<div class="cell-output cell-output-display">
-<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<p><a href="#tbl-bs-mit-synthetic" class="quarto-xref">Table&nbsp;<span>5.1</span></a> presents the tests for statistical significance of the estimated MMD metrics.</p>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>EMAR.<span class="fu">aggregate_bs_mitigation_synthetic</span>(backend<span class="op">=</span><span class="fu">Val</span>(<span class="op">:</span>html))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="tbl-bs-mit-synthetic" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-bs-mit-synthetic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;5.1: Tests for statistical significance of the estimated MMD metrics using mitigation strategies. We have highlighted p-values smaller than the significance level <span class="math inline">\(\alpha=0.05\)</span> in bold. Data: Synthetic.
+</figcaption>
+<div aria-describedby="tbl-bs-mit-synthetic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table" data-quarto-postprocess="true">
 <thead>
 <tr class="header headerLastRow">
 <th style="text-align: right;" data-quarto-table-cell-role="th">Metric</th>
@@ -1882,13 +1923,23 @@ Figure&nbsp;5.14: Evaluation metrics at the end of the experiment. Data: Overlap
 </tbody>
 </table>
 </div>
+</figure>
 </div>
 </section>
 <section id="real-world-1" class="level5" data-number="5.1.2.4.2">
 <h5 data-number="5.1.2.4.2" class="anchored" data-anchor-id="real-world-1"><span class="header-section-number">5.1.2.4.2</span> Real-World</h5>
-<div id="44" class="cell" data-execution_count="1">
-<div class="cell-output cell-output-display">
-<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<p><a href="#tbl-bs-mit-real-world" class="quarto-xref">Table&nbsp;<span>5.2</span></a> presents the tests for statistical significance of the estimated MMD metrics.</p>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>EMAR.<span class="fu">aggregate_bs_mitigation_real_world</span>(backend<span class="op">=</span><span class="fu">Val</span>(<span class="op">:</span>html))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="tbl-bs-mit-real-world" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-bs-mit-real-world-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;5.2: Tests for statistical significance of the estimated MMD metrics using mitigation strategies. We have highlighted p-values smaller than the significance level <span class="math inline">\(\alpha=0.05\)</span> in bold. Data: Real-World.
+</figcaption>
+<div aria-describedby="tbl-bs-mit-real-world-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table" data-quarto-postprocess="true">
 <thead>
 <tr class="header headerLastRow">
 <th style="text-align: right;" data-quarto-table-cell-role="th">Metric</th>
@@ -2111,105 +2162,105 @@ Figure&nbsp;5.14: Evaluation metrics at the end of the experiment. Data: Overlap
 </tr>
 <tr class="odd">
 <td style="text-align: right;">MMD</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">ClapROAR</td>
 <td style="text-align: right;">Deep Ensemble</td>
 <td style="text-align: right;">0.15</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">MMD</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">ClapROAR</td>
 <td style="text-align: right;">Linear</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">MMD</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">ClapROAR</td>
 <td style="text-align: right;">MLP</td>
 <td style="text-align: right;">0.214</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">MMD</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Generic (γ=0.5)</td>
 <td style="text-align: right;">Deep Ensemble</td>
 <td style="text-align: right;">0.938</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">MMD</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Generic (γ=0.5)</td>
 <td style="text-align: right;">Linear</td>
 <td style="text-align: right;">0.856</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">MMD</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Generic (γ=0.5)</td>
 <td style="text-align: right;">MLP</td>
 <td style="text-align: right;">0.932</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">MMD</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Generic (γ=0.9)</td>
 <td style="text-align: right;">Deep Ensemble</td>
 <td style="text-align: right;">0.758</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">MMD</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Generic (γ=0.9)</td>
 <td style="text-align: right;">Linear</td>
 <td style="text-align: right; font-weight: bold;">0.004</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">MMD</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Generic (γ=0.9)</td>
 <td style="text-align: right;">MLP</td>
 <td style="text-align: right;">0.93</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">MMD</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Gravitational</td>
 <td style="text-align: right;">Deep Ensemble</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">MMD</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Gravitational</td>
 <td style="text-align: right;">Linear</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">MMD</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Gravitational</td>
 <td style="text-align: right;">MLP</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">MMD</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Latent</td>
 <td style="text-align: right;">Deep Ensemble</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">MMD</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Latent</td>
 <td style="text-align: right;">Linear</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">MMD</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Latent</td>
 <td style="text-align: right;">MLP</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
@@ -2426,105 +2477,105 @@ Figure&nbsp;5.14: Evaluation metrics at the end of the experiment. Data: Overlap
 </tr>
 <tr class="even">
 <td style="text-align: right;">PP MMD</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">ClapROAR</td>
 <td style="text-align: right;">Deep Ensemble</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">PP MMD</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">ClapROAR</td>
 <td style="text-align: right;">Linear</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">PP MMD</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">ClapROAR</td>
 <td style="text-align: right;">MLP</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">PP MMD</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Generic (γ=0.5)</td>
 <td style="text-align: right;">Deep Ensemble</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">PP MMD</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Generic (γ=0.5)</td>
 <td style="text-align: right;">Linear</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">PP MMD</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Generic (γ=0.5)</td>
 <td style="text-align: right;">MLP</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">PP MMD</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Generic (γ=0.9)</td>
 <td style="text-align: right;">Deep Ensemble</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">PP MMD</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Generic (γ=0.9)</td>
 <td style="text-align: right;">Linear</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">PP MMD</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Generic (γ=0.9)</td>
 <td style="text-align: right;">MLP</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">PP MMD</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Gravitational</td>
 <td style="text-align: right;">Deep Ensemble</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">PP MMD</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Gravitational</td>
 <td style="text-align: right;">Linear</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">PP MMD</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Gravitational</td>
 <td style="text-align: right;">MLP</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">PP MMD</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Latent</td>
 <td style="text-align: right;">Deep Ensemble</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">PP MMD</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Latent</td>
 <td style="text-align: right;">Linear</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">PP MMD</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Latent</td>
 <td style="text-align: right;">MLP</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
@@ -2741,105 +2792,105 @@ Figure&nbsp;5.14: Evaluation metrics at the end of the experiment. Data: Overlap
 </tr>
 <tr class="odd">
 <td style="text-align: right;">PP MMD (grid)</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">ClapROAR</td>
 <td style="text-align: right;">Deep Ensemble</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">PP MMD (grid)</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">ClapROAR</td>
 <td style="text-align: right;">Linear</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">PP MMD (grid)</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">ClapROAR</td>
 <td style="text-align: right;">MLP</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">PP MMD (grid)</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Generic (γ=0.5)</td>
 <td style="text-align: right;">Deep Ensemble</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">PP MMD (grid)</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Generic (γ=0.5)</td>
 <td style="text-align: right;">Linear</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">PP MMD (grid)</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Generic (γ=0.5)</td>
 <td style="text-align: right;">MLP</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">PP MMD (grid)</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Generic (γ=0.9)</td>
 <td style="text-align: right;">Deep Ensemble</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">PP MMD (grid)</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Generic (γ=0.9)</td>
 <td style="text-align: right;">Linear</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">PP MMD (grid)</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Generic (γ=0.9)</td>
 <td style="text-align: right;">MLP</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">PP MMD (grid)</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Gravitational</td>
 <td style="text-align: right;">Deep Ensemble</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">PP MMD (grid)</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Gravitational</td>
 <td style="text-align: right;">Linear</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">PP MMD (grid)</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Gravitational</td>
 <td style="text-align: right;">MLP</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">PP MMD (grid)</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Latent</td>
 <td style="text-align: right;">Deep Ensemble</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">PP MMD (grid)</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Latent</td>
 <td style="text-align: right;">Linear</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">PP MMD (grid)</td>
-<td style="text-align: right;">Gmsc</td>
+<td style="text-align: right;">GMSC</td>
 <td style="text-align: right;">Latent</td>
 <td style="text-align: right;">MLP</td>
 <td style="text-align: right; font-weight: bold;">0.0</td>
@@ -2847,6 +2898,7 @@ Figure&nbsp;5.14: Evaluation metrics at the end of the experiment. Data: Overlap
 </tbody>
 </table>
 </div>
+</figure>
 </div>
 </section>
 </section>
@@ -2856,7 +2908,7 @@ Figure&nbsp;5.14: Evaluation metrics at the end of the experiment. Data: Overlap
 <div id="cell-fig-mit-paper" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Images.<span class="fu">load</span>(<span class="fu">joinpath</span>(www_artifact_path,<span class="st">"paper_synthetic_results.png"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Images.<span class="fu">load</span>(<span class="fu">joinpath</span>(www_artifact_path,<span class="st">"paper_synthetic_results.png"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div id="fig-mit-paper" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="1">
 <figure class="quarto-float quarto-float-fig figure">
@@ -2875,14 +2927,14 @@ Figure&nbsp;5.15: Chart in paper
 <div id="50" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> EMAR.<span class="fu">load_real_world_mitigation</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> EMAR.<span class="fu">load_real_world_mitigation</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p><a href="#fig-mit-real-paper" class="quarto-xref">Figure&nbsp;<span>5.16</span></a> shows the chart that went into the paper.</p>
 <div id="cell-fig-mit-real-paper" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Images.<span class="fu">load</span>(<span class="fu">joinpath</span>(www_artifact_path,<span class="st">"paper_real_world_results.png"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>Images.<span class="fu">load</span>(<span class="fu">joinpath</span>(www_artifact_path,<span class="st">"paper_real_world_results.png"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div id="fig-mit-real-paper" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="1">
 <figure class="quarto-float quarto-float-fig figure">
@@ -2906,60 +2958,60 @@ Figure&nbsp;5.16: Chart in paper
 <div id="56" class="cell" data-execution_count="0">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>generators <span class="op">=</span> <span class="fu">Dict</span>(</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>Latent<span class="op">=&gt;</span><span class="fu">GenericGenerator</span>(opt <span class="op">=</span> opt, decision_threshold<span class="op">=</span><span class="fl">0.5</span>),</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>Latent_conservative<span class="op">=&gt;</span><span class="fu">GenericGenerator</span>(opt <span class="op">=</span> opt, decision_threshold<span class="op">=</span><span class="fl">0.9</span>),</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>Gravitational<span class="op">=&gt;</span><span class="fu">GravitationalGenerator</span>(opt <span class="op">=</span> opt),</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>ClapROAR<span class="op">=&gt;</span><span class="fu">ClapROARGenerator</span>(opt <span class="op">=</span> opt)</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>generators <span class="op">=</span> <span class="fu">Dict</span>(</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>Latent<span class="op">=&gt;</span><span class="fu">GenericGenerator</span>(opt <span class="op">=</span> opt, decision_threshold<span class="op">=</span><span class="fl">0.5</span>),</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>Latent_conservative<span class="op">=&gt;</span><span class="fu">GenericGenerator</span>(opt <span class="op">=</span> opt, decision_threshold<span class="op">=</span><span class="fl">0.9</span>),</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>Gravitational<span class="op">=&gt;</span><span class="fu">GravitationalGenerator</span>(opt <span class="op">=</span> opt),</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>ClapROAR<span class="op">=&gt;</span><span class="fu">ClapROARGenerator</span>(opt <span class="op">=</span> opt)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div id="58" class="cell" data-execution_count="0">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>experiments <span class="op">=</span> <span class="fu">set_up_experiments</span>(data_sets,models,generators)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>experiments <span class="op">=</span> <span class="fu">set_up_experiments</span>(data_sets,models,generators)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div id="60" class="cell" data-execution_count="0">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>n_evals <span class="op">=</span> <span class="fl">5</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>n_rounds <span class="op">=</span> <span class="fl">50</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>evaluate_every <span class="op">=</span> <span class="fu">Int</span>(<span class="fu">round</span>(n_rounds<span class="op">/</span>n_evals))</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>n_folds <span class="op">=</span> <span class="fl">5</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> <span class="fl">100</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Serialization</span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> <span class="fu">run_experiments</span>(</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    experiments;</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    save_path<span class="op">=</span>output_path, evaluate_every<span class="op">=</span>evaluate_every, n_rounds<span class="op">=</span>n_rounds, n_folds<span class="op">=</span>n_folds, T<span class="op">=</span>T, </span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    latent_space <span class="op">=</span> <span class="cn">true</span></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="bu">Serialization</span>.<span class="fu">serialize</span>(<span class="fu">joinpath</span>(output_path,<span class="st">"results_synthetic_latent.jls"</span>),results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>n_evals <span class="op">=</span> <span class="fl">5</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>n_rounds <span class="op">=</span> <span class="fl">50</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>evaluate_every <span class="op">=</span> <span class="fu">Int</span>(<span class="fu">round</span>(n_rounds<span class="op">/</span>n_evals))</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>n_folds <span class="op">=</span> <span class="fl">5</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> <span class="fl">100</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Serialization</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> <span class="fu">run_experiments</span>(</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    experiments;</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    save_path<span class="op">=</span>output_path, evaluate_every<span class="op">=</span>evaluate_every, n_rounds<span class="op">=</span>n_rounds, n_folds<span class="op">=</span>n_folds, T<span class="op">=</span>T, </span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    latent_space <span class="op">=</span> <span class="cn">true</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="bu">Serialization</span>.<span class="fu">serialize</span>(<span class="fu">joinpath</span>(output_path,<span class="st">"results_synthetic_latent.jls"</span>),results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div id="62" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>data_names <span class="op">=</span> [<span class="st">"Circles"</span>, <span class="st">"Linearly Separable"</span>, <span class="st">"Moons"</span>, <span class="st">"Overlapping"</span>]</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> EMAR.<span class="fu">load_synthetic_mitigation_latent</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>data_names <span class="op">=</span> [<span class="st">"Circles"</span>, <span class="st">"Linearly Separable"</span>, <span class="st">"Moons"</span>, <span class="st">"Overlapping"</span>]</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> EMAR.<span class="fu">load_synthetic_mitigation_latent</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div id="64" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Images</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>line_charts <span class="op">=</span> <span class="fu">Dict</span>()</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>errorbar_charts <span class="op">=</span> <span class="fu">Dict</span>()</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (data_name, res) <span class="kw">in</span> results</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    plt <span class="op">=</span> <span class="fu">plot_res</span>(res)</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    Images.<span class="fu">save</span>(<span class="fu">joinpath</span>(www_path, <span class="st">"line_chart_latent_</span><span class="sc">$</span>(data_name)<span class="st">.png"</span>), plt)</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    Images.<span class="fu">save</span>(<span class="fu">joinpath</span>(www_paper_path, <span class="st">"line_chart_latent_</span><span class="sc">$</span>(data_name)<span class="st">.png"</span>), plt)</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    line_charts[data_name] <span class="op">=</span> plt</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    plt <span class="op">=</span> <span class="fu">plot_res</span>(res,<span class="fu">maximum</span>(res.output.n))</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    Images.<span class="fu">save</span>(<span class="fu">joinpath</span>(www_path, <span class="st">"errorbar_chart_latent_</span><span class="sc">$</span>(data_name)<span class="st">.png"</span>), plt)</span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    Images.<span class="fu">save</span>(<span class="fu">joinpath</span>(www_paper_path, <span class="st">"errorbar_chart_latent_</span><span class="sc">$</span>(data_name)<span class="st">.png"</span>), plt)</span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    errorbar_charts[data_name] <span class="op">=</span> plt</span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Images</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>line_charts <span class="op">=</span> <span class="fu">Dict</span>()</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>errorbar_charts <span class="op">=</span> <span class="fu">Dict</span>()</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (data_name, res) <span class="kw">in</span> results</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    plt <span class="op">=</span> <span class="fu">plot_res</span>(res)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    Images.<span class="fu">save</span>(<span class="fu">joinpath</span>(www_path, <span class="st">"line_chart_latent_</span><span class="sc">$</span>(data_name)<span class="st">.png"</span>), plt)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    Images.<span class="fu">save</span>(<span class="fu">joinpath</span>(www_paper_path, <span class="st">"line_chart_latent_</span><span class="sc">$</span>(data_name)<span class="st">.png"</span>), plt)</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    line_charts[data_name] <span class="op">=</span> plt</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    plt <span class="op">=</span> <span class="fu">plot_res</span>(res,<span class="fu">maximum</span>(res.output.n))</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    Images.<span class="fu">save</span>(<span class="fu">joinpath</span>(www_path, <span class="st">"errorbar_chart_latent_</span><span class="sc">$</span>(data_name)<span class="st">.png"</span>), plt)</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    Images.<span class="fu">save</span>(<span class="fu">joinpath</span>(www_paper_path, <span class="st">"errorbar_chart_latent_</span><span class="sc">$</span>(data_name)<span class="st">.png"</span>), plt)</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    errorbar_charts[data_name] <span class="op">=</span> plt</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -3055,13 +3107,20 @@ Figure&nbsp;5.24: Evaluation metrics at the end of the experiment. Data: Overlap
 </section>
 <section id="bootstrap-1" class="level4" data-number="5.2.2.3">
 <h4 data-number="5.2.2.3" class="anchored" data-anchor-id="bootstrap-1"><span class="header-section-number">5.2.2.3</span> Bootstrap</h4>
+<p><a href="#tbl-bs-mit-latent" class="quarto-xref">Table&nbsp;<span>5.3</span></a> presents the tests for statistical significance of the estimated MMD metrics.</p>
 <div id="74" class="cell" data-execution_count="0">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>n_bootstrap <span class="op">=</span> <span class="fl">100</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> <span class="fu">run_bootstrap</span>(results, n_bootstrap; filename<span class="op">=</span><span class="fu">joinpath</span>(output_path,<span class="st">"bootstrap_latent.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>n_bootstrap <span class="op">=</span> <span class="fl">100</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> <span class="fu">run_bootstrap</span>(results, n_bootstrap; filename<span class="op">=</span><span class="fu">joinpath</span>(output_path,<span class="st">"bootstrap_latent.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
+<div id="tbl-bs-mit-latent" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-bs-mit-latent-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;5.3: Tests for statistical significance of the estimated MMD metrics using mitigation strategies with Latent Space Search. We have highlighted p-values smaller than the significance level <span class="math inline">\(\alpha=0.05\)</span> in bold.
+</figcaption>
+<div aria-describedby="tbl-bs-mit-latent-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div id="76" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
@@ -4087,6 +4146,9 @@ Figure&nbsp;5.24: Evaluation metrics at the end of the experiment. Data: Overlap
 </table>
 </div>
 </div>
+</div>
+</figure>
+</div>
 </section>
 <section id="chart-in-paper-figure-7" class="level4" data-number="5.2.2.4">
 <h4 data-number="5.2.2.4" class="anchored" data-anchor-id="chart-in-paper-figure-7"><span class="header-section-number">5.2.2.4</span> Chart in paper (Figure 7)</h4>
@@ -4094,7 +4156,7 @@ Figure&nbsp;5.24: Evaluation metrics at the end of the experiment. Data: Overlap
 <div id="cell-fig-mit-latent-paper" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>Images.<span class="fu">load</span>(<span class="fu">joinpath</span>(www_artifact_path,<span class="st">"paper_synthetic_latent_results.png"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>Images.<span class="fu">load</span>(<span class="fu">joinpath</span>(www_artifact_path,<span class="st">"paper_synthetic_latent_results.png"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div id="fig-mit-latent-paper" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="1">
 <figure class="quarto-float quarto-float-fig figure">
@@ -4108,6 +4170,8 @@ Figure&nbsp;5.25: Chart in paper
 </div>
 </div>
 
+
+<!-- -->
 
 </section>
 </section>
@@ -4183,6 +4247,57 @@ Figure&nbsp;5.25: Chart in paper
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
@@ -4515,8 +4630,8 @@ Figure&nbsp;5.25: Chart in paper
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../sections/experiments/real_world.html" class="pagination-link" aria-label="Results: Real-World Data">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Results: Real-World Data</span></span>
+      <a href="../../sections/experiments/real_world.html" class="pagination-link" aria-label="Real-World Data">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Real-World Data</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
@@ -4524,7 +4639,743 @@ Figure&nbsp;5.25: Chart in paper
         <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Generators</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
-</nav>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb26" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="an">julia:</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co">  exeflags: ["+1.8"]</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>projectdir <span class="op">=</span> <span class="fu">splitpath</span>(<span class="fu">pwd</span>()) <span class="op">|&gt;</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>    ss <span class="op">-&gt;</span> <span class="fu">joinpath</span>(ss[<span class="fl">1</span><span class="op">:</span><span class="fu">findall</span>([s <span class="op">==</span> <span class="st">"endogenous-macrodynamics-in-algorithmic-recourse"</span> for s <span class="kw">in</span> ss])[<span class="fl">1</span>]]<span class="op">...</span>) </span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="fu">cd</span>(projectdir)</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a><span class="fu"># Mitigation Strategies</span></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">EMAR</span></span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">PrettyTables</span></span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Images</span></span>
+<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a>output_path <span class="op">=</span> <span class="fu">output_dir</span>(<span class="st">"mitigation_strategies"</span>)</span>
+<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a>www_path <span class="op">=</span> <span class="fu">www_dir</span>(<span class="st">"mitigation_strategies"</span>)</span>
+<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a>www_paper_path <span class="op">=</span> <span class="fu">mkpath</span>(<span class="st">"paper/www/appendix/mitigation/"</span>)</span>
+<span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-31"><a href="#cb26-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Artifacts:</span></span>
+<span id="cb26-32"><a href="#cb26-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Images:</span></span>
+<span id="cb26-33"><a href="#cb26-33" aria-hidden="true" tabindex="-1"></a>artifact_name <span class="op">=</span> <span class="fu">create_artifact_name_from_path</span>(www_path, <span class="cn">nothing</span>)</span>
+<span id="cb26-34"><a href="#cb26-34" aria-hidden="true" tabindex="-1"></a>_hash <span class="op">=</span> <span class="fu">artifact_hash</span>(artifact_name, <span class="fu">artifact_toml</span>())</span>
+<span id="cb26-35"><a href="#cb26-35" aria-hidden="true" tabindex="-1"></a>www_artifact_path <span class="op">=</span> <span class="fu">joinpath</span>(<span class="fu">artifact_path</span>(_hash), artifact_name)</span>
+<span id="cb26-36"><a href="#cb26-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Output:</span></span>
+<span id="cb26-37"><a href="#cb26-37" aria-hidden="true" tabindex="-1"></a>artifact_name <span class="op">=</span> <span class="fu">create_artifact_name_from_path</span>(output_path, <span class="cn">nothing</span>)</span>
+<span id="cb26-38"><a href="#cb26-38" aria-hidden="true" tabindex="-1"></a>_hash <span class="op">=</span> <span class="fu">artifact_hash</span>(artifact_name, <span class="fu">artifact_toml</span>())</span>
+<span id="cb26-39"><a href="#cb26-39" aria-hidden="true" tabindex="-1"></a>output_artifact_path <span class="op">=</span> <span class="fu">joinpath</span>(<span class="fu">artifact_path</span>(_hash), artifact_name)</span>
+<span id="cb26-40"><a href="#cb26-40" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-41"><a href="#cb26-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-44"><a href="#cb26-44" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-45"><a href="#cb26-45" aria-hidden="true" tabindex="-1"></a>models <span class="op">=</span> [</span>
+<span id="cb26-46"><a href="#cb26-46" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>LogisticRegression, </span>
+<span id="cb26-47"><a href="#cb26-47" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>FluxModel, </span>
+<span id="cb26-48"><a href="#cb26-48" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>FluxEnsemble,</span>
+<span id="cb26-49"><a href="#cb26-49" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb26-50"><a href="#cb26-50" aria-hidden="true" tabindex="-1"></a>opt <span class="op">=</span> Flux.<span class="fu">Descent</span>(<span class="fl">0.01</span>) </span>
+<span id="cb26-51"><a href="#cb26-51" aria-hidden="true" tabindex="-1"></a>generators <span class="op">=</span> <span class="fu">Dict</span>(</span>
+<span id="cb26-52"><a href="#cb26-52" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>Generic<span class="op">=&gt;</span><span class="fu">GenericGenerator</span>(opt <span class="op">=</span> opt, decision_threshold<span class="op">=</span><span class="fl">0.5</span>),</span>
+<span id="cb26-53"><a href="#cb26-53" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>Latent<span class="op">=&gt;</span><span class="fu">REVISEGenerator</span>(opt <span class="op">=</span> opt),</span>
+<span id="cb26-54"><a href="#cb26-54" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>Generic_conservative<span class="op">=&gt;</span><span class="fu">GenericGenerator</span>(opt <span class="op">=</span> opt, decision_threshold<span class="op">=</span><span class="fl">0.9</span>),</span>
+<span id="cb26-55"><a href="#cb26-55" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>Gravitational<span class="op">=&gt;</span><span class="fu">GravitationalGenerator</span>(opt <span class="op">=</span> opt),</span>
+<span id="cb26-56"><a href="#cb26-56" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>ClapROAR<span class="op">=&gt;</span><span class="fu">ClapROARGenerator</span>(opt <span class="op">=</span> opt)</span>
+<span id="cb26-57"><a href="#cb26-57" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-58"><a href="#cb26-58" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-59"><a href="#cb26-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-60"><a href="#cb26-60" aria-hidden="true" tabindex="-1"></a><span class="fu">## Mitigation Strategies</span></span>
+<span id="cb26-61"><a href="#cb26-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-62"><a href="#cb26-62" aria-hidden="true" tabindex="-1"></a><span class="fu">### Running the Experiment</span></span>
+<span id="cb26-63"><a href="#cb26-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-64"><a href="#cb26-64" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Synthetic</span></span>
+<span id="cb26-65"><a href="#cb26-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-68"><a href="#cb26-68" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-69"><a href="#cb26-69" aria-hidden="true" tabindex="-1"></a>max_obs <span class="op">=</span> <span class="fl">1000</span></span>
+<span id="cb26-70"><a href="#cb26-70" aria-hidden="true" tabindex="-1"></a>catalogue <span class="op">=</span> <span class="fu">load_synthetic</span>(max_obs)</span>
+<span id="cb26-71"><a href="#cb26-71" aria-hidden="true" tabindex="-1"></a>choices <span class="op">=</span> [</span>
+<span id="cb26-72"><a href="#cb26-72" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>linearly_separable, </span>
+<span id="cb26-73"><a href="#cb26-73" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>overlapping, </span>
+<span id="cb26-74"><a href="#cb26-74" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>circles, </span>
+<span id="cb26-75"><a href="#cb26-75" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>moons,</span>
+<span id="cb26-76"><a href="#cb26-76" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb26-77"><a href="#cb26-77" aria-hidden="true" tabindex="-1"></a>data_sets <span class="op">=</span> <span class="fu">filter</span>(p <span class="op">-&gt;</span> p[<span class="fl">1</span>] <span class="kw">in</span> choices, catalogue)</span>
+<span id="cb26-78"><a href="#cb26-78" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-79"><a href="#cb26-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-82"><a href="#cb26-82" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-83"><a href="#cb26-83" aria-hidden="true" tabindex="-1"></a>experiments <span class="op">=</span> <span class="fu">set_up_experiments</span>(data_sets,models,generators)</span>
+<span id="cb26-84"><a href="#cb26-84" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-85"><a href="#cb26-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-88"><a href="#cb26-88" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-89"><a href="#cb26-89" aria-hidden="true" tabindex="-1"></a>n_evals <span class="op">=</span> <span class="fl">5</span></span>
+<span id="cb26-90"><a href="#cb26-90" aria-hidden="true" tabindex="-1"></a>n_rounds <span class="op">=</span> <span class="fl">50</span></span>
+<span id="cb26-91"><a href="#cb26-91" aria-hidden="true" tabindex="-1"></a>evaluate_every <span class="op">=</span> <span class="fu">Int</span>(<span class="fu">round</span>(n_rounds<span class="op">/</span>n_evals))</span>
+<span id="cb26-92"><a href="#cb26-92" aria-hidden="true" tabindex="-1"></a>n_folds <span class="op">=</span> <span class="fl">5</span></span>
+<span id="cb26-93"><a href="#cb26-93" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> <span class="fl">100</span></span>
+<span id="cb26-94"><a href="#cb26-94" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Serialization</span></span>
+<span id="cb26-95"><a href="#cb26-95" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> <span class="fu">run_experiments</span>(</span>
+<span id="cb26-96"><a href="#cb26-96" aria-hidden="true" tabindex="-1"></a>    experiments;</span>
+<span id="cb26-97"><a href="#cb26-97" aria-hidden="true" tabindex="-1"></a>    save_path<span class="op">=</span>output_path,evaluate_every<span class="op">=</span>evaluate_every,n_rounds<span class="op">=</span>n_rounds, n_folds<span class="op">=</span>n_folds, T<span class="op">=</span>T</span>
+<span id="cb26-98"><a href="#cb26-98" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-99"><a href="#cb26-99" aria-hidden="true" tabindex="-1"></a><span class="bu">Serialization</span>.<span class="fu">serialize</span>(<span class="fu">joinpath</span>(output_path,<span class="st">"results_synthetic.jls"</span>),results)</span>
+<span id="cb26-100"><a href="#cb26-100" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-101"><a href="#cb26-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-102"><a href="#cb26-102" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Real World</span></span>
+<span id="cb26-103"><a href="#cb26-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-106"><a href="#cb26-106" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-107"><a href="#cb26-107" aria-hidden="true" tabindex="-1"></a>models <span class="op">=</span> [</span>
+<span id="cb26-108"><a href="#cb26-108" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>LogisticRegression, </span>
+<span id="cb26-109"><a href="#cb26-109" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>FluxModel, </span>
+<span id="cb26-110"><a href="#cb26-110" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>FluxEnsemble,</span>
+<span id="cb26-111"><a href="#cb26-111" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb26-112"><a href="#cb26-112" aria-hidden="true" tabindex="-1"></a>opt <span class="op">=</span> Flux.<span class="fu">Descent</span>(<span class="fl">0.01</span>) </span>
+<span id="cb26-113"><a href="#cb26-113" aria-hidden="true" tabindex="-1"></a>generators <span class="op">=</span> <span class="fu">Dict</span>(</span>
+<span id="cb26-114"><a href="#cb26-114" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>Generic<span class="op">=&gt;</span><span class="fu">GenericGenerator</span>(opt <span class="op">=</span> opt, decision_threshold<span class="op">=</span><span class="fl">0.5</span>),</span>
+<span id="cb26-115"><a href="#cb26-115" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>Latent<span class="op">=&gt;</span><span class="fu">REVISEGenerator</span>(opt <span class="op">=</span> opt),</span>
+<span id="cb26-116"><a href="#cb26-116" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>Generic_conservative<span class="op">=&gt;</span><span class="fu">GenericGenerator</span>(opt <span class="op">=</span> opt, decision_threshold<span class="op">=</span><span class="fl">0.9</span>),</span>
+<span id="cb26-117"><a href="#cb26-117" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>Gravitational<span class="op">=&gt;</span><span class="fu">GravitationalGenerator</span>(opt <span class="op">=</span> opt),</span>
+<span id="cb26-118"><a href="#cb26-118" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>ClapROAR<span class="op">=&gt;</span><span class="fu">ClapROARGenerator</span>(opt <span class="op">=</span> opt)</span>
+<span id="cb26-119"><a href="#cb26-119" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-120"><a href="#cb26-120" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-121"><a href="#cb26-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-124"><a href="#cb26-124" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-125"><a href="#cb26-125" aria-hidden="true" tabindex="-1"></a>max_obs <span class="op">=</span> <span class="fl">2500</span></span>
+<span id="cb26-126"><a href="#cb26-126" aria-hidden="true" tabindex="-1"></a>data_path <span class="op">=</span> <span class="fu">data_dir</span>(<span class="st">"real_world"</span>)</span>
+<span id="cb26-127"><a href="#cb26-127" aria-hidden="true" tabindex="-1"></a>data_sets <span class="op">=</span> <span class="fu">load_real_world</span>(max_obs)</span>
+<span id="cb26-128"><a href="#cb26-128" aria-hidden="true" tabindex="-1"></a>choices <span class="op">=</span> [</span>
+<span id="cb26-129"><a href="#cb26-129" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>cal_housing, </span>
+<span id="cb26-130"><a href="#cb26-130" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>credit_default, </span>
+<span id="cb26-131"><a href="#cb26-131" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>gmsc, </span>
+<span id="cb26-132"><a href="#cb26-132" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb26-133"><a href="#cb26-133" aria-hidden="true" tabindex="-1"></a>data_sets <span class="op">=</span> <span class="fu">filter</span>(p <span class="op">-&gt;</span> p[<span class="fl">1</span>] <span class="kw">in</span> choices, data_sets)</span>
+<span id="cb26-134"><a href="#cb26-134" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-135"><a href="#cb26-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-138"><a href="#cb26-138" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-139"><a href="#cb26-139" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">CounterfactualExplanations.DataPreprocessing</span>: unpack</span>
+<span id="cb26-140"><a href="#cb26-140" aria-hidden="true" tabindex="-1"></a>bs <span class="op">=</span> <span class="fl">500</span></span>
+<span id="cb26-141"><a href="#cb26-141" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">data_loader</span>(data<span class="op">::</span><span class="dt">CounterfactualData</span>)</span>
+<span id="cb26-142"><a href="#cb26-142" aria-hidden="true" tabindex="-1"></a>    X, y <span class="op">=</span> <span class="fu">unpack</span>(data)</span>
+<span id="cb26-143"><a href="#cb26-143" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> Flux.<span class="fu">DataLoader</span>((X,y),batchsize<span class="op">=</span>bs)</span>
+<span id="cb26-144"><a href="#cb26-144" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> data</span>
+<span id="cb26-145"><a href="#cb26-145" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb26-146"><a href="#cb26-146" aria-hidden="true" tabindex="-1"></a>model_params <span class="op">=</span> (batch_norm<span class="op">=</span><span class="cn">false</span>,n_hidden<span class="op">=</span><span class="fl">64</span>,n_layers<span class="op">=</span><span class="fl">3</span>,dropout<span class="op">=</span><span class="cn">true</span>,p_dropout<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb26-147"><a href="#cb26-147" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-148"><a href="#cb26-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-151"><a href="#cb26-151" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-152"><a href="#cb26-152" aria-hidden="true" tabindex="-1"></a>experiments <span class="op">=</span> <span class="fu">set_up_experiments</span>(</span>
+<span id="cb26-153"><a href="#cb26-153" aria-hidden="true" tabindex="-1"></a>    data_sets,models,generators; </span>
+<span id="cb26-154"><a href="#cb26-154" aria-hidden="true" tabindex="-1"></a>    pre_train_models<span class="op">=</span><span class="fl">100</span>, model_params<span class="op">=</span>model_params, </span>
+<span id="cb26-155"><a href="#cb26-155" aria-hidden="true" tabindex="-1"></a>    data_loader<span class="op">=</span>data_loader</span>
+<span id="cb26-156"><a href="#cb26-156" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-157"><a href="#cb26-157" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-158"><a href="#cb26-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-161"><a href="#cb26-161" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-162"><a href="#cb26-162" aria-hidden="true" tabindex="-1"></a>n_evals <span class="op">=</span> <span class="fl">5</span></span>
+<span id="cb26-163"><a href="#cb26-163" aria-hidden="true" tabindex="-1"></a>n_rounds <span class="op">=</span> <span class="fl">50</span></span>
+<span id="cb26-164"><a href="#cb26-164" aria-hidden="true" tabindex="-1"></a>evaluate_every <span class="op">=</span> <span class="fu">Int</span>(<span class="fu">round</span>(n_rounds<span class="op">/</span>n_evals))</span>
+<span id="cb26-165"><a href="#cb26-165" aria-hidden="true" tabindex="-1"></a>n_folds <span class="op">=</span> <span class="fl">5</span></span>
+<span id="cb26-166"><a href="#cb26-166" aria-hidden="true" tabindex="-1"></a>n_samples <span class="op">=</span> <span class="fl">10000</span></span>
+<span id="cb26-167"><a href="#cb26-167" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> <span class="fl">100</span></span>
+<span id="cb26-168"><a href="#cb26-168" aria-hidden="true" tabindex="-1"></a>generative_model_params <span class="op">=</span> (epochs<span class="op">=</span><span class="fl">250</span>, latent_dim<span class="op">=</span><span class="fl">8</span>)</span>
+<span id="cb26-169"><a href="#cb26-169" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> <span class="fu">run_experiments</span>(</span>
+<span id="cb26-170"><a href="#cb26-170" aria-hidden="true" tabindex="-1"></a>    experiments;</span>
+<span id="cb26-171"><a href="#cb26-171" aria-hidden="true" tabindex="-1"></a>    save_path<span class="op">=</span>output_path,evaluate_every<span class="op">=</span>evaluate_every,n_rounds<span class="op">=</span>n_rounds, n_folds<span class="op">=</span>n_folds, T<span class="op">=</span>T, n_samples<span class="op">=</span>n_samples,</span>
+<span id="cb26-172"><a href="#cb26-172" aria-hidden="true" tabindex="-1"></a>    generative_model_params<span class="op">=</span>generative_model_params</span>
+<span id="cb26-173"><a href="#cb26-173" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-174"><a href="#cb26-174" aria-hidden="true" tabindex="-1"></a><span class="bu">Serialization</span>.<span class="fu">serialize</span>(<span class="fu">joinpath</span>(output_path,<span class="st">"results_real_world.jls"</span>),results)</span>
+<span id="cb26-175"><a href="#cb26-175" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-176"><a href="#cb26-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-177"><a href="#cb26-177" aria-hidden="true" tabindex="-1"></a><span class="fu">### Results</span></span>
+<span id="cb26-178"><a href="#cb26-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-181"><a href="#cb26-181" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-182"><a href="#cb26-182" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb26-183"><a href="#cb26-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-184"><a href="#cb26-184" aria-hidden="true" tabindex="-1"></a>data_names <span class="op">=</span> [</span>
+<span id="cb26-185"><a href="#cb26-185" aria-hidden="true" tabindex="-1"></a>    <span class="st">"California Housing"</span>,</span>
+<span id="cb26-186"><a href="#cb26-186" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Circles"</span>,</span>
+<span id="cb26-187"><a href="#cb26-187" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Credit Default"</span>,</span>
+<span id="cb26-188"><a href="#cb26-188" aria-hidden="true" tabindex="-1"></a>    <span class="st">"GMSC"</span>,</span>
+<span id="cb26-189"><a href="#cb26-189" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Linearly Separable"</span>, </span>
+<span id="cb26-190"><a href="#cb26-190" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Moons"</span>, </span>
+<span id="cb26-191"><a href="#cb26-191" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Overlapping"</span></span>
+<span id="cb26-192"><a href="#cb26-192" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb26-193"><a href="#cb26-193" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> <span class="fu">merge</span>(EMAR.<span class="fu">load_synthetic_mitigation</span>(), EMAR.<span class="fu">load_real_world_mitigation</span>()) </span>
+<span id="cb26-194"><a href="#cb26-194" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-195"><a href="#cb26-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-196"><a href="#cb26-196" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Animated GIFs</span></span>
+<span id="cb26-197"><a href="#cb26-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-200"><a href="#cb26-200" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-201"><a href="#cb26-201" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb26-202"><a href="#cb26-202" aria-hidden="true" tabindex="-1"></a>Plots.<span class="fu">scalefontsizes</span>(<span class="fl">2</span>)</span>
+<span id="cb26-203"><a href="#cb26-203" aria-hidden="true" tabindex="-1"></a>df_plot <span class="op">=</span> results[<span class="op">:</span>overlapping].output <span class="op">|&gt;</span></span>
+<span id="cb26-204"><a href="#cb26-204" aria-hidden="true" tabindex="-1"></a>    df <span class="op">-&gt;</span> <span class="fu">filter</span>(<span class="op">:</span>name <span class="op">=&gt;</span> <span class="op">==</span>(<span class="op">:</span>mmd), df) <span class="op">|&gt;</span></span>
+<span id="cb26-205"><a href="#cb26-205" aria-hidden="true" tabindex="-1"></a>    df <span class="op">-&gt;</span> <span class="fu">filter</span>(<span class="op">:</span>model <span class="op">=&gt;</span> <span class="op">==</span>(<span class="op">:</span>FluxEnsemble), df) <span class="op">|&gt;</span></span>
+<span id="cb26-206"><a href="#cb26-206" aria-hidden="true" tabindex="-1"></a>    df <span class="op">-&gt;</span> <span class="fu">filter</span>(<span class="op">:</span>scope <span class="op">=&gt;</span> <span class="op">==</span>(<span class="op">:</span>domain), df) <span class="op">|&gt;</span></span>
+<span id="cb26-207"><a href="#cb26-207" aria-hidden="true" tabindex="-1"></a>    df <span class="op">-&gt;</span> <span class="fu">filter</span>(<span class="op">:</span>n <span class="op">=&gt;</span> <span class="fu">&gt;</span>(<span class="fl">0</span>), df) </span>
+<span id="cb26-208"><a href="#cb26-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-209"><a href="#cb26-209" aria-hidden="true" tabindex="-1"></a>df_plot.generator <span class="op">.=</span> <span class="fu">string</span>.(df_plot.generator)</span>
+<span id="cb26-210"><a href="#cb26-210" aria-hidden="true" tabindex="-1"></a>df_plot.generator <span class="op">.=</span> <span class="fu">replace</span>(</span>
+<span id="cb26-211"><a href="#cb26-211" aria-hidden="true" tabindex="-1"></a>    df_plot.generator, </span>
+<span id="cb26-212"><a href="#cb26-212" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Generic"</span> <span class="op">=&gt;</span> <span class="st">"Gen.(γ=0.5)"</span>,</span>
+<span id="cb26-213"><a href="#cb26-213" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Generic_conservative"</span> <span class="op">=&gt;</span> <span class="st">"Gen.(γ=0.9)"</span>,</span>
+<span id="cb26-214"><a href="#cb26-214" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ClapROAR"</span> <span class="op">=&gt;</span> <span class="st">"ClaPROAR"</span></span>
+<span id="cb26-215"><a href="#cb26-215" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-216"><a href="#cb26-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-217"><a href="#cb26-217" aria-hidden="true" tabindex="-1"></a>ylims <span class="op">=</span> (<span class="fl">0</span>, <span class="fl">1.2</span> <span class="op">*</span> <span class="fu">maximum</span>(df_plot.value))</span>
+<span id="cb26-218"><a href="#cb26-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-219"><a href="#cb26-219" aria-hidden="true" tabindex="-1"></a>anim <span class="op">=</span> <span class="pp">@animate</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="fu">sort</span>(<span class="fu">unique</span>(df_plot.n))</span>
+<span id="cb26-220"><a href="#cb26-220" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> <span class="fu">filter</span>(<span class="op">:</span>n <span class="op">=&gt;</span> <span class="op">==</span>(i), df_plot) <span class="op">|&gt;</span></span>
+<span id="cb26-221"><a href="#cb26-221" aria-hidden="true" tabindex="-1"></a>        df <span class="op">-&gt;</span> <span class="fu">combine</span>(<span class="fu">groupby</span>(df, <span class="op">:</span>generator), <span class="op">:</span>value <span class="op">=&gt;</span> mean, <span class="op">:</span>value <span class="op">=&gt;</span> std)</span>
+<span id="cb26-222"><a href="#cb26-222" aria-hidden="true" tabindex="-1"></a>    plt <span class="op">=</span> <span class="fu">bar</span>(</span>
+<span id="cb26-223"><a href="#cb26-223" aria-hidden="true" tabindex="-1"></a>        <span class="fu">string</span>.(df.generator), df.value_mean, </span>
+<span id="cb26-224"><a href="#cb26-224" aria-hidden="true" tabindex="-1"></a>        c<span class="op">=:</span>blues, </span>
+<span id="cb26-225"><a href="#cb26-225" aria-hidden="true" tabindex="-1"></a>        linecolor<span class="op">=</span><span class="fu">ifelse</span>.(df.generator <span class="op">.∈</span> [[<span class="st">"Gravitational"</span>, <span class="st">"ClaPROAR"</span>, <span class="st">"Gen.(γ=0.9)"</span>]], <span class="op">:</span>orange, <span class="cn">nothing</span>),</span>
+<span id="cb26-226"><a href="#cb26-226" aria-hidden="true" tabindex="-1"></a>        linestyle<span class="op">=</span><span class="fu">ifelse</span>.(df.generator <span class="op">.∈</span> [[<span class="st">"Gravitational"</span>, <span class="st">"ClaPROAR"</span>]], <span class="op">:</span>solid, <span class="op">:</span>dot),</span>
+<span id="cb26-227"><a href="#cb26-227" aria-hidden="true" tabindex="-1"></a>        lw<span class="op">=</span><span class="fl">5</span>, widen<span class="op">=</span><span class="cn">false</span>,</span>
+<span id="cb26-228"><a href="#cb26-228" aria-hidden="true" tabindex="-1"></a>        legend<span class="op">=</span><span class="cn">false</span>,</span>
+<span id="cb26-229"><a href="#cb26-229" aria-hidden="true" tabindex="-1"></a>        ylims <span class="op">=</span> ylims,</span>
+<span id="cb26-230"><a href="#cb26-230" aria-hidden="true" tabindex="-1"></a>        title <span class="op">=</span> <span class="st">"Number of rounds: </span><span class="sc">$</span>(i)<span class="st">"</span>,</span>
+<span id="cb26-231"><a href="#cb26-231" aria-hidden="true" tabindex="-1"></a>        xtickfontsize <span class="op">=</span> <span class="fl">10</span>,</span>
+<span id="cb26-232"><a href="#cb26-232" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb26-233"><a href="#cb26-233" aria-hidden="true" tabindex="-1"></a>    n_gen <span class="op">=</span> <span class="fu">length</span>(<span class="fu">unique</span>(df.generator))</span>
+<span id="cb26-234"><a href="#cb26-234" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plot!</span>((<span class="fl">0</span><span class="op">:</span>(n_gen<span class="op">-</span><span class="fl">1</span>)) <span class="op">.+</span> <span class="fl">0.5</span>, df.value_mean, yerror<span class="op">=</span>df.value_std, ms<span class="op">=</span><span class="fl">10</span>, color<span class="op">=</span><span class="st">"transparent"</span>)</span>
+<span id="cb26-235"><a href="#cb26-235" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scatter!</span>((<span class="fl">0</span><span class="op">:</span>(n_gen<span class="op">-</span><span class="fl">1</span>)) <span class="op">.+</span> <span class="fl">0.5</span>, df.value_mean, ms<span class="op">=</span><span class="fl">10</span>, c<span class="op">=:</span>blues)</span>
+<span id="cb26-236"><a href="#cb26-236" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb26-237"><a href="#cb26-237" aria-hidden="true" tabindex="-1"></a><span class="fu">gif</span>(anim, <span class="st">"dev/presentation/www/mitigation_domain.gif"</span>, fps<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb26-238"><a href="#cb26-238" aria-hidden="true" tabindex="-1"></a>Plots.<span class="fu">scalefontsizes</span>()</span>
+<span id="cb26-239"><a href="#cb26-239" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-240"><a href="#cb26-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-243"><a href="#cb26-243" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-244"><a href="#cb26-244" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb26-245"><a href="#cb26-245" aria-hidden="true" tabindex="-1"></a>Plots.<span class="fu">scalefontsizes</span>(<span class="fl">2</span>)</span>
+<span id="cb26-246"><a href="#cb26-246" aria-hidden="true" tabindex="-1"></a>df_plot <span class="op">=</span> results[<span class="op">:</span>overlapping].output <span class="op">|&gt;</span></span>
+<span id="cb26-247"><a href="#cb26-247" aria-hidden="true" tabindex="-1"></a>    df <span class="op">-&gt;</span> <span class="fu">filter</span>(<span class="op">:</span>name <span class="op">=&gt;</span> <span class="op">==</span>(<span class="op">:</span>model_performance), df) <span class="op">|&gt;</span></span>
+<span id="cb26-248"><a href="#cb26-248" aria-hidden="true" tabindex="-1"></a>    df <span class="op">-&gt;</span> <span class="fu">filter</span>(<span class="op">:</span>model <span class="op">=&gt;</span> <span class="op">==</span>(<span class="op">:</span>FluxEnsemble), df) <span class="op">|&gt;</span></span>
+<span id="cb26-249"><a href="#cb26-249" aria-hidden="true" tabindex="-1"></a>    df <span class="op">-&gt;</span> <span class="fu">filter</span>(<span class="op">:</span>scope <span class="op">=&gt;</span> <span class="op">==</span>(<span class="op">:</span>model), df) <span class="op">|&gt;</span></span>
+<span id="cb26-250"><a href="#cb26-250" aria-hidden="true" tabindex="-1"></a>    df <span class="op">-&gt;</span> <span class="fu">filter</span>(<span class="op">:</span>n <span class="op">=&gt;</span> <span class="fu">&gt;</span>(<span class="fl">0</span>), df) </span>
+<span id="cb26-251"><a href="#cb26-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-252"><a href="#cb26-252" aria-hidden="true" tabindex="-1"></a>df_plot.generator <span class="op">.=</span> <span class="fu">string</span>.(df_plot.generator)</span>
+<span id="cb26-253"><a href="#cb26-253" aria-hidden="true" tabindex="-1"></a>df_plot.generator <span class="op">.=</span> <span class="fu">replace</span>(</span>
+<span id="cb26-254"><a href="#cb26-254" aria-hidden="true" tabindex="-1"></a>    df_plot.generator, </span>
+<span id="cb26-255"><a href="#cb26-255" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Generic"</span> <span class="op">=&gt;</span> <span class="st">"Gen.(γ=0.5)"</span>,</span>
+<span id="cb26-256"><a href="#cb26-256" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Generic_conservative"</span> <span class="op">=&gt;</span> <span class="st">"Gen.(γ=0.9)"</span>,</span>
+<span id="cb26-257"><a href="#cb26-257" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ClapROAR"</span> <span class="op">=&gt;</span> <span class="st">"ClaPROAR"</span></span>
+<span id="cb26-258"><a href="#cb26-258" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-259"><a href="#cb26-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-260"><a href="#cb26-260" aria-hidden="true" tabindex="-1"></a>ylims <span class="op">=</span> (<span class="fl">1.2</span> <span class="op">*</span> <span class="fu">minimum</span>(df_plot.value), <span class="fl">0</span>)</span>
+<span id="cb26-261"><a href="#cb26-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-262"><a href="#cb26-262" aria-hidden="true" tabindex="-1"></a>anim <span class="op">=</span> <span class="pp">@animate</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="fu">sort</span>(<span class="fu">unique</span>(df_plot.n))</span>
+<span id="cb26-263"><a href="#cb26-263" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> <span class="fu">filter</span>(<span class="op">:</span>n <span class="op">=&gt;</span> <span class="op">==</span>(i) ,df_plot) <span class="op">|&gt;</span></span>
+<span id="cb26-264"><a href="#cb26-264" aria-hidden="true" tabindex="-1"></a>        df <span class="op">-&gt;</span> <span class="fu">combine</span>(<span class="fu">groupby</span>(df, <span class="op">:</span>generator), <span class="op">:</span>value <span class="op">=&gt;</span> mean, <span class="op">:</span>value <span class="op">=&gt;</span> std)</span>
+<span id="cb26-265"><a href="#cb26-265" aria-hidden="true" tabindex="-1"></a>    plt <span class="op">=</span> <span class="fu">bar</span>(</span>
+<span id="cb26-266"><a href="#cb26-266" aria-hidden="true" tabindex="-1"></a>        <span class="fu">string</span>.(df.generator), df.value_mean, </span>
+<span id="cb26-267"><a href="#cb26-267" aria-hidden="true" tabindex="-1"></a>        c<span class="op">=:</span>blues, </span>
+<span id="cb26-268"><a href="#cb26-268" aria-hidden="true" tabindex="-1"></a>        linecolor<span class="op">=</span><span class="fu">ifelse</span>.(df.generator <span class="op">.∈</span> [[<span class="st">"Gravitational"</span>, <span class="st">"ClaPROAR"</span>, <span class="st">"Gen.(γ=0.9)"</span>]], <span class="op">:</span>orange, <span class="cn">nothing</span>),</span>
+<span id="cb26-269"><a href="#cb26-269" aria-hidden="true" tabindex="-1"></a>        linestyle<span class="op">=</span><span class="fu">ifelse</span>.(df.generator <span class="op">.∈</span> [[<span class="st">"Gravitational"</span>, <span class="st">"ClaPROAR"</span>]], <span class="op">:</span>solid, <span class="op">:</span>dot),</span>
+<span id="cb26-270"><a href="#cb26-270" aria-hidden="true" tabindex="-1"></a>        lw<span class="op">=</span><span class="fl">5</span>, widen<span class="op">=</span><span class="cn">false</span>,</span>
+<span id="cb26-271"><a href="#cb26-271" aria-hidden="true" tabindex="-1"></a>        legend<span class="op">=</span><span class="cn">false</span>,</span>
+<span id="cb26-272"><a href="#cb26-272" aria-hidden="true" tabindex="-1"></a>        ylims <span class="op">=</span> ylims,</span>
+<span id="cb26-273"><a href="#cb26-273" aria-hidden="true" tabindex="-1"></a>        title <span class="op">=</span> <span class="st">"Number of rounds: </span><span class="sc">$</span>(i)<span class="st">"</span>,</span>
+<span id="cb26-274"><a href="#cb26-274" aria-hidden="true" tabindex="-1"></a>        xtickfontsize <span class="op">=</span> <span class="fl">10</span>,</span>
+<span id="cb26-275"><a href="#cb26-275" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb26-276"><a href="#cb26-276" aria-hidden="true" tabindex="-1"></a>    n_gen <span class="op">=</span> <span class="fu">length</span>(<span class="fu">unique</span>(df.generator))</span>
+<span id="cb26-277"><a href="#cb26-277" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plot!</span>((<span class="fl">0</span><span class="op">:</span>(n_gen<span class="op">-</span><span class="fl">1</span>)) <span class="op">.+</span> <span class="fl">0.5</span>, df.value_mean, yerror<span class="op">=</span>df.value_std, ms<span class="op">=</span><span class="fl">10</span>, color<span class="op">=</span><span class="st">"transparent"</span>)</span>
+<span id="cb26-278"><a href="#cb26-278" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scatter!</span>((<span class="fl">0</span><span class="op">:</span>(n_gen<span class="op">-</span><span class="fl">1</span>)) <span class="op">.+</span> <span class="fl">0.5</span>, df.value_mean, ms<span class="op">=</span><span class="fl">10</span>, c<span class="op">=:</span>blues)</span>
+<span id="cb26-279"><a href="#cb26-279" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb26-280"><a href="#cb26-280" aria-hidden="true" tabindex="-1"></a><span class="fu">gif</span>(anim, <span class="st">"dev/presentation/www/mitigation_performance.gif"</span>, fps<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb26-281"><a href="#cb26-281" aria-hidden="true" tabindex="-1"></a>Plots.<span class="fu">scalefontsizes</span>()</span>
+<span id="cb26-282"><a href="#cb26-282" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-283"><a href="#cb26-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-284"><a href="#cb26-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-287"><a href="#cb26-287" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-288"><a href="#cb26-288" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb26-289"><a href="#cb26-289" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-290"><a href="#cb26-290" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Images</span></span>
+<span id="cb26-291"><a href="#cb26-291" aria-hidden="true" tabindex="-1"></a>line_charts <span class="op">=</span> <span class="fu">Dict</span>()</span>
+<span id="cb26-292"><a href="#cb26-292" aria-hidden="true" tabindex="-1"></a>errorbar_charts <span class="op">=</span> <span class="fu">Dict</span>()</span>
+<span id="cb26-293"><a href="#cb26-293" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (data_name, res) <span class="kw">in</span> results</span>
+<span id="cb26-294"><a href="#cb26-294" aria-hidden="true" tabindex="-1"></a>    plt <span class="op">=</span> <span class="fu">plot_res</span>(res)</span>
+<span id="cb26-295"><a href="#cb26-295" aria-hidden="true" tabindex="-1"></a>    Images.<span class="fu">save</span>(<span class="fu">joinpath</span>(www_path, <span class="st">"line_chart_</span><span class="sc">$</span>(data_name)<span class="st">.png"</span>), plt)</span>
+<span id="cb26-296"><a href="#cb26-296" aria-hidden="true" tabindex="-1"></a>    Images.<span class="fu">save</span>(<span class="fu">joinpath</span>(www_paper_path, <span class="st">"line_chart_</span><span class="sc">$</span>(data_name)<span class="st">.png"</span>), plt)</span>
+<span id="cb26-297"><a href="#cb26-297" aria-hidden="true" tabindex="-1"></a>    line_charts[data_name] <span class="op">=</span> plt</span>
+<span id="cb26-298"><a href="#cb26-298" aria-hidden="true" tabindex="-1"></a>    plt <span class="op">=</span> <span class="fu">plot_res</span>(res,<span class="fu">maximum</span>(res.output.n))</span>
+<span id="cb26-299"><a href="#cb26-299" aria-hidden="true" tabindex="-1"></a>    Images.<span class="fu">save</span>(<span class="fu">joinpath</span>(www_path, <span class="st">"errorbar_chart_</span><span class="sc">$</span>(data_name)<span class="st">.png"</span>), plt)</span>
+<span id="cb26-300"><a href="#cb26-300" aria-hidden="true" tabindex="-1"></a>    Images.<span class="fu">save</span>(<span class="fu">joinpath</span>(www_paper_path, <span class="st">"errorbar_chart_</span><span class="sc">$</span>(data_name)<span class="st">.png"</span>), plt)</span>
+<span id="cb26-301"><a href="#cb26-301" aria-hidden="true" tabindex="-1"></a>    errorbar_charts[data_name] <span class="op">=</span> plt</span>
+<span id="cb26-302"><a href="#cb26-302" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb26-303"><a href="#cb26-303" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-304"><a href="#cb26-304" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-305"><a href="#cb26-305" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Line Charts</span></span>
+<span id="cb26-306"><a href="#cb26-306" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-309"><a href="#cb26-309" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-310"><a href="#cb26-310" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb26-311"><a href="#cb26-311" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: asis</span></span>
+<span id="cb26-312"><a href="#cb26-312" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb26-313"><a href="#cb26-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-314"><a href="#cb26-314" aria-hidden="true" tabindex="-1"></a>fig_label_prefix <span class="op">=</span> <span class="st">"mit-line"</span></span>
+<span id="cb26-315"><a href="#cb26-315" aria-hidden="true" tabindex="-1"></a>fig_labels <span class="op">=</span> (nm <span class="op">-&gt;</span> <span class="st">"fig-</span><span class="sc">$</span>(fig_label_prefix)<span class="st">-</span><span class="sc">$</span>nm<span class="st">"</span>).(<span class="fu">replace</span>.(<span class="fu">lowercase</span>.(data_names), <span class="st">" "</span> <span class="op">=&gt;</span> <span class="st">"-"</span>))</span>
+<span id="cb26-316"><a href="#cb26-316" aria-hidden="true" tabindex="-1"></a>_str <span class="op">=</span> <span class="st">"The evolution of the evaluation metrics over the course of the experiment is shown for different datasets in @</span><span class="sc">$</span>(fig_labels[<span class="fl">1</span>])<span class="st"> to @</span><span class="sc">$</span>(fig_labels[<span class="kw">end</span>])<span class="st">."</span></span>
+<span id="cb26-317"><a href="#cb26-317" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(_str)</span>
+<span id="cb26-318"><a href="#cb26-318" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-319"><a href="#cb26-319" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-322"><a href="#cb26-322" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-323"><a href="#cb26-323" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb26-324"><a href="#cb26-324" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: asis</span></span>
+<span id="cb26-325"><a href="#cb26-325" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb26-326"><a href="#cb26-326" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb26-327"><a href="#cb26-327" aria-hidden="true" tabindex="-1"></a>str_pattern <span class="op">=</span> <span class="st">"line_chart"</span></span>
+<span id="cb26-328"><a href="#cb26-328" aria-hidden="true" tabindex="-1"></a>fig_caption <span class="op">=</span> <span class="st">"Evolution of evaluation metrics over the course of the experiment."</span></span>
+<span id="cb26-329"><a href="#cb26-329" aria-hidden="true" tabindex="-1"></a>full_paths <span class="op">=</span> <span class="fu">joinpath</span>.(www_paper_path, <span class="fu">readdir</span>(www_paper_path)[<span class="fu">contains</span>.(<span class="fu">readdir</span>(www_paper_path), str_pattern)])</span>
+<span id="cb26-330"><a href="#cb26-330" aria-hidden="true" tabindex="-1"></a>include_img_commands <span class="op">=</span> EMAR.<span class="fu">get_img_command</span>(data_names, full_paths, fig_labels; fig_caption) </span>
+<span id="cb26-331"><a href="#cb26-331" aria-hidden="true" tabindex="-1"></a>_str <span class="op">=</span> <span class="fu">join</span>(include_img_commands, <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb26-332"><a href="#cb26-332" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(_str)</span>
+<span id="cb26-333"><a href="#cb26-333" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-334"><a href="#cb26-334" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-335"><a href="#cb26-335" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-336"><a href="#cb26-336" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Error Bar Charts</span></span>
+<span id="cb26-337"><a href="#cb26-337" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-340"><a href="#cb26-340" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-341"><a href="#cb26-341" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb26-342"><a href="#cb26-342" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: asis</span></span>
+<span id="cb26-343"><a href="#cb26-343" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb26-344"><a href="#cb26-344" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-345"><a href="#cb26-345" aria-hidden="true" tabindex="-1"></a>fig_label_prefix <span class="op">=</span> <span class="st">"mit-errorbar"</span></span>
+<span id="cb26-346"><a href="#cb26-346" aria-hidden="true" tabindex="-1"></a>fig_labels <span class="op">=</span> (nm <span class="op">-&gt;</span> <span class="st">"fig-</span><span class="sc">$</span>(fig_label_prefix)<span class="st">-</span><span class="sc">$</span>nm<span class="st">"</span>).(<span class="fu">replace</span>.(<span class="fu">lowercase</span>.(data_names), <span class="st">" "</span> <span class="op">=&gt;</span> <span class="st">"-"</span>))</span>
+<span id="cb26-347"><a href="#cb26-347" aria-hidden="true" tabindex="-1"></a>_str <span class="op">=</span> <span class="st">"The evaluation metrics at the end of the experiment are shown for different datasets in @</span><span class="sc">$</span>(fig_labels[<span class="fl">1</span>])<span class="st"> to @</span><span class="sc">$</span>(fig_labels[<span class="kw">end</span>])<span class="st">."</span></span>
+<span id="cb26-348"><a href="#cb26-348" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(_str)</span>
+<span id="cb26-349"><a href="#cb26-349" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-350"><a href="#cb26-350" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-353"><a href="#cb26-353" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-354"><a href="#cb26-354" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb26-355"><a href="#cb26-355" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: asis</span></span>
+<span id="cb26-356"><a href="#cb26-356" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb26-357"><a href="#cb26-357" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb26-358"><a href="#cb26-358" aria-hidden="true" tabindex="-1"></a>str_pattern <span class="op">=</span> <span class="st">"errorbar"</span></span>
+<span id="cb26-359"><a href="#cb26-359" aria-hidden="true" tabindex="-1"></a>fig_caption <span class="op">=</span> <span class="st">"Evaluation metrics at the end of the experiment."</span></span>
+<span id="cb26-360"><a href="#cb26-360" aria-hidden="true" tabindex="-1"></a>full_paths <span class="op">=</span> <span class="fu">joinpath</span>.(www_paper_path, <span class="fu">readdir</span>(www_paper_path)[<span class="fu">contains</span>.(<span class="fu">readdir</span>(www_paper_path), str_pattern)])</span>
+<span id="cb26-361"><a href="#cb26-361" aria-hidden="true" tabindex="-1"></a>include_img_commands <span class="op">=</span> EMAR.<span class="fu">get_img_command</span>(data_names, full_paths, fig_labels; fig_caption) </span>
+<span id="cb26-362"><a href="#cb26-362" aria-hidden="true" tabindex="-1"></a>_str <span class="op">=</span> <span class="fu">join</span>(include_img_commands, <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb26-363"><a href="#cb26-363" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(_str)</span>
+<span id="cb26-364"><a href="#cb26-364" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-365"><a href="#cb26-365" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-366"><a href="#cb26-366" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Bootstrap</span></span>
+<span id="cb26-367"><a href="#cb26-367" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-368"><a href="#cb26-368" aria-hidden="true" tabindex="-1"></a><span class="fu">##### Synthetic</span></span>
+<span id="cb26-369"><a href="#cb26-369" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-372"><a href="#cb26-372" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-373"><a href="#cb26-373" aria-hidden="true" tabindex="-1"></a>n_bootstrap <span class="op">=</span> <span class="fl">100</span></span>
+<span id="cb26-374"><a href="#cb26-374" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> <span class="fu">run_bootstrap</span>(results, n_bootstrap; filename<span class="op">=</span><span class="fu">joinpath</span>(output_path,<span class="st">"bootstrap_synthetic.csv"</span>))</span>
+<span id="cb26-375"><a href="#cb26-375" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-376"><a href="#cb26-376" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-377"><a href="#cb26-377" aria-hidden="true" tabindex="-1"></a>@tbl-bs-mit-synthetic presents the tests for statistical significance of the estimated MMD metrics.</span>
+<span id="cb26-378"><a href="#cb26-378" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-379"><a href="#cb26-379" aria-hidden="true" tabindex="-1"></a>::: {#tbl-bs-mit-synthetic}</span>
+<span id="cb26-380"><a href="#cb26-380" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-383"><a href="#cb26-383" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-384"><a href="#cb26-384" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: asis</span></span>
+<span id="cb26-385"><a href="#cb26-385" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb26-386"><a href="#cb26-386" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-387"><a href="#cb26-387" aria-hidden="true" tabindex="-1"></a>EMAR.<span class="fu">aggregate_bs_mitigation_synthetic</span>(backend<span class="op">=</span><span class="fu">Val</span>(<span class="op">:</span>html))</span>
+<span id="cb26-388"><a href="#cb26-388" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-389"><a href="#cb26-389" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-390"><a href="#cb26-390" aria-hidden="true" tabindex="-1"></a>Tests for statistical significance of the estimated MMD metrics using mitigation strategies. We have highlighted p-values smaller than the significance level $\alpha=0.05$ in bold. Data: Synthetic.</span>
+<span id="cb26-391"><a href="#cb26-391" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-392"><a href="#cb26-392" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb26-393"><a href="#cb26-393" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-394"><a href="#cb26-394" aria-hidden="true" tabindex="-1"></a><span class="fu">##### Real-World</span></span>
+<span id="cb26-395"><a href="#cb26-395" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-396"><a href="#cb26-396" aria-hidden="true" tabindex="-1"></a>@tbl-bs-mit-real-world presents the tests for statistical significance of the estimated MMD metrics.</span>
+<span id="cb26-397"><a href="#cb26-397" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-398"><a href="#cb26-398" aria-hidden="true" tabindex="-1"></a>::: {#tbl-bs-mit-real-world}</span>
+<span id="cb26-399"><a href="#cb26-399" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-402"><a href="#cb26-402" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-403"><a href="#cb26-403" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: asis</span></span>
+<span id="cb26-404"><a href="#cb26-404" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb26-405"><a href="#cb26-405" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-406"><a href="#cb26-406" aria-hidden="true" tabindex="-1"></a>EMAR.<span class="fu">aggregate_bs_mitigation_real_world</span>(backend<span class="op">=</span><span class="fu">Val</span>(<span class="op">:</span>html))</span>
+<span id="cb26-407"><a href="#cb26-407" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-408"><a href="#cb26-408" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-409"><a href="#cb26-409" aria-hidden="true" tabindex="-1"></a>Tests for statistical significance of the estimated MMD metrics using mitigation strategies. We have highlighted p-values smaller than the significance level $\alpha=0.05$ in bold. Data: Real-World.</span>
+<span id="cb26-410"><a href="#cb26-410" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-411"><a href="#cb26-411" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb26-412"><a href="#cb26-412" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-413"><a href="#cb26-413" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Chart in paper (Figure 6)</span></span>
+<span id="cb26-414"><a href="#cb26-414" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-415"><a href="#cb26-415" aria-hidden="true" tabindex="-1"></a>@fig-mit-paper shows the chart that went into the paper.</span>
+<span id="cb26-416"><a href="#cb26-416" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-419"><a href="#cb26-419" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-420"><a href="#cb26-420" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb26-421"><a href="#cb26-421" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb26-422"><a href="#cb26-422" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-423"><a href="#cb26-423" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">DataFrames</span>, <span class="bu">Statistics</span></span>
+<span id="cb26-424"><a href="#cb26-424" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> results[<span class="op">:</span>overlapping].output</span>
+<span id="cb26-425"><a href="#cb26-425" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df[df.n <span class="op">.==</span> <span class="fu">maximum</span>(df.n),<span class="op">:</span>]</span>
+<span id="cb26-426"><a href="#cb26-426" aria-hidden="true" tabindex="-1"></a>gdf <span class="op">=</span> <span class="fu">groupby</span>(df, [<span class="op">:</span>generator, <span class="op">:</span>model, <span class="op">:</span>n, <span class="op">:</span>name, <span class="op">:</span>scope])</span>
+<span id="cb26-427"><a href="#cb26-427" aria-hidden="true" tabindex="-1"></a>df_plot <span class="op">=</span> <span class="fu">combine</span>(gdf, <span class="op">:</span>value <span class="op">=&gt;</span> (x <span class="op">-&gt;</span> [(<span class="fu">mean</span>(x),<span class="fu">mean</span>(x)<span class="fu">+std</span>(x),<span class="fu">mean</span>(x)<span class="fu">-std</span>(x))]) <span class="op">=&gt;</span> [<span class="op">:</span>mean, <span class="op">:</span>ymax, <span class="op">:</span>ymin])</span>
+<span id="cb26-428"><a href="#cb26-428" aria-hidden="true" tabindex="-1"></a>df_plot <span class="op">=</span> df_plot[[name <span class="kw">in</span> [<span class="op">:</span>mmd, <span class="op">:</span>mmd_grid, <span class="op">:</span>model_performance] for name <span class="kw">in</span> df_plot.name],<span class="op">:</span>]</span>
+<span id="cb26-429"><a href="#cb26-429" aria-hidden="true" tabindex="-1"></a>df_plot <span class="op">=</span> df_plot[.!(df_plot.name<span class="op">.==:</span>mmd <span class="op">.&amp;&amp;</span> df_plot.scope<span class="op">.==:</span>model),<span class="op">:</span>]</span>
+<span id="cb26-430"><a href="#cb26-430" aria-hidden="true" tabindex="-1"></a>df_plot <span class="op">=</span> <span class="fu">mapcols</span>(x <span class="op">-&gt;</span> <span class="fu">typeof</span>(x) <span class="op">==</span> <span class="dt">Vector</span>{<span class="dt">Symbol</span>} ? <span class="fu">string</span>.(x) <span class="op">:</span> x, df_plot)</span>
+<span id="cb26-431"><a href="#cb26-431" aria-hidden="true" tabindex="-1"></a><span class="fu">transform!</span>(df_plot, <span class="op">:</span>name <span class="op">=&gt;</span> (X <span class="op">-&gt;</span> [x<span class="op">==</span><span class="st">"mmd"</span> ? <span class="st">"MMD (domain)"</span> <span class="op">:</span> x for x <span class="kw">in</span> X]) <span class="op">=&gt;</span> <span class="op">:</span>name)</span>
+<span id="cb26-432"><a href="#cb26-432" aria-hidden="true" tabindex="-1"></a><span class="fu">transform!</span>(df_plot, <span class="op">:</span>name <span class="op">=&gt;</span> (X <span class="op">-&gt;</span> [x<span class="op">==</span><span class="st">"mmd_grid"</span> ? <span class="st">"MMD (model)"</span> <span class="op">:</span> x for x <span class="kw">in</span> X]) <span class="op">=&gt;</span> <span class="op">:</span>name)</span>
+<span id="cb26-433"><a href="#cb26-433" aria-hidden="true" tabindex="-1"></a><span class="fu">transform!</span>(df_plot, <span class="op">:</span>name <span class="op">=&gt;</span> (X <span class="op">-&gt;</span> [x<span class="op">==</span><span class="st">"model_performance"</span> ? <span class="st">"Performance"</span> <span class="op">:</span> x for x <span class="kw">in</span> X]) <span class="op">=&gt;</span> <span class="op">:</span>name)</span>
+<span id="cb26-434"><a href="#cb26-434" aria-hidden="true" tabindex="-1"></a><span class="fu">transform!</span>(df_plot, <span class="op">:</span>generator <span class="op">=&gt;</span> (X <span class="op">-&gt;</span> [x<span class="op">==</span><span class="st">"Generic"</span> ? <span class="st">"Generic (γ=0.5)"</span> <span class="op">:</span> x for x <span class="kw">in</span> X]) <span class="op">=&gt;</span> <span class="op">:</span>generator)</span>
+<span id="cb26-435"><a href="#cb26-435" aria-hidden="true" tabindex="-1"></a><span class="fu">transform!</span>(df_plot, <span class="op">:</span>generator <span class="op">=&gt;</span> (X <span class="op">-&gt;</span> [x<span class="op">==</span><span class="st">"Generic_conservative"</span> ? <span class="st">"Generic (γ=0.9)"</span> <span class="op">:</span> x for x <span class="kw">in</span> X]) <span class="op">=&gt;</span> <span class="op">:</span>generator)</span>
+<span id="cb26-436"><a href="#cb26-436" aria-hidden="true" tabindex="-1"></a><span class="fu">transform!</span>(df_plot, <span class="op">:</span>model <span class="op">=&gt;</span> (X <span class="op">-&gt;</span> [x<span class="op">==</span><span class="st">"FluxEnsemble"</span> ? <span class="st">"Deep Ensemble"</span> <span class="op">:</span> x for x <span class="kw">in</span> X]) <span class="op">=&gt;</span> <span class="op">:</span>model)</span>
+<span id="cb26-437"><a href="#cb26-437" aria-hidden="true" tabindex="-1"></a><span class="fu">transform!</span>(df_plot, <span class="op">:</span>model <span class="op">=&gt;</span> (X <span class="op">-&gt;</span> [x<span class="op">==</span><span class="st">"FluxModel"</span> ? <span class="st">"MLP"</span> <span class="op">:</span> x for x <span class="kw">in</span> X]) <span class="op">=&gt;</span> <span class="op">:</span>model)</span>
+<span id="cb26-438"><a href="#cb26-438" aria-hidden="true" tabindex="-1"></a><span class="fu">transform!</span>(df_plot, <span class="op">:</span>model <span class="op">=&gt;</span> (X <span class="op">-&gt;</span> [x<span class="op">==</span><span class="st">"LogisticRegression"</span> ? <span class="st">"Linear"</span> <span class="op">:</span> x for x <span class="kw">in</span> X]) <span class="op">=&gt;</span> <span class="op">:</span>model)</span>
+<span id="cb26-439"><a href="#cb26-439" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-440"><a href="#cb26-440" aria-hidden="true" tabindex="-1"></a>ncol <span class="op">=</span> <span class="fu">length</span>(<span class="fu">unique</span>(df_plot.model))</span>
+<span id="cb26-441"><a href="#cb26-441" aria-hidden="true" tabindex="-1"></a>nrow <span class="op">=</span> <span class="fu">length</span>(<span class="fu">unique</span>(df_plot.name))</span>
+<span id="cb26-442"><a href="#cb26-442" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-443"><a href="#cb26-443" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">RCall</span></span>
+<span id="cb26-444"><a href="#cb26-444" aria-hidden="true" tabindex="-1"></a>scale_ <span class="op">=</span> <span class="fl">2.0</span></span>
+<span id="cb26-445"><a href="#cb26-445" aria-hidden="true" tabindex="-1"></a>R<span class="st">"""</span></span>
+<span id="cb26-446"><a href="#cb26-446" aria-hidden="true" tabindex="-1"></a><span class="st">library(data.table)</span></span>
+<span id="cb26-447"><a href="#cb26-447" aria-hidden="true" tabindex="-1"></a><span class="st">df_plot &lt;- data.table(</span><span class="sc">$</span>df_plot<span class="st">)</span></span>
+<span id="cb26-448"><a href="#cb26-448" aria-hidden="true" tabindex="-1"></a><span class="st">model_order &lt;- c("Linear", "MLP", "Deep Ensemble")</span></span>
+<span id="cb26-449"><a href="#cb26-449" aria-hidden="true" tabindex="-1"></a><span class="st">df_plot[,model:=factor(model, levels=model_order)]</span></span>
+<span id="cb26-450"><a href="#cb26-450" aria-hidden="true" tabindex="-1"></a><span class="st">library(ggplot2)</span></span>
+<span id="cb26-451"><a href="#cb26-451" aria-hidden="true" tabindex="-1"></a><span class="st">plt &lt;- ggplot(</span><span class="sc">$</span>df_plot<span class="st">) +</span></span>
+<span id="cb26-452"><a href="#cb26-452" aria-hidden="true" tabindex="-1"></a><span class="st">    geom_bar(aes(x=n, y=mean, fill=generator), stat="identity", alpha=0.5, position="dodge") +</span></span>
+<span id="cb26-453"><a href="#cb26-453" aria-hidden="true" tabindex="-1"></a><span class="st">    geom_pointrange( aes(x=n, y=mean, ymin=ymin, ymax=ymax, colour=generator), alpha=0.9, position=position_dodge(width=0.9), size=0.5) +</span></span>
+<span id="cb26-454"><a href="#cb26-454" aria-hidden="true" tabindex="-1"></a><span class="st">    facet_grid(</span></span>
+<span id="cb26-455"><a href="#cb26-455" aria-hidden="true" tabindex="-1"></a><span class="st">        rows = vars(name),</span></span>
+<span id="cb26-456"><a href="#cb26-456" aria-hidden="true" tabindex="-1"></a><span class="st">        cols =  vars(model), </span></span>
+<span id="cb26-457"><a href="#cb26-457" aria-hidden="true" tabindex="-1"></a><span class="st">        scales = "free_y"</span></span>
+<span id="cb26-458"><a href="#cb26-458" aria-hidden="true" tabindex="-1"></a><span class="st">    ) +</span></span>
+<span id="cb26-459"><a href="#cb26-459" aria-hidden="true" tabindex="-1"></a><span class="st">    labs(y = "Value") + </span></span>
+<span id="cb26-460"><a href="#cb26-460" aria-hidden="true" tabindex="-1"></a><span class="st">    scale_fill_discrete(name="Generator:") +</span></span>
+<span id="cb26-461"><a href="#cb26-461" aria-hidden="true" tabindex="-1"></a><span class="st">    scale_colour_discrete(name="Generator:") +</span></span>
+<span id="cb26-462"><a href="#cb26-462" aria-hidden="true" tabindex="-1"></a><span class="st">    theme(</span></span>
+<span id="cb26-463"><a href="#cb26-463" aria-hidden="true" tabindex="-1"></a><span class="st">        axis.title.x=element_blank(),</span></span>
+<span id="cb26-464"><a href="#cb26-464" aria-hidden="true" tabindex="-1"></a><span class="st">        axis.text.x=element_blank(),</span></span>
+<span id="cb26-465"><a href="#cb26-465" aria-hidden="true" tabindex="-1"></a><span class="st">        axis.ticks.x=element_blank(),</span></span>
+<span id="cb26-466"><a href="#cb26-466" aria-hidden="true" tabindex="-1"></a><span class="st">        legend.position="bottom"</span></span>
+<span id="cb26-467"><a href="#cb26-467" aria-hidden="true" tabindex="-1"></a><span class="st">    ) +</span></span>
+<span id="cb26-468"><a href="#cb26-468" aria-hidden="true" tabindex="-1"></a><span class="st">    guides(fill=guide_legend(ncol=3))</span></span>
+<span id="cb26-469"><a href="#cb26-469" aria-hidden="true" tabindex="-1"></a><span class="st">temp_path &lt;- file.path(tempdir(), "plot.png")</span></span>
+<span id="cb26-470"><a href="#cb26-470" aria-hidden="true" tabindex="-1"></a><span class="st">ggsave(temp_path,width=</span><span class="sc">$</span>ncol<span class="st"> * </span><span class="sc">$</span>scale_<span class="st">,height=</span><span class="sc">$</span>nrow<span class="st"> * </span><span class="sc">$</span>scale_<span class="st"> * 0.8, dpi=300) </span></span>
+<span id="cb26-471"><a href="#cb26-471" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb26-472"><a href="#cb26-472" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-473"><a href="#cb26-473" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> Images.<span class="fu">load</span>(<span class="fu">rcopy</span>(R<span class="st">"temp_path"</span>))</span>
+<span id="cb26-474"><a href="#cb26-474" aria-hidden="true" tabindex="-1"></a>Images.<span class="fu">save</span>(<span class="fu">joinpath</span>(www_path,<span class="st">"paper_synthetic_results.png"</span>), img)</span>
+<span id="cb26-475"><a href="#cb26-475" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-476"><a href="#cb26-476" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-479"><a href="#cb26-479" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-480"><a href="#cb26-480" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: true</span></span>
+<span id="cb26-481"><a href="#cb26-481" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-mit-paper</span></span>
+<span id="cb26-482"><a href="#cb26-482" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Chart in paper"</span></span>
+<span id="cb26-483"><a href="#cb26-483" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb26-484"><a href="#cb26-484" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-485"><a href="#cb26-485" aria-hidden="true" tabindex="-1"></a>Images.<span class="fu">load</span>(<span class="fu">joinpath</span>(www_artifact_path,<span class="st">"paper_synthetic_results.png"</span>))</span>
+<span id="cb26-486"><a href="#cb26-486" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-487"><a href="#cb26-487" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-488"><a href="#cb26-488" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-489"><a href="#cb26-489" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Chart in paper (Figure 8)</span></span>
+<span id="cb26-490"><a href="#cb26-490" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-493"><a href="#cb26-493" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-494"><a href="#cb26-494" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb26-495"><a href="#cb26-495" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-496"><a href="#cb26-496" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> EMAR.<span class="fu">load_real_world_mitigation</span>()</span>
+<span id="cb26-497"><a href="#cb26-497" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-498"><a href="#cb26-498" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-499"><a href="#cb26-499" aria-hidden="true" tabindex="-1"></a>@fig-mit-real-paper shows the chart that went into the paper.</span>
+<span id="cb26-500"><a href="#cb26-500" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-503"><a href="#cb26-503" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-504"><a href="#cb26-504" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb26-505"><a href="#cb26-505" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb26-506"><a href="#cb26-506" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-507"><a href="#cb26-507" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">DataFrames</span>, <span class="bu">Statistics</span></span>
+<span id="cb26-508"><a href="#cb26-508" aria-hidden="true" tabindex="-1"></a>model_ <span class="op">=</span> <span class="op">:</span>FluxModel</span>
+<span id="cb26-509"><a href="#cb26-509" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> <span class="fu">DataFrame</span>() </span>
+<span id="cb26-510"><a href="#cb26-510" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (key, val) <span class="kw">in</span> results</span>
+<span id="cb26-511"><a href="#cb26-511" aria-hidden="true" tabindex="-1"></a>    df_ <span class="op">=</span> <span class="fu">deepcopy</span>(val.output)</span>
+<span id="cb26-512"><a href="#cb26-512" aria-hidden="true" tabindex="-1"></a>    df_.dataset <span class="op">.=</span> key</span>
+<span id="cb26-513"><a href="#cb26-513" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> <span class="fu">vcat</span>(df,df_)</span>
+<span id="cb26-514"><a href="#cb26-514" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb26-515"><a href="#cb26-515" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df[df.n <span class="op">.==</span> <span class="fu">maximum</span>(df.n),<span class="op">:</span>]</span>
+<span id="cb26-516"><a href="#cb26-516" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df[df.model <span class="op">.==</span> model_,<span class="op">:</span>]</span>
+<span id="cb26-517"><a href="#cb26-517" aria-hidden="true" tabindex="-1"></a><span class="fu">filter!</span>(<span class="op">:</span>value <span class="op">=&gt;</span> x <span class="op">-&gt;</span> !<span class="fu">any</span>(f <span class="op">-&gt;</span> <span class="fu">f</span>(x), (ismissing, isnothing, isnan)), df)</span>
+<span id="cb26-518"><a href="#cb26-518" aria-hidden="true" tabindex="-1"></a>gdf <span class="op">=</span> <span class="fu">groupby</span>(df, [<span class="op">:</span>generator, <span class="op">:</span>dataset, <span class="op">:</span>n, <span class="op">:</span>name, <span class="op">:</span>scope])</span>
+<span id="cb26-519"><a href="#cb26-519" aria-hidden="true" tabindex="-1"></a>df_plot <span class="op">=</span> <span class="fu">combine</span>(gdf, <span class="op">:</span>value <span class="op">=&gt;</span> (x <span class="op">-&gt;</span> [(<span class="fu">mean</span>(x),<span class="fu">mean</span>(x)<span class="fu">+std</span>(x),<span class="fu">mean</span>(x)<span class="fu">-std</span>(x))]) <span class="op">=&gt;</span> [<span class="op">:</span>mean, <span class="op">:</span>ymax, <span class="op">:</span>ymin])</span>
+<span id="cb26-520"><a href="#cb26-520" aria-hidden="true" tabindex="-1"></a>df_plot <span class="op">=</span> df_plot[[name <span class="kw">in</span> [<span class="op">:</span>mmd, <span class="op">:</span>model_performance] for name <span class="kw">in</span> df_plot.name],<span class="op">:</span>]</span>
+<span id="cb26-521"><a href="#cb26-521" aria-hidden="true" tabindex="-1"></a>df_plot <span class="op">=</span> df_plot[.!(df_plot.name<span class="op">.==:</span>mmd <span class="op">.&amp;&amp;</span> df_plot.scope<span class="op">.!=:</span>model),<span class="op">:</span>]</span>
+<span id="cb26-522"><a href="#cb26-522" aria-hidden="true" tabindex="-1"></a>df_plot <span class="op">=</span> <span class="fu">mapcols</span>(x <span class="op">-&gt;</span> <span class="fu">typeof</span>(x) <span class="op">==</span> <span class="dt">Vector</span>{<span class="dt">Symbol</span>} ? <span class="fu">string</span>.(x) <span class="op">:</span> x, df_plot)</span>
+<span id="cb26-523"><a href="#cb26-523" aria-hidden="true" tabindex="-1"></a><span class="fu">transform!</span>(df_plot, <span class="op">:</span>dataset <span class="op">=&gt;</span> (X <span class="op">-&gt;</span> [x<span class="op">==</span><span class="st">"cal_housing"</span> ? <span class="st">"California Housing"</span> <span class="op">:</span> x for x <span class="kw">in</span> X]) <span class="op">=&gt;</span> <span class="op">:</span>dataset)</span>
+<span id="cb26-524"><a href="#cb26-524" aria-hidden="true" tabindex="-1"></a><span class="fu">transform!</span>(df_plot, <span class="op">:</span>dataset <span class="op">=&gt;</span> (X <span class="op">-&gt;</span> [x<span class="op">==</span><span class="st">"credit_default"</span> ? <span class="st">"Credit Default"</span> <span class="op">:</span> x for x <span class="kw">in</span> X]) <span class="op">=&gt;</span> <span class="op">:</span>dataset)</span>
+<span id="cb26-525"><a href="#cb26-525" aria-hidden="true" tabindex="-1"></a><span class="fu">transform!</span>(df_plot, <span class="op">:</span>dataset <span class="op">=&gt;</span> (X <span class="op">-&gt;</span> [x<span class="op">==</span><span class="st">"gmsc"</span> ? <span class="st">"GMSC"</span> <span class="op">:</span> x for x <span class="kw">in</span> X]) <span class="op">=&gt;</span> <span class="op">:</span>dataset)</span>
+<span id="cb26-526"><a href="#cb26-526" aria-hidden="true" tabindex="-1"></a><span class="fu">transform!</span>(df_plot, <span class="op">:</span>name <span class="op">=&gt;</span> (X <span class="op">-&gt;</span> [x<span class="op">==</span><span class="st">"mmd"</span> ? <span class="st">"MMD (model)"</span> <span class="op">:</span> x for x <span class="kw">in</span> X]) <span class="op">=&gt;</span> <span class="op">:</span>name)</span>
+<span id="cb26-527"><a href="#cb26-527" aria-hidden="true" tabindex="-1"></a><span class="fu">transform!</span>(df_plot, <span class="op">:</span>name <span class="op">=&gt;</span> (X <span class="op">-&gt;</span> [x<span class="op">==</span><span class="st">"model_performance"</span> ? <span class="st">"Performance"</span> <span class="op">:</span> x for x <span class="kw">in</span> X]) <span class="op">=&gt;</span> <span class="op">:</span>name)</span>
+<span id="cb26-528"><a href="#cb26-528" aria-hidden="true" tabindex="-1"></a><span class="fu">transform!</span>(df_plot, <span class="op">:</span>generator <span class="op">=&gt;</span> (X <span class="op">-&gt;</span> [x<span class="op">==</span><span class="st">"Generic"</span> ? <span class="st">"Generic (γ=0.5)"</span> <span class="op">:</span> x for x <span class="kw">in</span> X]) <span class="op">=&gt;</span> <span class="op">:</span>generator)</span>
+<span id="cb26-529"><a href="#cb26-529" aria-hidden="true" tabindex="-1"></a><span class="fu">transform!</span>(df_plot, <span class="op">:</span>generator <span class="op">=&gt;</span> (X <span class="op">-&gt;</span> [x<span class="op">==</span><span class="st">"Generic_conservative"</span> ? <span class="st">"Generic (γ=0.9)"</span> <span class="op">:</span> x for x <span class="kw">in</span> X]) <span class="op">=&gt;</span> <span class="op">:</span>generator)</span>
+<span id="cb26-530"><a href="#cb26-530" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-531"><a href="#cb26-531" aria-hidden="true" tabindex="-1"></a>ncol <span class="op">=</span> <span class="fu">length</span>(<span class="fu">unique</span>(df_plot.dataset))</span>
+<span id="cb26-532"><a href="#cb26-532" aria-hidden="true" tabindex="-1"></a>nrow <span class="op">=</span> <span class="fu">length</span>(<span class="fu">unique</span>(df_plot.name))</span>
+<span id="cb26-533"><a href="#cb26-533" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-534"><a href="#cb26-534" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">RCall</span></span>
+<span id="cb26-535"><a href="#cb26-535" aria-hidden="true" tabindex="-1"></a>scale_ <span class="op">=</span> <span class="fl">2.0</span></span>
+<span id="cb26-536"><a href="#cb26-536" aria-hidden="true" tabindex="-1"></a>R<span class="st">"""</span></span>
+<span id="cb26-537"><a href="#cb26-537" aria-hidden="true" tabindex="-1"></a><span class="st">library(ggplot2)</span></span>
+<span id="cb26-538"><a href="#cb26-538" aria-hidden="true" tabindex="-1"></a><span class="st">plt &lt;- ggplot(</span><span class="sc">$</span>df_plot<span class="st">) +</span></span>
+<span id="cb26-539"><a href="#cb26-539" aria-hidden="true" tabindex="-1"></a><span class="st">    geom_bar(aes(x=n, y=mean, fill=generator), stat="identity", alpha=0.5, position="dodge") +</span></span>
+<span id="cb26-540"><a href="#cb26-540" aria-hidden="true" tabindex="-1"></a><span class="st">    geom_pointrange( aes(x=n, y=mean, ymin=ymin, ymax=ymax, colour=generator), alpha=0.9, position=position_dodge(width=0.9), size=0.5) +</span></span>
+<span id="cb26-541"><a href="#cb26-541" aria-hidden="true" tabindex="-1"></a><span class="st">    facet_grid(</span></span>
+<span id="cb26-542"><a href="#cb26-542" aria-hidden="true" tabindex="-1"></a><span class="st">        rows = vars(name),</span></span>
+<span id="cb26-543"><a href="#cb26-543" aria-hidden="true" tabindex="-1"></a><span class="st">        cols =  vars(dataset), </span></span>
+<span id="cb26-544"><a href="#cb26-544" aria-hidden="true" tabindex="-1"></a><span class="st">        scales = "free_y"</span></span>
+<span id="cb26-545"><a href="#cb26-545" aria-hidden="true" tabindex="-1"></a><span class="st">    ) +</span></span>
+<span id="cb26-546"><a href="#cb26-546" aria-hidden="true" tabindex="-1"></a><span class="st">    labs(y = "Value") + </span></span>
+<span id="cb26-547"><a href="#cb26-547" aria-hidden="true" tabindex="-1"></a><span class="st">    scale_fill_discrete(name="Generator:") +</span></span>
+<span id="cb26-548"><a href="#cb26-548" aria-hidden="true" tabindex="-1"></a><span class="st">    scale_colour_discrete(name="Generator:") +</span></span>
+<span id="cb26-549"><a href="#cb26-549" aria-hidden="true" tabindex="-1"></a><span class="st">    theme(</span></span>
+<span id="cb26-550"><a href="#cb26-550" aria-hidden="true" tabindex="-1"></a><span class="st">        axis.title.x=element_blank(),</span></span>
+<span id="cb26-551"><a href="#cb26-551" aria-hidden="true" tabindex="-1"></a><span class="st">        axis.text.x=element_blank(),</span></span>
+<span id="cb26-552"><a href="#cb26-552" aria-hidden="true" tabindex="-1"></a><span class="st">        axis.ticks.x=element_blank(),</span></span>
+<span id="cb26-553"><a href="#cb26-553" aria-hidden="true" tabindex="-1"></a><span class="st">        legend.position="bottom"</span></span>
+<span id="cb26-554"><a href="#cb26-554" aria-hidden="true" tabindex="-1"></a><span class="st">    ) +</span></span>
+<span id="cb26-555"><a href="#cb26-555" aria-hidden="true" tabindex="-1"></a><span class="st">    guides(fill=guide_legend(ncol=3))</span></span>
+<span id="cb26-556"><a href="#cb26-556" aria-hidden="true" tabindex="-1"></a><span class="st">temp_path &lt;- file.path(tempdir(), "plot.png")</span></span>
+<span id="cb26-557"><a href="#cb26-557" aria-hidden="true" tabindex="-1"></a><span class="st">ggsave(temp_path,width=</span><span class="sc">$</span>ncol<span class="st"> * </span><span class="sc">$</span>scale_<span class="st">,height=</span><span class="sc">$</span>nrow<span class="st"> * </span><span class="sc">$</span>scale_<span class="st"> * 0.85, dpi=300) </span></span>
+<span id="cb26-558"><a href="#cb26-558" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb26-559"><a href="#cb26-559" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-560"><a href="#cb26-560" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> Images.<span class="fu">load</span>(<span class="fu">rcopy</span>(R<span class="st">"temp_path"</span>))</span>
+<span id="cb26-561"><a href="#cb26-561" aria-hidden="true" tabindex="-1"></a>Images.<span class="fu">save</span>(<span class="fu">joinpath</span>(www_path,<span class="st">"paper_real_world_results.png"</span>), img)</span>
+<span id="cb26-562"><a href="#cb26-562" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-563"><a href="#cb26-563" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-566"><a href="#cb26-566" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-567"><a href="#cb26-567" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: true</span></span>
+<span id="cb26-568"><a href="#cb26-568" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-mit-real-paper</span></span>
+<span id="cb26-569"><a href="#cb26-569" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Chart in paper"</span></span>
+<span id="cb26-570"><a href="#cb26-570" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb26-571"><a href="#cb26-571" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-572"><a href="#cb26-572" aria-hidden="true" tabindex="-1"></a>Images.<span class="fu">load</span>(<span class="fu">joinpath</span>(www_artifact_path,<span class="st">"paper_real_world_results.png"</span>))</span>
+<span id="cb26-573"><a href="#cb26-573" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-574"><a href="#cb26-574" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-575"><a href="#cb26-575" aria-hidden="true" tabindex="-1"></a><span class="fu">## Mitigation and Latent Space Search</span></span>
+<span id="cb26-576"><a href="#cb26-576" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-577"><a href="#cb26-577" aria-hidden="true" tabindex="-1"></a>For the synthetic datasets, we investigate the effect of combining latent space search with the mitigation strategies. </span>
+<span id="cb26-578"><a href="#cb26-578" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-579"><a href="#cb26-579" aria-hidden="true" tabindex="-1"></a><span class="fu">### Running the Experiment</span></span>
+<span id="cb26-580"><a href="#cb26-580" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-583"><a href="#cb26-583" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-584"><a href="#cb26-584" aria-hidden="true" tabindex="-1"></a>generators <span class="op">=</span> <span class="fu">Dict</span>(</span>
+<span id="cb26-585"><a href="#cb26-585" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>Latent<span class="op">=&gt;</span><span class="fu">GenericGenerator</span>(opt <span class="op">=</span> opt, decision_threshold<span class="op">=</span><span class="fl">0.5</span>),</span>
+<span id="cb26-586"><a href="#cb26-586" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>Latent_conservative<span class="op">=&gt;</span><span class="fu">GenericGenerator</span>(opt <span class="op">=</span> opt, decision_threshold<span class="op">=</span><span class="fl">0.9</span>),</span>
+<span id="cb26-587"><a href="#cb26-587" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>Gravitational<span class="op">=&gt;</span><span class="fu">GravitationalGenerator</span>(opt <span class="op">=</span> opt),</span>
+<span id="cb26-588"><a href="#cb26-588" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>ClapROAR<span class="op">=&gt;</span><span class="fu">ClapROARGenerator</span>(opt <span class="op">=</span> opt)</span>
+<span id="cb26-589"><a href="#cb26-589" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-590"><a href="#cb26-590" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-591"><a href="#cb26-591" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-594"><a href="#cb26-594" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-595"><a href="#cb26-595" aria-hidden="true" tabindex="-1"></a>experiments <span class="op">=</span> <span class="fu">set_up_experiments</span>(data_sets,models,generators)</span>
+<span id="cb26-596"><a href="#cb26-596" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-597"><a href="#cb26-597" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-600"><a href="#cb26-600" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-601"><a href="#cb26-601" aria-hidden="true" tabindex="-1"></a>n_evals <span class="op">=</span> <span class="fl">5</span></span>
+<span id="cb26-602"><a href="#cb26-602" aria-hidden="true" tabindex="-1"></a>n_rounds <span class="op">=</span> <span class="fl">50</span></span>
+<span id="cb26-603"><a href="#cb26-603" aria-hidden="true" tabindex="-1"></a>evaluate_every <span class="op">=</span> <span class="fu">Int</span>(<span class="fu">round</span>(n_rounds<span class="op">/</span>n_evals))</span>
+<span id="cb26-604"><a href="#cb26-604" aria-hidden="true" tabindex="-1"></a>n_folds <span class="op">=</span> <span class="fl">5</span></span>
+<span id="cb26-605"><a href="#cb26-605" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> <span class="fl">100</span></span>
+<span id="cb26-606"><a href="#cb26-606" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Serialization</span></span>
+<span id="cb26-607"><a href="#cb26-607" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> <span class="fu">run_experiments</span>(</span>
+<span id="cb26-608"><a href="#cb26-608" aria-hidden="true" tabindex="-1"></a>    experiments;</span>
+<span id="cb26-609"><a href="#cb26-609" aria-hidden="true" tabindex="-1"></a>    save_path<span class="op">=</span>output_path, evaluate_every<span class="op">=</span>evaluate_every, n_rounds<span class="op">=</span>n_rounds, n_folds<span class="op">=</span>n_folds, T<span class="op">=</span>T, </span>
+<span id="cb26-610"><a href="#cb26-610" aria-hidden="true" tabindex="-1"></a>    latent_space <span class="op">=</span> <span class="cn">true</span></span>
+<span id="cb26-611"><a href="#cb26-611" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-612"><a href="#cb26-612" aria-hidden="true" tabindex="-1"></a><span class="bu">Serialization</span>.<span class="fu">serialize</span>(<span class="fu">joinpath</span>(output_path,<span class="st">"results_synthetic_latent.jls"</span>),results)</span>
+<span id="cb26-613"><a href="#cb26-613" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-614"><a href="#cb26-614" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-617"><a href="#cb26-617" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-618"><a href="#cb26-618" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb26-619"><a href="#cb26-619" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-620"><a href="#cb26-620" aria-hidden="true" tabindex="-1"></a>data_names <span class="op">=</span> [<span class="st">"Circles"</span>, <span class="st">"Linearly Separable"</span>, <span class="st">"Moons"</span>, <span class="st">"Overlapping"</span>]</span>
+<span id="cb26-621"><a href="#cb26-621" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> EMAR.<span class="fu">load_synthetic_mitigation_latent</span>()</span>
+<span id="cb26-622"><a href="#cb26-622" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-623"><a href="#cb26-623" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-626"><a href="#cb26-626" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-627"><a href="#cb26-627" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb26-628"><a href="#cb26-628" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-629"><a href="#cb26-629" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Images</span></span>
+<span id="cb26-630"><a href="#cb26-630" aria-hidden="true" tabindex="-1"></a>line_charts <span class="op">=</span> <span class="fu">Dict</span>()</span>
+<span id="cb26-631"><a href="#cb26-631" aria-hidden="true" tabindex="-1"></a>errorbar_charts <span class="op">=</span> <span class="fu">Dict</span>()</span>
+<span id="cb26-632"><a href="#cb26-632" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (data_name, res) <span class="kw">in</span> results</span>
+<span id="cb26-633"><a href="#cb26-633" aria-hidden="true" tabindex="-1"></a>    plt <span class="op">=</span> <span class="fu">plot_res</span>(res)</span>
+<span id="cb26-634"><a href="#cb26-634" aria-hidden="true" tabindex="-1"></a>    Images.<span class="fu">save</span>(<span class="fu">joinpath</span>(www_path, <span class="st">"line_chart_latent_</span><span class="sc">$</span>(data_name)<span class="st">.png"</span>), plt)</span>
+<span id="cb26-635"><a href="#cb26-635" aria-hidden="true" tabindex="-1"></a>    Images.<span class="fu">save</span>(<span class="fu">joinpath</span>(www_paper_path, <span class="st">"line_chart_latent_</span><span class="sc">$</span>(data_name)<span class="st">.png"</span>), plt)</span>
+<span id="cb26-636"><a href="#cb26-636" aria-hidden="true" tabindex="-1"></a>    line_charts[data_name] <span class="op">=</span> plt</span>
+<span id="cb26-637"><a href="#cb26-637" aria-hidden="true" tabindex="-1"></a>    plt <span class="op">=</span> <span class="fu">plot_res</span>(res,<span class="fu">maximum</span>(res.output.n))</span>
+<span id="cb26-638"><a href="#cb26-638" aria-hidden="true" tabindex="-1"></a>    Images.<span class="fu">save</span>(<span class="fu">joinpath</span>(www_path, <span class="st">"errorbar_chart_latent_</span><span class="sc">$</span>(data_name)<span class="st">.png"</span>), plt)</span>
+<span id="cb26-639"><a href="#cb26-639" aria-hidden="true" tabindex="-1"></a>    Images.<span class="fu">save</span>(<span class="fu">joinpath</span>(www_paper_path, <span class="st">"errorbar_chart_latent_</span><span class="sc">$</span>(data_name)<span class="st">.png"</span>), plt)</span>
+<span id="cb26-640"><a href="#cb26-640" aria-hidden="true" tabindex="-1"></a>    errorbar_charts[data_name] <span class="op">=</span> plt</span>
+<span id="cb26-641"><a href="#cb26-641" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb26-642"><a href="#cb26-642" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-643"><a href="#cb26-643" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-644"><a href="#cb26-644" aria-hidden="true" tabindex="-1"></a><span class="fu">### Results</span></span>
+<span id="cb26-645"><a href="#cb26-645" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-646"><a href="#cb26-646" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Line Charts</span></span>
+<span id="cb26-647"><a href="#cb26-647" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-650"><a href="#cb26-650" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-651"><a href="#cb26-651" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb26-652"><a href="#cb26-652" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: asis</span></span>
+<span id="cb26-653"><a href="#cb26-653" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb26-654"><a href="#cb26-654" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-655"><a href="#cb26-655" aria-hidden="true" tabindex="-1"></a>fig_label_prefix <span class="op">=</span> <span class="st">"mit-line-latent"</span></span>
+<span id="cb26-656"><a href="#cb26-656" aria-hidden="true" tabindex="-1"></a>fig_labels <span class="op">=</span> (nm <span class="op">-&gt;</span> <span class="st">"fig-</span><span class="sc">$</span>(fig_label_prefix)<span class="st">-</span><span class="sc">$</span>nm<span class="st">"</span>).(<span class="fu">replace</span>.(<span class="fu">lowercase</span>.(data_names), <span class="st">" "</span> <span class="op">=&gt;</span> <span class="st">"-"</span>))</span>
+<span id="cb26-657"><a href="#cb26-657" aria-hidden="true" tabindex="-1"></a>_str <span class="op">=</span> <span class="st">"The evolution of the evaluation metrics over the course of the experiment is shown for different datasets in @</span><span class="sc">$</span>(fig_labels[<span class="fl">1</span>])<span class="st"> to @</span><span class="sc">$</span>(fig_labels[<span class="kw">end</span>])<span class="st">."</span></span>
+<span id="cb26-658"><a href="#cb26-658" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(_str)</span>
+<span id="cb26-659"><a href="#cb26-659" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-660"><a href="#cb26-660" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-663"><a href="#cb26-663" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-664"><a href="#cb26-664" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb26-665"><a href="#cb26-665" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: asis</span></span>
+<span id="cb26-666"><a href="#cb26-666" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb26-667"><a href="#cb26-667" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb26-668"><a href="#cb26-668" aria-hidden="true" tabindex="-1"></a>str_pattern <span class="op">=</span> <span class="st">"line_chart_latent"</span></span>
+<span id="cb26-669"><a href="#cb26-669" aria-hidden="true" tabindex="-1"></a>fig_caption <span class="op">=</span> <span class="st">"Evolution of evaluation metrics over the course of the experiment."</span></span>
+<span id="cb26-670"><a href="#cb26-670" aria-hidden="true" tabindex="-1"></a>full_paths <span class="op">=</span> <span class="fu">joinpath</span>.(www_paper_path, <span class="fu">readdir</span>(www_paper_path)[<span class="fu">contains</span>.(<span class="fu">readdir</span>(www_paper_path), str_pattern)])</span>
+<span id="cb26-671"><a href="#cb26-671" aria-hidden="true" tabindex="-1"></a>include_img_commands <span class="op">=</span> EMAR.<span class="fu">get_img_command</span>(data_names, full_paths, fig_labels; fig_caption) </span>
+<span id="cb26-672"><a href="#cb26-672" aria-hidden="true" tabindex="-1"></a>_str <span class="op">=</span> <span class="fu">join</span>(include_img_commands, <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb26-673"><a href="#cb26-673" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(_str)</span>
+<span id="cb26-674"><a href="#cb26-674" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-675"><a href="#cb26-675" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-676"><a href="#cb26-676" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-677"><a href="#cb26-677" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Error Bar Charts</span></span>
+<span id="cb26-678"><a href="#cb26-678" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-681"><a href="#cb26-681" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-682"><a href="#cb26-682" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb26-683"><a href="#cb26-683" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: asis</span></span>
+<span id="cb26-684"><a href="#cb26-684" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb26-685"><a href="#cb26-685" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-686"><a href="#cb26-686" aria-hidden="true" tabindex="-1"></a>fig_label_prefix <span class="op">=</span> <span class="st">"mit-errorbar-latent"</span></span>
+<span id="cb26-687"><a href="#cb26-687" aria-hidden="true" tabindex="-1"></a>fig_labels <span class="op">=</span> (nm <span class="op">-&gt;</span> <span class="st">"fig-</span><span class="sc">$</span>(fig_label_prefix)<span class="st">-</span><span class="sc">$</span>nm<span class="st">"</span>).(<span class="fu">replace</span>.(<span class="fu">lowercase</span>.(data_names), <span class="st">" "</span> <span class="op">=&gt;</span> <span class="st">"-"</span>))</span>
+<span id="cb26-688"><a href="#cb26-688" aria-hidden="true" tabindex="-1"></a>_str <span class="op">=</span> <span class="st">"The evaluation metrics at the end of the experiment are shown for different datasets in @</span><span class="sc">$</span>(fig_labels[<span class="fl">1</span>])<span class="st"> to @</span><span class="sc">$</span>(fig_labels[<span class="kw">end</span>])<span class="st">."</span></span>
+<span id="cb26-689"><a href="#cb26-689" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(_str)</span>
+<span id="cb26-690"><a href="#cb26-690" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-691"><a href="#cb26-691" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-694"><a href="#cb26-694" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-695"><a href="#cb26-695" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb26-696"><a href="#cb26-696" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: asis</span></span>
+<span id="cb26-697"><a href="#cb26-697" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb26-698"><a href="#cb26-698" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb26-699"><a href="#cb26-699" aria-hidden="true" tabindex="-1"></a>str_pattern <span class="op">=</span> <span class="st">"errorbar_chart_latent"</span></span>
+<span id="cb26-700"><a href="#cb26-700" aria-hidden="true" tabindex="-1"></a>fig_caption <span class="op">=</span> <span class="st">"Evaluation metrics at the end of the experiment."</span></span>
+<span id="cb26-701"><a href="#cb26-701" aria-hidden="true" tabindex="-1"></a>full_paths <span class="op">=</span> <span class="fu">joinpath</span>.(www_paper_path, <span class="fu">readdir</span>(www_paper_path)[<span class="fu">contains</span>.(<span class="fu">readdir</span>(www_paper_path), str_pattern)])</span>
+<span id="cb26-702"><a href="#cb26-702" aria-hidden="true" tabindex="-1"></a>include_img_commands <span class="op">=</span> EMAR.<span class="fu">get_img_command</span>(data_names, full_paths, fig_labels; fig_caption) </span>
+<span id="cb26-703"><a href="#cb26-703" aria-hidden="true" tabindex="-1"></a>_str <span class="op">=</span> <span class="fu">join</span>(include_img_commands, <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb26-704"><a href="#cb26-704" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(_str)</span>
+<span id="cb26-705"><a href="#cb26-705" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-706"><a href="#cb26-706" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-707"><a href="#cb26-707" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Bootstrap</span></span>
+<span id="cb26-708"><a href="#cb26-708" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-709"><a href="#cb26-709" aria-hidden="true" tabindex="-1"></a>@tbl-bs-mit-latent presents the tests for statistical significance of the estimated MMD metrics.</span>
+<span id="cb26-710"><a href="#cb26-710" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-713"><a href="#cb26-713" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-714"><a href="#cb26-714" aria-hidden="true" tabindex="-1"></a>n_bootstrap <span class="op">=</span> <span class="fl">100</span></span>
+<span id="cb26-715"><a href="#cb26-715" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> <span class="fu">run_bootstrap</span>(results, n_bootstrap; filename<span class="op">=</span><span class="fu">joinpath</span>(output_path,<span class="st">"bootstrap_latent.csv"</span>))</span>
+<span id="cb26-716"><a href="#cb26-716" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-717"><a href="#cb26-717" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-718"><a href="#cb26-718" aria-hidden="true" tabindex="-1"></a>::: {#tbl-bs-mit-latent}</span>
+<span id="cb26-719"><a href="#cb26-719" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-722"><a href="#cb26-722" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-723"><a href="#cb26-723" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: true</span></span>
+<span id="cb26-724"><a href="#cb26-724" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb26-725"><a href="#cb26-725" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb26-726"><a href="#cb26-726" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-727"><a href="#cb26-727" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> EMAR.<span class="fu">aggregate_bs_mitigation_latent</span>(backend <span class="op">=</span> <span class="fu">Val</span>(<span class="op">:</span>html))</span>
+<span id="cb26-728"><a href="#cb26-728" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-729"><a href="#cb26-729" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-730"><a href="#cb26-730" aria-hidden="true" tabindex="-1"></a>Tests for statistical significance of the estimated MMD metrics using mitigation strategies with Latent Space Search. We have highlighted p-values smaller than the significance level $\alpha=0.05$ in bold.</span>
+<span id="cb26-731"><a href="#cb26-731" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-732"><a href="#cb26-732" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb26-733"><a href="#cb26-733" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-734"><a href="#cb26-734" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Chart in paper (Figure 7)</span></span>
+<span id="cb26-735"><a href="#cb26-735" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-736"><a href="#cb26-736" aria-hidden="true" tabindex="-1"></a>@fig-mit-latent-paper shows the chart that went into the paper.</span>
+<span id="cb26-737"><a href="#cb26-737" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-740"><a href="#cb26-740" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-741"><a href="#cb26-741" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb26-742"><a href="#cb26-742" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb26-743"><a href="#cb26-743" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-744"><a href="#cb26-744" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">DataFrames</span>, <span class="bu">Statistics</span></span>
+<span id="cb26-745"><a href="#cb26-745" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> results[<span class="op">:</span>overlapping].output</span>
+<span id="cb26-746"><a href="#cb26-746" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df[df.n <span class="op">.==</span> <span class="fu">maximum</span>(df.n),<span class="op">:</span>]</span>
+<span id="cb26-747"><a href="#cb26-747" aria-hidden="true" tabindex="-1"></a>gdf <span class="op">=</span> <span class="fu">groupby</span>(df, [<span class="op">:</span>generator, <span class="op">:</span>model, <span class="op">:</span>n, <span class="op">:</span>name, <span class="op">:</span>scope])</span>
+<span id="cb26-748"><a href="#cb26-748" aria-hidden="true" tabindex="-1"></a>df_plot <span class="op">=</span> <span class="fu">combine</span>(gdf, <span class="op">:</span>value <span class="op">=&gt;</span> (x <span class="op">-&gt;</span> [(<span class="fu">mean</span>(x),<span class="fu">mean</span>(x)<span class="fu">+std</span>(x),<span class="fu">mean</span>(x)<span class="fu">-std</span>(x))]) <span class="op">=&gt;</span> [<span class="op">:</span>mean, <span class="op">:</span>ymax, <span class="op">:</span>ymin])</span>
+<span id="cb26-749"><a href="#cb26-749" aria-hidden="true" tabindex="-1"></a>df_plot <span class="op">=</span> df_plot[[name <span class="kw">in</span> [<span class="op">:</span>mmd, <span class="op">:</span>mmd_grid, <span class="op">:</span>model_performance] for name <span class="kw">in</span> df_plot.name],<span class="op">:</span>]</span>
+<span id="cb26-750"><a href="#cb26-750" aria-hidden="true" tabindex="-1"></a>df_plot <span class="op">=</span> df_plot[.!(df_plot.name<span class="op">.==:</span>mmd <span class="op">.&amp;&amp;</span> df_plot.scope<span class="op">.==:</span>model),<span class="op">:</span>]</span>
+<span id="cb26-751"><a href="#cb26-751" aria-hidden="true" tabindex="-1"></a>df_plot <span class="op">=</span> <span class="fu">mapcols</span>(x <span class="op">-&gt;</span> <span class="fu">typeof</span>(x) <span class="op">==</span> <span class="dt">Vector</span>{<span class="dt">Symbol</span>} ? <span class="fu">string</span>.(x) <span class="op">:</span> x, df_plot)</span>
+<span id="cb26-752"><a href="#cb26-752" aria-hidden="true" tabindex="-1"></a><span class="fu">transform!</span>(df_plot, <span class="op">:</span>name <span class="op">=&gt;</span> (X <span class="op">-&gt;</span> [x<span class="op">==</span><span class="st">"mmd"</span> ? <span class="st">"MMD (domain)"</span> <span class="op">:</span> x for x <span class="kw">in</span> X]) <span class="op">=&gt;</span> <span class="op">:</span>name)</span>
+<span id="cb26-753"><a href="#cb26-753" aria-hidden="true" tabindex="-1"></a><span class="fu">transform!</span>(df_plot, <span class="op">:</span>name <span class="op">=&gt;</span> (X <span class="op">-&gt;</span> [x<span class="op">==</span><span class="st">"mmd_grid"</span> ? <span class="st">"MMD (model)"</span> <span class="op">:</span> x for x <span class="kw">in</span> X]) <span class="op">=&gt;</span> <span class="op">:</span>name)</span>
+<span id="cb26-754"><a href="#cb26-754" aria-hidden="true" tabindex="-1"></a><span class="fu">transform!</span>(df_plot, <span class="op">:</span>name <span class="op">=&gt;</span> (X <span class="op">-&gt;</span> [x<span class="op">==</span><span class="st">"model_performance"</span> ? <span class="st">"Performance"</span> <span class="op">:</span> x for x <span class="kw">in</span> X]) <span class="op">=&gt;</span> <span class="op">:</span>name)</span>
+<span id="cb26-755"><a href="#cb26-755" aria-hidden="true" tabindex="-1"></a><span class="fu">transform!</span>(df_plot, <span class="op">:</span>generator <span class="op">=&gt;</span> (X <span class="op">-&gt;</span> [x<span class="op">==</span><span class="st">"Latent"</span> ? <span class="st">"Latent (γ=0.5)"</span> <span class="op">:</span> x for x <span class="kw">in</span> X]) <span class="op">=&gt;</span> <span class="op">:</span>generator)</span>
+<span id="cb26-756"><a href="#cb26-756" aria-hidden="true" tabindex="-1"></a><span class="fu">transform!</span>(df_plot, <span class="op">:</span>generator <span class="op">=&gt;</span> (X <span class="op">-&gt;</span> [x<span class="op">==</span><span class="st">"Latent_conservative"</span> ? <span class="st">"Latent (γ=0.9)"</span> <span class="op">:</span> x for x <span class="kw">in</span> X]) <span class="op">=&gt;</span> <span class="op">:</span>generator)</span>
+<span id="cb26-757"><a href="#cb26-757" aria-hidden="true" tabindex="-1"></a><span class="fu">transform!</span>(df_plot, <span class="op">:</span>model <span class="op">=&gt;</span> (X <span class="op">-&gt;</span> [x<span class="op">==</span><span class="st">"FluxEnsemble"</span> ? <span class="st">"Deep Ensemble"</span> <span class="op">:</span> x for x <span class="kw">in</span> X]) <span class="op">=&gt;</span> <span class="op">:</span>model)</span>
+<span id="cb26-758"><a href="#cb26-758" aria-hidden="true" tabindex="-1"></a><span class="fu">transform!</span>(df_plot, <span class="op">:</span>model <span class="op">=&gt;</span> (X <span class="op">-&gt;</span> [x<span class="op">==</span><span class="st">"FluxModel"</span> ? <span class="st">"MLP"</span> <span class="op">:</span> x for x <span class="kw">in</span> X]) <span class="op">=&gt;</span> <span class="op">:</span>model)</span>
+<span id="cb26-759"><a href="#cb26-759" aria-hidden="true" tabindex="-1"></a><span class="fu">transform!</span>(df_plot, <span class="op">:</span>model <span class="op">=&gt;</span> (X <span class="op">-&gt;</span> [x<span class="op">==</span><span class="st">"LogisticRegression"</span> ? <span class="st">"Linear"</span> <span class="op">:</span> x for x <span class="kw">in</span> X]) <span class="op">=&gt;</span> <span class="op">:</span>model)</span>
+<span id="cb26-760"><a href="#cb26-760" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-761"><a href="#cb26-761" aria-hidden="true" tabindex="-1"></a>ncol <span class="op">=</span> <span class="fu">length</span>(<span class="fu">unique</span>(df_plot.model))</span>
+<span id="cb26-762"><a href="#cb26-762" aria-hidden="true" tabindex="-1"></a>nrow <span class="op">=</span> <span class="fu">length</span>(<span class="fu">unique</span>(df_plot.name))</span>
+<span id="cb26-763"><a href="#cb26-763" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-764"><a href="#cb26-764" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">RCall</span></span>
+<span id="cb26-765"><a href="#cb26-765" aria-hidden="true" tabindex="-1"></a>scale_ <span class="op">=</span> <span class="fl">1.9</span></span>
+<span id="cb26-766"><a href="#cb26-766" aria-hidden="true" tabindex="-1"></a>R<span class="st">"""</span></span>
+<span id="cb26-767"><a href="#cb26-767" aria-hidden="true" tabindex="-1"></a><span class="st">library(data.table)</span></span>
+<span id="cb26-768"><a href="#cb26-768" aria-hidden="true" tabindex="-1"></a><span class="st">df_plot &lt;- data.table(</span><span class="sc">$</span>df_plot<span class="st">)</span></span>
+<span id="cb26-769"><a href="#cb26-769" aria-hidden="true" tabindex="-1"></a><span class="st">model_order &lt;- c("Linear", "MLP", "Deep Ensemble")</span></span>
+<span id="cb26-770"><a href="#cb26-770" aria-hidden="true" tabindex="-1"></a><span class="st">df_plot[,model:=factor(model, levels=model_order)]</span></span>
+<span id="cb26-771"><a href="#cb26-771" aria-hidden="true" tabindex="-1"></a><span class="st">library(ggplot2)</span></span>
+<span id="cb26-772"><a href="#cb26-772" aria-hidden="true" tabindex="-1"></a><span class="st">plt &lt;- ggplot(</span><span class="sc">$</span>df_plot<span class="st">) +</span></span>
+<span id="cb26-773"><a href="#cb26-773" aria-hidden="true" tabindex="-1"></a><span class="st">    geom_bar(aes(x=n, y=mean, fill=generator), stat="identity", alpha=0.5, position="dodge") +</span></span>
+<span id="cb26-774"><a href="#cb26-774" aria-hidden="true" tabindex="-1"></a><span class="st">    geom_pointrange( aes(x=n, y=mean, ymin=ymin, ymax=ymax, colour=generator), alpha=0.9, position=position_dodge(width=0.9), size=0.5) +</span></span>
+<span id="cb26-775"><a href="#cb26-775" aria-hidden="true" tabindex="-1"></a><span class="st">    facet_grid(</span></span>
+<span id="cb26-776"><a href="#cb26-776" aria-hidden="true" tabindex="-1"></a><span class="st">        rows = vars(name),</span></span>
+<span id="cb26-777"><a href="#cb26-777" aria-hidden="true" tabindex="-1"></a><span class="st">        cols =  vars(model), </span></span>
+<span id="cb26-778"><a href="#cb26-778" aria-hidden="true" tabindex="-1"></a><span class="st">        scales = "free_y"</span></span>
+<span id="cb26-779"><a href="#cb26-779" aria-hidden="true" tabindex="-1"></a><span class="st">    ) +</span></span>
+<span id="cb26-780"><a href="#cb26-780" aria-hidden="true" tabindex="-1"></a><span class="st">    labs(y = "Value") + </span></span>
+<span id="cb26-781"><a href="#cb26-781" aria-hidden="true" tabindex="-1"></a><span class="st">    scale_fill_discrete(name="Generator:") +</span></span>
+<span id="cb26-782"><a href="#cb26-782" aria-hidden="true" tabindex="-1"></a><span class="st">    scale_colour_discrete(name="Generator:") +</span></span>
+<span id="cb26-783"><a href="#cb26-783" aria-hidden="true" tabindex="-1"></a><span class="st">    theme(</span></span>
+<span id="cb26-784"><a href="#cb26-784" aria-hidden="true" tabindex="-1"></a><span class="st">        axis.title.x=element_blank(),</span></span>
+<span id="cb26-785"><a href="#cb26-785" aria-hidden="true" tabindex="-1"></a><span class="st">        axis.text.x=element_blank(),</span></span>
+<span id="cb26-786"><a href="#cb26-786" aria-hidden="true" tabindex="-1"></a><span class="st">        axis.ticks.x=element_blank(),</span></span>
+<span id="cb26-787"><a href="#cb26-787" aria-hidden="true" tabindex="-1"></a><span class="st">        legend.position="bottom"</span></span>
+<span id="cb26-788"><a href="#cb26-788" aria-hidden="true" tabindex="-1"></a><span class="st">    ) +</span></span>
+<span id="cb26-789"><a href="#cb26-789" aria-hidden="true" tabindex="-1"></a><span class="st">    guides(fill=guide_legend(ncol=4))</span></span>
+<span id="cb26-790"><a href="#cb26-790" aria-hidden="true" tabindex="-1"></a><span class="st">temp_path &lt;- file.path(tempdir(), "plot.png")</span></span>
+<span id="cb26-791"><a href="#cb26-791" aria-hidden="true" tabindex="-1"></a><span class="st">ggsave(temp_path,width=</span><span class="sc">$</span>ncol<span class="st"> * </span><span class="sc">$</span>scale_<span class="st">,height=</span><span class="sc">$</span>nrow<span class="st"> * </span><span class="sc">$</span>scale_<span class="st"> * 0.8, dpi=300) </span></span>
+<span id="cb26-792"><a href="#cb26-792" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb26-793"><a href="#cb26-793" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-794"><a href="#cb26-794" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> Images.<span class="fu">load</span>(<span class="fu">rcopy</span>(R<span class="st">"temp_path"</span>))</span>
+<span id="cb26-795"><a href="#cb26-795" aria-hidden="true" tabindex="-1"></a>Images.<span class="fu">save</span>(<span class="fu">joinpath</span>(www_path,<span class="st">"paper_synthetic_latent_results.png"</span>), img)</span>
+<span id="cb26-796"><a href="#cb26-796" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-797"><a href="#cb26-797" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-800"><a href="#cb26-800" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-801"><a href="#cb26-801" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: true</span></span>
+<span id="cb26-802"><a href="#cb26-802" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-mit-latent-paper</span></span>
+<span id="cb26-803"><a href="#cb26-803" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Chart in paper"</span></span>
+<span id="cb26-804"><a href="#cb26-804" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb26-805"><a href="#cb26-805" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-806"><a href="#cb26-806" aria-hidden="true" tabindex="-1"></a>Images.<span class="fu">load</span>(<span class="fu">joinpath</span>(www_artifact_path,<span class="st">"paper_synthetic_latent_results.png"</span>))</span>
+<span id="cb26-807"><a href="#cb26-807" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-808"><a href="#cb26-808" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-811"><a href="#cb26-811" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb26-812"><a href="#cb26-812" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb26-813"><a href="#cb26-813" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-814"><a href="#cb26-814" aria-hidden="true" tabindex="-1"></a><span class="fu">generate_artifacts</span>(output_path)</span>
+<span id="cb26-815"><a href="#cb26-815" aria-hidden="true" tabindex="-1"></a><span class="fu">generate_artifacts</span>(www_path)</span>
+<span id="cb26-816"><a href="#cb26-816" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
 <script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
 (function() {
