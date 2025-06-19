@@ -150,10 +150,18 @@ function kable(
     return println(rcopy(R"ktab"))
 end
 
+global bs_header = [
+    "Metric",
+    "Data",
+    "Generator",
+    "Model",
+    "p-value",
+]
+
 """
 Tabulate the bootstrap results for HTML.
 """
-function tabulate_bs(df::DataFrame, backend::Val{:html}, alpha::AbstractFloat=0.05; kwrgs...)
+function tabulate_bs(df::DataFrame, backend::Val{:html}, alpha::AbstractFloat=0.05; header=bs_header, kwrgs...)
     hl = HtmlHighlighter(
        (data, i, j) -> (j == 5) && data[i, 5] < alpha,
        HtmlDecoration(font_weight = "bold")
@@ -162,6 +170,7 @@ function tabulate_bs(df::DataFrame, backend::Val{:html}, alpha::AbstractFloat=0.
         df;
         backend = backend,
         highlighters = (hl,),
+        header = header,
         kwrgs...
     )
 end
@@ -169,7 +178,7 @@ end
 """
 Tabulate the bootstrap results for LaTeX.
 """
-function tabulate_bs(df::DataFrame, backend::Val{:latex}, alpha::AbstractFloat=0.05; kwrgs...)
+function tabulate_bs(df::DataFrame, backend::Val{:latex}, alpha::AbstractFloat=0.05; header=bs_header, kwrgs...)
     hl = LatexHighlighter(
         (data, i, j) -> (j == 5) && data[i, 5] < alpha,
         ["textbf"]
@@ -180,6 +189,7 @@ function tabulate_bs(df::DataFrame, backend::Val{:latex}, alpha::AbstractFloat=0
         highlighters = (hl,),
         table_type = :longtable,
         longtable_footer = "Continued below.",
+        header = header,
         kwrgs...
     )
 end
@@ -193,13 +203,7 @@ function aggregate_bs(
     latent::Bool=false;
     alpha::AbstractFloat = 0.05,
     backend::Union{Nothing,Val} = nothing,
-    header = [
-        "Metric",
-        "Data",
-        "Generator",
-        "Model",
-        "p-value",
-    ],
+    header = bs_header,
     kwrgs...
 )
 
