@@ -22,6 +22,7 @@ This notebook was used to run the experiments for the synthetic datasets and can
 #| echo: false
 #| eval: true
 
+using CSV
 using EMAR
 using PrettyTables
 using Images
@@ -340,7 +341,10 @@ df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstra
 #| output: asis
 #| eval: true
 
-EMAR.aggregate_bs_synthetic(backend=Val(:html))
+df = EMAR.aggregate_bs_synthetic()
+CSV.write(joinpath(www_path, "bootstrap.csv"), df)
+CSV.write(joinpath(www_paper_path, "bootstrap.csv"), df)
+EMAR.tabulate_bs(df, Val(:html))
 ```
 
 Tests for statistical significance of the estimated MMD metrics. We have highlighted p-values smaller than the significance level $\alpha=0.05$ in bold. Data: Synthetic.

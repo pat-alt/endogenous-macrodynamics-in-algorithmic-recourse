@@ -1,0 +1,136 @@
+name,data,generator,model,p_value_mean
+MMD,Cal Housing,ClapROAR,Deep Ensemble,0.0
+MMD,Cal Housing,ClapROAR,Linear,0.0
+MMD,Cal Housing,ClapROAR,MLP,0.0
+MMD,Cal Housing,Generic (γ=0.5),Deep Ensemble,0.0
+MMD,Cal Housing,Generic (γ=0.5),Linear,0.0
+MMD,Cal Housing,Generic (γ=0.5),MLP,0.0
+MMD,Cal Housing,Generic (γ=0.9),Deep Ensemble,0.0
+MMD,Cal Housing,Generic (γ=0.9),Linear,0.0
+MMD,Cal Housing,Generic (γ=0.9),MLP,0.0
+MMD,Cal Housing,Gravitational,Deep Ensemble,0.0
+MMD,Cal Housing,Gravitational,Linear,0.0
+MMD,Cal Housing,Gravitational,MLP,0.0
+MMD,Cal Housing,Latent,Deep Ensemble,0.0
+MMD,Cal Housing,Latent,Linear,0.0
+MMD,Cal Housing,Latent,MLP,0.0
+MMD,Credit Default,ClapROAR,Deep Ensemble,1.0
+MMD,Credit Default,ClapROAR,Linear,1.0
+MMD,Credit Default,ClapROAR,MLP,1.0
+MMD,Credit Default,Generic (γ=0.5),Deep Ensemble,1.0
+MMD,Credit Default,Generic (γ=0.5),Linear,1.0
+MMD,Credit Default,Generic (γ=0.5),MLP,1.0
+MMD,Credit Default,Generic (γ=0.9),Deep Ensemble,1.0
+MMD,Credit Default,Generic (γ=0.9),Linear,1.0
+MMD,Credit Default,Generic (γ=0.9),MLP,1.0
+MMD,Credit Default,Gravitational,Deep Ensemble,0.0
+MMD,Credit Default,Gravitational,Linear,0.0
+MMD,Credit Default,Gravitational,MLP,0.0
+MMD,Credit Default,Latent,Deep Ensemble,0.0
+MMD,Credit Default,Latent,Linear,0.8
+MMD,Credit Default,Latent,MLP,0.0
+MMD,GMSC,ClapROAR,Deep Ensemble,0.15
+MMD,GMSC,ClapROAR,Linear,0.0
+MMD,GMSC,ClapROAR,MLP,0.21399999999999997
+MMD,GMSC,Generic (γ=0.5),Deep Ensemble,0.938
+MMD,GMSC,Generic (γ=0.5),Linear,0.8560000000000001
+MMD,GMSC,Generic (γ=0.5),MLP,0.932
+MMD,GMSC,Generic (γ=0.9),Deep Ensemble,0.758
+MMD,GMSC,Generic (γ=0.9),Linear,0.004
+MMD,GMSC,Generic (γ=0.9),MLP,0.9299999999999999
+MMD,GMSC,Gravitational,Deep Ensemble,0.0
+MMD,GMSC,Gravitational,Linear,0.0
+MMD,GMSC,Gravitational,MLP,0.0
+MMD,GMSC,Latent,Deep Ensemble,0.0
+MMD,GMSC,Latent,Linear,0.0
+MMD,GMSC,Latent,MLP,0.0
+PP MMD,Cal Housing,ClapROAR,Deep Ensemble,0.0
+PP MMD,Cal Housing,ClapROAR,Linear,0.0
+PP MMD,Cal Housing,ClapROAR,MLP,0.0
+PP MMD,Cal Housing,Generic (γ=0.5),Deep Ensemble,0.0
+PP MMD,Cal Housing,Generic (γ=0.5),Linear,0.0
+PP MMD,Cal Housing,Generic (γ=0.5),MLP,0.0
+PP MMD,Cal Housing,Generic (γ=0.9),Deep Ensemble,0.0
+PP MMD,Cal Housing,Generic (γ=0.9),Linear,0.0
+PP MMD,Cal Housing,Generic (γ=0.9),MLP,0.0
+PP MMD,Cal Housing,Gravitational,Deep Ensemble,0.0
+PP MMD,Cal Housing,Gravitational,Linear,0.0
+PP MMD,Cal Housing,Gravitational,MLP,0.0
+PP MMD,Cal Housing,Latent,Deep Ensemble,0.0
+PP MMD,Cal Housing,Latent,Linear,0.0
+PP MMD,Cal Housing,Latent,MLP,0.0
+PP MMD,Credit Default,ClapROAR,Deep Ensemble,0.0
+PP MMD,Credit Default,ClapROAR,Linear,0.0
+PP MMD,Credit Default,ClapROAR,MLP,0.0
+PP MMD,Credit Default,Generic (γ=0.5),Deep Ensemble,0.0
+PP MMD,Credit Default,Generic (γ=0.5),Linear,0.0
+PP MMD,Credit Default,Generic (γ=0.5),MLP,0.0
+PP MMD,Credit Default,Generic (γ=0.9),Deep Ensemble,0.0
+PP MMD,Credit Default,Generic (γ=0.9),Linear,0.0
+PP MMD,Credit Default,Generic (γ=0.9),MLP,0.0
+PP MMD,Credit Default,Gravitational,Deep Ensemble,0.0
+PP MMD,Credit Default,Gravitational,Linear,0.0
+PP MMD,Credit Default,Gravitational,MLP,0.0
+PP MMD,Credit Default,Latent,Deep Ensemble,0.0
+PP MMD,Credit Default,Latent,Linear,0.0
+PP MMD,Credit Default,Latent,MLP,0.0
+PP MMD,GMSC,ClapROAR,Deep Ensemble,0.0
+PP MMD,GMSC,ClapROAR,Linear,0.0
+PP MMD,GMSC,ClapROAR,MLP,0.0
+PP MMD,GMSC,Generic (γ=0.5),Deep Ensemble,0.0
+PP MMD,GMSC,Generic (γ=0.5),Linear,0.0
+PP MMD,GMSC,Generic (γ=0.5),MLP,0.0
+PP MMD,GMSC,Generic (γ=0.9),Deep Ensemble,0.0
+PP MMD,GMSC,Generic (γ=0.9),Linear,0.0
+PP MMD,GMSC,Generic (γ=0.9),MLP,0.0
+PP MMD,GMSC,Gravitational,Deep Ensemble,0.0
+PP MMD,GMSC,Gravitational,Linear,0.0
+PP MMD,GMSC,Gravitational,MLP,0.0
+PP MMD,GMSC,Latent,Deep Ensemble,0.0
+PP MMD,GMSC,Latent,Linear,0.0
+PP MMD,GMSC,Latent,MLP,0.0
+PP MMD (grid),Cal Housing,ClapROAR,Deep Ensemble,0.044
+PP MMD (grid),Cal Housing,ClapROAR,Linear,0.004
+PP MMD (grid),Cal Housing,ClapROAR,MLP,0.012
+PP MMD (grid),Cal Housing,Generic (γ=0.5),Deep Ensemble,0.0
+PP MMD (grid),Cal Housing,Generic (γ=0.5),Linear,0.0
+PP MMD (grid),Cal Housing,Generic (γ=0.5),MLP,0.0
+PP MMD (grid),Cal Housing,Generic (γ=0.9),Deep Ensemble,0.002
+PP MMD (grid),Cal Housing,Generic (γ=0.9),Linear,0.0
+PP MMD (grid),Cal Housing,Generic (γ=0.9),MLP,0.0
+PP MMD (grid),Cal Housing,Gravitational,Deep Ensemble,0.0
+PP MMD (grid),Cal Housing,Gravitational,Linear,0.013999999999999999
+PP MMD (grid),Cal Housing,Gravitational,MLP,0.0625
+PP MMD (grid),Cal Housing,Latent,Deep Ensemble,0.0
+PP MMD (grid),Cal Housing,Latent,Linear,0.002
+PP MMD (grid),Cal Housing,Latent,MLP,0.0
+PP MMD (grid),Credit Default,ClapROAR,Deep Ensemble,0.0
+PP MMD (grid),Credit Default,ClapROAR,Linear,0.0
+PP MMD (grid),Credit Default,ClapROAR,MLP,0.0
+PP MMD (grid),Credit Default,Generic (γ=0.5),Deep Ensemble,0.0
+PP MMD (grid),Credit Default,Generic (γ=0.5),Linear,0.0
+PP MMD (grid),Credit Default,Generic (γ=0.5),MLP,0.0
+PP MMD (grid),Credit Default,Generic (γ=0.9),Deep Ensemble,0.0
+PP MMD (grid),Credit Default,Generic (γ=0.9),Linear,0.0
+PP MMD (grid),Credit Default,Generic (γ=0.9),MLP,0.0
+PP MMD (grid),Credit Default,Gravitational,Deep Ensemble,0.0
+PP MMD (grid),Credit Default,Gravitational,Linear,0.0
+PP MMD (grid),Credit Default,Gravitational,MLP,0.0
+PP MMD (grid),Credit Default,Latent,Deep Ensemble,0.0
+PP MMD (grid),Credit Default,Latent,Linear,0.078
+PP MMD (grid),Credit Default,Latent,MLP,0.0
+PP MMD (grid),GMSC,ClapROAR,Deep Ensemble,0.0
+PP MMD (grid),GMSC,ClapROAR,Linear,0.0
+PP MMD (grid),GMSC,ClapROAR,MLP,0.0
+PP MMD (grid),GMSC,Generic (γ=0.5),Deep Ensemble,0.0
+PP MMD (grid),GMSC,Generic (γ=0.5),Linear,0.0
+PP MMD (grid),GMSC,Generic (γ=0.5),MLP,0.0
+PP MMD (grid),GMSC,Generic (γ=0.9),Deep Ensemble,0.0
+PP MMD (grid),GMSC,Generic (γ=0.9),Linear,0.0
+PP MMD (grid),GMSC,Generic (γ=0.9),MLP,0.0
+PP MMD (grid),GMSC,Gravitational,Deep Ensemble,0.0
+PP MMD (grid),GMSC,Gravitational,Linear,0.0
+PP MMD (grid),GMSC,Gravitational,MLP,0.0
+PP MMD (grid),GMSC,Latent,Deep Ensemble,0.0
+PP MMD (grid),GMSC,Latent,Linear,0.0
+PP MMD (grid),GMSC,Latent,MLP,0.0

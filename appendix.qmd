@@ -20,8 +20,48 @@ cd(projectdir)
 ## Supplementary Material {#sec-satml-appendices .appendix}
 
 ```{julia}
-using EMAR
+using CSV
+using DataFrames
+using PrettyTables
+
 www_paper_root = "paper/www/appendix/"
+
+# Helper functions
+"""
+Helper function to quickly generate a Markdown image include.
+"""
+function get_img_command(data_names, full_paths, fig_labels; fig_caption="", width=100)
+    fig_cap = fig_caption == "" ? fig_caption : "$fig_caption "
+    return [
+        "![$(fig_cap)Data: $(nm).](/$pth){#$(lbl) width=$(width)%}"
+        for (nm, pth, lbl) in zip(data_names, full_paths, fig_labels)
+    ]
+end
+
+"""
+Tabulate the bootstrap results for LaTeX.
+"""
+function tabulate_bs(df::DataFrame, backend::Val{:latex}, alpha::AbstractFloat=0.05; kwrgs...)
+    hl = LatexHighlighter(
+        (data, i, j) -> (j == 5) && data[i, 5] < alpha,
+        ["textbf"]
+    )
+    pretty_table(
+        df;
+        backend = backend,
+        highlighters = (hl,),
+        table_type = :longtable,
+        longtable_footer = "Continued below.",
+        header = [
+            "Metric",
+            "Data",
+            "Generator",
+            "Model",
+            "p-value",
+        ],
+        kwrgs...
+    )
+end
 ```
 
 \FloatBarrier
@@ -54,7 +94,7 @@ println(_str)
 str_pattern = "line_chart"
 fig_caption = "Evolution of evaluation metrics over the course of the experiment."
 full_paths = joinpath.(www_paper_path, readdir(www_paper_path)[contains.(readdir(www_paper_path), str_pattern)])
-include_img_commands = EMAR.get_img_command(data_names, full_paths, fig_labels; fig_caption) 
+include_img_commands = get_img_command(data_names, full_paths, fig_labels; fig_caption) 
 _str = join(include_img_commands, "\n\n")
 println(_str)
 ```
@@ -80,7 +120,7 @@ println(_str)
 str_pattern = "errorbar"
 fig_caption = "Evaluation metrics at the end of the experiment."
 full_paths = joinpath.(www_paper_path, readdir(www_paper_path)[contains.(readdir(www_paper_path), str_pattern)])
-include_img_commands = EMAR.get_img_command(data_names, full_paths, fig_labels; fig_caption) 
+include_img_commands = get_img_command(data_names, full_paths, fig_labels; fig_caption) 
 _str = join(include_img_commands, "\n\n")
 println(_str)
 ```
@@ -96,7 +136,8 @@ println(_str)
 #| output: asis
 #| eval: true
 
-EMAR.aggregate_bs_synthetic(backend=Val(:latex))
+df = CSV.read(joinpath(www_paper_path, "bootstrap.csv"), DataFrame)
+tabulate_bs(df, Val(:latex))
 ```
 
 Tests for statistical significance of the estimated MMD metrics. We have highlighted p-values smaller than the significance level $\alpha=0.05$ in bold. Data: Synthetic.
@@ -133,7 +174,7 @@ println(_str)
 str_pattern = "line_chart"
 fig_caption = "Evolution of evaluation metrics over the course of the experiment."
 full_paths = joinpath.(www_paper_path, readdir(www_paper_path)[contains.(readdir(www_paper_path), str_pattern)])
-include_img_commands = EMAR.get_img_command(data_names, full_paths, fig_labels; fig_caption) 
+include_img_commands = get_img_command(data_names, full_paths, fig_labels; fig_caption) 
 _str = join(include_img_commands, "\n\n")
 println(_str)
 ```
@@ -159,7 +200,7 @@ println(_str)
 str_pattern = "errorbar"
 fig_caption = "Evaluation metrics at the end of the experiment."
 full_paths = joinpath.(www_paper_path, readdir(www_paper_path)[contains.(readdir(www_paper_path), str_pattern)])
-include_img_commands = EMAR.get_img_command(data_names, full_paths, fig_labels; fig_caption) 
+include_img_commands = get_img_command(data_names, full_paths, fig_labels; fig_caption) 
 _str = join(include_img_commands, "\n\n")
 println(_str)
 ```
@@ -174,7 +215,8 @@ println(_str)
 #| output: asis
 #| eval: true
 
-EMAR.aggregate_bs_real_world(backend=Val(:latex))
+df = CSV.read(joinpath(www_paper_path, "bootstrap.csv"), DataFrame)
+tabulate_bs(df, Val(:latex))
 ```
 
 Tests for statistical significance of the estimated MMD metrics. We have highlighted p-values smaller than the significance level $\alpha=0.05$ in bold. Data: Real-World.
@@ -219,7 +261,7 @@ println(_str)
 str_pattern = "line_chart"
 fig_caption = "Evolution of evaluation metrics over the course of the experiment."
 full_paths = joinpath.(www_paper_path, readdir(www_paper_path)[contains.(readdir(www_paper_path), str_pattern)])
-include_img_commands = EMAR.get_img_command(data_names, full_paths, fig_labels; fig_caption) 
+include_img_commands = get_img_command(data_names, full_paths, fig_labels; fig_caption) 
 _str = join(include_img_commands, "\n\n")
 println(_str)
 ```
@@ -245,7 +287,7 @@ println(_str)
 str_pattern = "errorbar"
 fig_caption = "Evaluation metrics at the end of the experiment."
 full_paths = joinpath.(www_paper_path, readdir(www_paper_path)[contains.(readdir(www_paper_path), str_pattern)])
-include_img_commands = EMAR.get_img_command(data_names, full_paths, fig_labels; fig_caption) 
+include_img_commands = get_img_command(data_names, full_paths, fig_labels; fig_caption) 
 _str = join(include_img_commands, "\n\n")
 println(_str)
 ```
@@ -260,7 +302,8 @@ println(_str)
 #| output: asis
 #| eval: true
 
-EMAR.aggregate_bs_mitigation_synthetic(backend=Val(:latex))
+df = CSV.read(joinpath(www_paper_path, "bootstrap_synthetic.csv"), DataFrame)
+tabulate_bs(df, Val(:latex))
 ```
 
 Tests for statistical significance of the estimated MMD metrics using mitigation strategies. We have highlighted p-values smaller than the significance level $\alpha=0.05$ in bold. Data: Synthetic.
@@ -275,7 +318,8 @@ Tests for statistical significance of the estimated MMD metrics using mitigation
 #| output: asis
 #| eval: true
 
-EMAR.aggregate_bs_mitigation_real_world(backend=Val(:latex))
+df = CSV.read(joinpath(www_paper_path, "bootstrap_real_world.csv"), DataFrame)
+tabulate_bs(df, Val(:latex))
 ```
 
 Tests for statistical significance of the estimated MMD metrics using mitigation strategies. We have highlighted p-values smaller than the significance level $\alpha=0.05$ in bold. Data: Real-World.
@@ -311,7 +355,7 @@ println(_str)
 str_pattern = "line_chart_latent"
 fig_caption = "Evolution of evaluation metrics over the course of the experiment."
 full_paths = joinpath.(www_paper_path, readdir(www_paper_path)[contains.(readdir(www_paper_path), str_pattern)])
-include_img_commands = EMAR.get_img_command(data_names, full_paths, fig_labels; fig_caption) 
+include_img_commands = get_img_command(data_names, full_paths, fig_labels; fig_caption) 
 _str = join(include_img_commands, "\n\n")
 println(_str)
 ```
@@ -337,7 +381,7 @@ println(_str)
 str_pattern = "errorbar_chart_latent"
 fig_caption = "Evaluation metrics at the end of the experiment."
 full_paths = joinpath.(www_paper_path, readdir(www_paper_path)[contains.(readdir(www_paper_path), str_pattern)])
-include_img_commands = EMAR.get_img_command(data_names, full_paths, fig_labels; fig_caption) 
+include_img_commands = get_img_command(data_names, full_paths, fig_labels; fig_caption) 
 _str = join(include_img_commands, "\n\n")
 println(_str)
 ```
@@ -352,7 +396,8 @@ println(_str)
 #| output: asis
 #| eval: true
 
-EMAR.aggregate_bs_mitigation_latent(backend=Val(:latex))
+df = CSV.read(joinpath(www_paper_path, "bootstrap_latent.csv"), DataFrame)
+tabulate_bs(df, Val(:latex))
 ```
 
 Tests for statistical significance of the estimated MMD metrics using mitigation strategies with Latent Space Search. We have highlighted p-values smaller than the significance level $\alpha=0.05$ in bold.

@@ -17,6 +17,7 @@ cd(projectdir)
 #| echo: false
 #| eval: true
 
+using CSV
 using EMAR
 using PrettyTables
 using Images
@@ -342,7 +343,10 @@ df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstra
 #| output: asis
 #| eval: true
 
-EMAR.aggregate_bs_mitigation_synthetic(backend=Val(:html))
+df = EMAR.aggregate_bs_mitigation_synthetic()
+CSV.write(joinpath(www_path, "bootstrap_synthetic.csv"), df)
+CSV.write(joinpath(www_paper_path, "bootstrap_synthetic.csv"), df)
+EMAR.tabulate_bs(df, Val(:html))
 ```
 
 Tests for statistical significance of the estimated MMD metrics using mitigation strategies. We have highlighted p-values smaller than the significance level $\alpha=0.05$ in bold. Data: Synthetic.
@@ -359,7 +363,10 @@ Tests for statistical significance of the estimated MMD metrics using mitigation
 #| output: asis
 #| eval: true
 
-EMAR.aggregate_bs_mitigation_real_world(backend=Val(:html))
+df = EMAR.aggregate_bs_mitigation_real_world()
+CSV.write(joinpath(www_path, "bootstrap_real_world.csv"), df)
+CSV.write(joinpath(www_paper_path, "bootstrap_real_world.csv"), df)
+EMAR.tabulate_bs(df, Val(:html))
 ```
 
 Tests for statistical significance of the estimated MMD metrics using mitigation strategies. We have highlighted p-values smaller than the significance level $\alpha=0.05$ in bold. Data: Real-World.
@@ -648,7 +655,10 @@ df = run_bootstrap(results, n_bootstrap; filename=joinpath(output_path,"bootstra
 #| eval: true
 #| echo: false
 
-df = EMAR.aggregate_bs_mitigation_latent(backend = Val(:html))
+df = EMAR.aggregate_bs_mitigation_latent()
+CSV.write(joinpath(www_path, "bootstrap_latent.csv"), df)
+CSV.write(joinpath(www_paper_path, "bootstrap_latent.csv"), df)
+EMAR.tabulate_bs(df, Val(:html))
 ```
 
 Tests for statistical significance of the estimated MMD metrics using mitigation strategies with Latent Space Search. We have highlighted p-values smaller than the significance level $\alpha=0.05$ in bold.

@@ -1,0 +1,145 @@
+name,data,generator,model,p_value_mean
+MMD,Circles,ClapROAR,Deep Ensemble,1.0
+MMD,Circles,ClapROAR,Linear,0.994
+MMD,Circles,ClapROAR,MLP,1.0
+MMD,Circles,Gravitational,Deep Ensemble,0.998
+MMD,Circles,Gravitational,Linear,1.0
+MMD,Circles,Gravitational,MLP,1.0
+MMD,Circles,Latent (γ=0.5),Deep Ensemble,1.0
+MMD,Circles,Latent (γ=0.5),Linear,0.9960000000000001
+MMD,Circles,Latent (γ=0.5),MLP,1.0
+MMD,Circles,Latent (γ=0.9),Deep Ensemble,1.0
+MMD,Circles,Latent (γ=0.9),Linear,0.9960000000000001
+MMD,Circles,Latent (γ=0.9),MLP,1.0
+MMD,Linearly Separable,ClapROAR,Deep Ensemble,0.33399999999999996
+MMD,Linearly Separable,ClapROAR,Linear,0.866
+MMD,Linearly Separable,ClapROAR,MLP,0.16799999999999998
+MMD,Linearly Separable,Gravitational,Deep Ensemble,0.38
+MMD,Linearly Separable,Gravitational,Linear,0.82
+MMD,Linearly Separable,Gravitational,MLP,0.0
+MMD,Linearly Separable,Latent (γ=0.5),Deep Ensemble,0.0
+MMD,Linearly Separable,Latent (γ=0.5),Linear,0.892
+MMD,Linearly Separable,Latent (γ=0.5),MLP,0.126
+MMD,Linearly Separable,Latent (γ=0.9),Deep Ensemble,0.0
+MMD,Linearly Separable,Latent (γ=0.9),Linear,0.8960000000000001
+MMD,Linearly Separable,Latent (γ=0.9),MLP,0.0
+MMD,Moons,ClapROAR,Deep Ensemble,0.0
+MMD,Moons,ClapROAR,Linear,0.0
+MMD,Moons,ClapROAR,MLP,0.0
+MMD,Moons,Gravitational,Deep Ensemble,0.0
+MMD,Moons,Gravitational,Linear,0.0
+MMD,Moons,Gravitational,MLP,0.0
+MMD,Moons,Latent (γ=0.5),Deep Ensemble,0.0
+MMD,Moons,Latent (γ=0.5),Linear,0.0
+MMD,Moons,Latent (γ=0.5),MLP,0.0
+MMD,Moons,Latent (γ=0.9),Deep Ensemble,0.0
+MMD,Moons,Latent (γ=0.9),Linear,0.0
+MMD,Moons,Latent (γ=0.9),MLP,0.0
+MMD,Overlapping,ClapROAR,Deep Ensemble,0.0
+MMD,Overlapping,ClapROAR,Linear,0.0
+MMD,Overlapping,ClapROAR,MLP,0.0
+MMD,Overlapping,Gravitational,Deep Ensemble,0.0
+MMD,Overlapping,Gravitational,Linear,0.0
+MMD,Overlapping,Gravitational,MLP,0.0
+MMD,Overlapping,Latent (γ=0.5),Deep Ensemble,0.0
+MMD,Overlapping,Latent (γ=0.5),Linear,0.0
+MMD,Overlapping,Latent (γ=0.5),MLP,0.0
+MMD,Overlapping,Latent (γ=0.9),Deep Ensemble,0.0
+MMD,Overlapping,Latent (γ=0.9),Linear,0.0
+MMD,Overlapping,Latent (γ=0.9),MLP,0.0
+PP MMD,Circles,ClapROAR,Deep Ensemble,0.998
+PP MMD,Circles,ClapROAR,Linear,0.0
+PP MMD,Circles,ClapROAR,MLP,1.0
+PP MMD,Circles,Gravitational,Deep Ensemble,1.0
+PP MMD,Circles,Gravitational,Linear,0.0
+PP MMD,Circles,Gravitational,MLP,1.0
+PP MMD,Circles,Latent (γ=0.5),Deep Ensemble,0.998
+PP MMD,Circles,Latent (γ=0.5),Linear,0.0
+PP MMD,Circles,Latent (γ=0.5),MLP,0.9975
+PP MMD,Circles,Latent (γ=0.9),Deep Ensemble,0.998
+PP MMD,Circles,Latent (γ=0.9),Linear,0.0
+PP MMD,Circles,Latent (γ=0.9),MLP,0.998
+PP MMD,Linearly Separable,ClapROAR,Deep Ensemble,0.6980000000000001
+PP MMD,Linearly Separable,ClapROAR,Linear,0.094
+PP MMD,Linearly Separable,ClapROAR,MLP,0.826
+PP MMD,Linearly Separable,Gravitational,Deep Ensemble,0.616
+PP MMD,Linearly Separable,Gravitational,Linear,0.096
+PP MMD,Linearly Separable,Gravitational,MLP,0.9620000000000001
+PP MMD,Linearly Separable,Latent (γ=0.5),Deep Ensemble,0.9480000000000001
+PP MMD,Linearly Separable,Latent (γ=0.5),Linear,0.094
+PP MMD,Linearly Separable,Latent (γ=0.5),MLP,0.85
+PP MMD,Linearly Separable,Latent (γ=0.9),Deep Ensemble,0.9600000000000002
+PP MMD,Linearly Separable,Latent (γ=0.9),Linear,0.072
+PP MMD,Linearly Separable,Latent (γ=0.9),MLP,0.966
+PP MMD,Moons,ClapROAR,Deep Ensemble,0.9620000000000001
+PP MMD,Moons,ClapROAR,Linear,0.13399999999999998
+PP MMD,Moons,ClapROAR,MLP,0.005
+PP MMD,Moons,Gravitational,Deep Ensemble,0.966
+PP MMD,Moons,Gravitational,Linear,0.2075
+PP MMD,Moons,Gravitational,MLP,0.01
+PP MMD,Moons,Latent (γ=0.5),Deep Ensemble,0.9075
+PP MMD,Moons,Latent (γ=0.5),Linear,0.0
+PP MMD,Moons,Latent (γ=0.5),MLP,0.006
+PP MMD,Moons,Latent (γ=0.9),Deep Ensemble,0.93
+PP MMD,Moons,Latent (γ=0.9),Linear,0.0275
+PP MMD,Moons,Latent (γ=0.9),MLP,0.002
+PP MMD,Overlapping,ClapROAR,Deep Ensemble,0.41200000000000003
+PP MMD,Overlapping,ClapROAR,Linear,0.13
+PP MMD,Overlapping,ClapROAR,MLP,0.33999999999999997
+PP MMD,Overlapping,Gravitational,Deep Ensemble,0.544
+PP MMD,Overlapping,Gravitational,Linear,0.238
+PP MMD,Overlapping,Gravitational,MLP,0.662
+PP MMD,Overlapping,Latent (γ=0.5),Deep Ensemble,0.046
+PP MMD,Overlapping,Latent (γ=0.5),Linear,0.0
+PP MMD,Overlapping,Latent (γ=0.5),MLP,0.07
+PP MMD,Overlapping,Latent (γ=0.9),Deep Ensemble,0.196
+PP MMD,Overlapping,Latent (γ=0.9),Linear,0.046
+PP MMD,Overlapping,Latent (γ=0.9),MLP,0.132
+PP MMD (grid),Circles,ClapROAR,Deep Ensemble,0.994
+PP MMD (grid),Circles,ClapROAR,Linear,0.0
+PP MMD (grid),Circles,ClapROAR,MLP,0.9960000000000001
+PP MMD (grid),Circles,Gravitational,Deep Ensemble,0.9920000000000002
+PP MMD (grid),Circles,Gravitational,Linear,0.0
+PP MMD (grid),Circles,Gravitational,MLP,0.9960000000000001
+PP MMD (grid),Circles,Latent (γ=0.5),Deep Ensemble,0.998
+PP MMD (grid),Circles,Latent (γ=0.5),Linear,0.0
+PP MMD (grid),Circles,Latent (γ=0.5),MLP,0.9924999999999999
+PP MMD (grid),Circles,Latent (γ=0.9),Deep Ensemble,0.9940000000000001
+PP MMD (grid),Circles,Latent (γ=0.9),Linear,0.0
+PP MMD (grid),Circles,Latent (γ=0.9),MLP,0.9880000000000001
+PP MMD (grid),Linearly Separable,ClapROAR,Deep Ensemble,0.0
+PP MMD (grid),Linearly Separable,ClapROAR,Linear,0.0
+PP MMD (grid),Linearly Separable,ClapROAR,MLP,0.0
+PP MMD (grid),Linearly Separable,Gravitational,Deep Ensemble,0.0
+PP MMD (grid),Linearly Separable,Gravitational,Linear,0.0
+PP MMD (grid),Linearly Separable,Gravitational,MLP,0.0
+PP MMD (grid),Linearly Separable,Latent (γ=0.5),Deep Ensemble,0.0
+PP MMD (grid),Linearly Separable,Latent (γ=0.5),Linear,0.0
+PP MMD (grid),Linearly Separable,Latent (γ=0.5),MLP,0.0
+PP MMD (grid),Linearly Separable,Latent (γ=0.9),Deep Ensemble,0.0
+PP MMD (grid),Linearly Separable,Latent (γ=0.9),Linear,0.0
+PP MMD (grid),Linearly Separable,Latent (γ=0.9),MLP,0.044
+PP MMD (grid),Moons,ClapROAR,Deep Ensemble,0.128
+PP MMD (grid),Moons,ClapROAR,Linear,0.07199999999999998
+PP MMD (grid),Moons,ClapROAR,MLP,0.0
+PP MMD (grid),Moons,Gravitational,Deep Ensemble,0.2
+PP MMD (grid),Moons,Gravitational,Linear,0.1525
+PP MMD (grid),Moons,Gravitational,MLP,0.0
+PP MMD (grid),Moons,Latent (γ=0.5),Deep Ensemble,0.22
+PP MMD (grid),Moons,Latent (γ=0.5),Linear,0.0
+PP MMD (grid),Moons,Latent (γ=0.5),MLP,0.0
+PP MMD (grid),Moons,Latent (γ=0.9),Deep Ensemble,0.27599999999999997
+PP MMD (grid),Moons,Latent (γ=0.9),Linear,0.035
+PP MMD (grid),Moons,Latent (γ=0.9),MLP,0.002
+PP MMD (grid),Overlapping,ClapROAR,Deep Ensemble,0.296
+PP MMD (grid),Overlapping,ClapROAR,Linear,0.19
+PP MMD (grid),Overlapping,ClapROAR,MLP,0.374
+PP MMD (grid),Overlapping,Gravitational,Deep Ensemble,0.446
+PP MMD (grid),Overlapping,Gravitational,Linear,0.32399999999999995
+PP MMD (grid),Overlapping,Gravitational,MLP,0.518
+PP MMD (grid),Overlapping,Latent (γ=0.5),Deep Ensemble,0.344
+PP MMD (grid),Overlapping,Latent (γ=0.5),Linear,0.004
+PP MMD (grid),Overlapping,Latent (γ=0.5),MLP,0.49000000000000005
+PP MMD (grid),Overlapping,Latent (γ=0.9),Deep Ensemble,0.362
+PP MMD (grid),Overlapping,Latent (γ=0.9),Linear,0.052000000000000005
+PP MMD (grid),Overlapping,Latent (γ=0.9),MLP,0.41200000000000003

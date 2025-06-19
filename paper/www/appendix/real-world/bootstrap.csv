@@ -1,0 +1,109 @@
+name,data,generator,model,p_value_mean
+MMD,Cal Housing,DICE,Deep Ensemble,0.0
+MMD,Cal Housing,DICE,Linear,0.0
+MMD,Cal Housing,DICE,MLP,0.0
+MMD,Cal Housing,Generic (γ=0.5),Deep Ensemble,0.0
+MMD,Cal Housing,Generic (γ=0.5),Linear,0.0
+MMD,Cal Housing,Generic (γ=0.5),MLP,0.0
+MMD,Cal Housing,Greedy,Deep Ensemble,0.0
+MMD,Cal Housing,Greedy,Linear,0.0
+MMD,Cal Housing,Greedy,MLP,0.0
+MMD,Cal Housing,Latent,Deep Ensemble,0.0
+MMD,Cal Housing,Latent,Linear,0.0
+MMD,Cal Housing,Latent,MLP,0.0
+MMD,Credit Default,DICE,Deep Ensemble,1.0
+MMD,Credit Default,DICE,Linear,1.0
+MMD,Credit Default,DICE,MLP,1.0
+MMD,Credit Default,Generic (γ=0.5),Deep Ensemble,1.0
+MMD,Credit Default,Generic (γ=0.5),Linear,1.0
+MMD,Credit Default,Generic (γ=0.5),MLP,1.0
+MMD,Credit Default,Greedy,Deep Ensemble,1.0
+MMD,Credit Default,Greedy,Linear,1.0
+MMD,Credit Default,Greedy,MLP,1.0
+MMD,Credit Default,Latent,Deep Ensemble,0.0
+MMD,Credit Default,Latent,Linear,1.0
+MMD,Credit Default,Latent,MLP,0.0
+MMD,GMSC,DICE,Deep Ensemble,0.082
+MMD,GMSC,DICE,Linear,0.51
+MMD,GMSC,DICE,MLP,0.33799999999999997
+MMD,GMSC,Generic (γ=0.5),Deep Ensemble,0.306
+MMD,GMSC,Generic (γ=0.5),Linear,0.278
+MMD,GMSC,Generic (γ=0.5),MLP,0.12799999999999997
+MMD,GMSC,Greedy,Deep Ensemble,0.032
+MMD,GMSC,Greedy,Linear,0.006
+MMD,GMSC,Greedy,MLP,0.0
+MMD,GMSC,Latent,Deep Ensemble,0.0
+MMD,GMSC,Latent,Linear,0.0
+MMD,GMSC,Latent,MLP,0.0
+PP MMD,Cal Housing,DICE,Deep Ensemble,0.0
+PP MMD,Cal Housing,DICE,Linear,0.0
+PP MMD,Cal Housing,DICE,MLP,0.0
+PP MMD,Cal Housing,Generic (γ=0.5),Deep Ensemble,0.0
+PP MMD,Cal Housing,Generic (γ=0.5),Linear,0.0
+PP MMD,Cal Housing,Generic (γ=0.5),MLP,0.0
+PP MMD,Cal Housing,Greedy,Deep Ensemble,0.0
+PP MMD,Cal Housing,Greedy,Linear,0.0
+PP MMD,Cal Housing,Greedy,MLP,0.0
+PP MMD,Cal Housing,Latent,Deep Ensemble,0.0
+PP MMD,Cal Housing,Latent,Linear,0.0
+PP MMD,Cal Housing,Latent,MLP,0.0
+PP MMD,Credit Default,DICE,Deep Ensemble,0.0
+PP MMD,Credit Default,DICE,Linear,0.0
+PP MMD,Credit Default,DICE,MLP,0.0
+PP MMD,Credit Default,Generic (γ=0.5),Deep Ensemble,0.0
+PP MMD,Credit Default,Generic (γ=0.5),Linear,0.0
+PP MMD,Credit Default,Generic (γ=0.5),MLP,0.0
+PP MMD,Credit Default,Greedy,Deep Ensemble,0.0
+PP MMD,Credit Default,Greedy,Linear,0.044000000000000004
+PP MMD,Credit Default,Greedy,MLP,0.0
+PP MMD,Credit Default,Latent,Deep Ensemble,0.0
+PP MMD,Credit Default,Latent,Linear,0.43599999999999994
+PP MMD,Credit Default,Latent,MLP,0.0
+PP MMD,GMSC,DICE,Deep Ensemble,0.032
+PP MMD,GMSC,DICE,Linear,0.0
+PP MMD,GMSC,DICE,MLP,0.0
+PP MMD,GMSC,Generic (γ=0.5),Deep Ensemble,0.018
+PP MMD,GMSC,Generic (γ=0.5),Linear,0.0
+PP MMD,GMSC,Generic (γ=0.5),MLP,0.0
+PP MMD,GMSC,Greedy,Deep Ensemble,0.02
+PP MMD,GMSC,Greedy,Linear,0.0
+PP MMD,GMSC,Greedy,MLP,0.0
+PP MMD,GMSC,Latent,Deep Ensemble,0.008
+PP MMD,GMSC,Latent,Linear,0.0
+PP MMD,GMSC,Latent,MLP,0.0
+PP MMD (grid),Cal Housing,DICE,Deep Ensemble,0.0
+PP MMD (grid),Cal Housing,DICE,Linear,0.0
+PP MMD (grid),Cal Housing,DICE,MLP,0.0
+PP MMD (grid),Cal Housing,Generic (γ=0.5),Deep Ensemble,0.0
+PP MMD (grid),Cal Housing,Generic (γ=0.5),Linear,0.0
+PP MMD (grid),Cal Housing,Generic (γ=0.5),MLP,0.004
+PP MMD (grid),Cal Housing,Greedy,Deep Ensemble,0.0
+PP MMD (grid),Cal Housing,Greedy,Linear,0.0
+PP MMD (grid),Cal Housing,Greedy,MLP,0.0
+PP MMD (grid),Cal Housing,Latent,Deep Ensemble,0.006
+PP MMD (grid),Cal Housing,Latent,Linear,0.01
+PP MMD (grid),Cal Housing,Latent,MLP,0.026000000000000002
+PP MMD (grid),Credit Default,DICE,Deep Ensemble,0.0
+PP MMD (grid),Credit Default,DICE,Linear,0.0
+PP MMD (grid),Credit Default,DICE,MLP,0.0
+PP MMD (grid),Credit Default,Generic (γ=0.5),Deep Ensemble,0.0
+PP MMD (grid),Credit Default,Generic (γ=0.5),Linear,0.0
+PP MMD (grid),Credit Default,Generic (γ=0.5),MLP,0.0
+PP MMD (grid),Credit Default,Greedy,Deep Ensemble,0.164
+PP MMD (grid),Credit Default,Greedy,Linear,0.0
+PP MMD (grid),Credit Default,Greedy,MLP,0.0
+PP MMD (grid),Credit Default,Latent,Deep Ensemble,0.0
+PP MMD (grid),Credit Default,Latent,Linear,0.044
+PP MMD (grid),Credit Default,Latent,MLP,0.0
+PP MMD (grid),GMSC,DICE,Deep Ensemble,0.0
+PP MMD (grid),GMSC,DICE,Linear,0.0
+PP MMD (grid),GMSC,DICE,MLP,0.004
+PP MMD (grid),GMSC,Generic (γ=0.5),Deep Ensemble,0.002
+PP MMD (grid),GMSC,Generic (γ=0.5),Linear,0.0
+PP MMD (grid),GMSC,Generic (γ=0.5),MLP,0.0
+PP MMD (grid),GMSC,Greedy,Deep Ensemble,0.0
+PP MMD (grid),GMSC,Greedy,Linear,0.0
+PP MMD (grid),GMSC,Greedy,MLP,0.0
+PP MMD (grid),GMSC,Latent,Deep Ensemble,0.0
+PP MMD (grid),GMSC,Latent,Linear,0.0
+PP MMD (grid),GMSC,Latent,MLP,0.03

@@ -153,7 +153,7 @@ end
 """
 Tabulate the bootstrap results for HTML.
 """
-function tabulate_bs(df::DataFrame, backend::Val{:html}, alpha::AbstractFloat; kwrgs...)
+function tabulate_bs(df::DataFrame, backend::Val{:html}, alpha::AbstractFloat=0.05; kwrgs...)
     hl = HtmlHighlighter(
        (data, i, j) -> (j == 5) && data[i, 5] < alpha,
        HtmlDecoration(font_weight = "bold")
@@ -169,7 +169,7 @@ end
 """
 Tabulate the bootstrap results for LaTeX.
 """
-function tabulate_bs(df::DataFrame, backend::Val{:latex}, alpha::AbstractFloat; kwrgs...)
+function tabulate_bs(df::DataFrame, backend::Val{:latex}, alpha::AbstractFloat=0.05; kwrgs...)
     hl = LatexHighlighter(
         (data, i, j) -> (j == 5) && data[i, 5] < alpha,
         ["textbf"]
